@@ -18,7 +18,6 @@
 ├── models.py         # API별 Pydantic v2 모델
 ├── storage.py        # CSV·Parquet 저장과 성능 측정
 ├── tests/            # 스키마 검증 테스트
-├── tools/            # 실행결과 PDF 생성 도구
 ├── output/           # 실행 결과 파일
 └── report.md         # 실행 결과 및 본인 의견
 ```
@@ -39,18 +38,11 @@ pytest
 ruff check .
 ```
 
-## 실행결과 PDF 생성
-
-```bash
-python tools/build_report.py
-```
-
 ## 결과 파일
 
 - API별 CSV·Parquet 파일
 - `output/benchmark_results.csv`
 - `report.md`
-- `판교캠_5반_홍은비_day1종합실습_실행결과.pdf`
 
 ## 오류 처리
 
