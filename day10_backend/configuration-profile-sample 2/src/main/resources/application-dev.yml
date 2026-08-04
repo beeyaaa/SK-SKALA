@@ -1,0 +1,26 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+app:
+  environment: development
+
+  external-api:
+    base-url: ${EXTERNAL_API_URL:https://dev-api.example.com}
+    connect-timeout: 3s
+    read-timeout: 10s
+    api-key: ${APP_API_KEY:dev-api-key}
+
+  storage:
+    type: local
+    directory: ${STORAGE_DIRECTORY:/data/dev/uploads}
+    max-file-size: 50MB
+
+  security:
+    allowed-origins:
+      - https://dev.example.com
+      - http://localhost:3000
+
+logging:
+  level:
+    root: INFO
+    com.example.configsample: DEBUG

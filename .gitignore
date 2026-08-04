@@ -1,1 +1,31 @@
 .DS_Store
+
+# Python 캐시 및 일반적인 가상환경
+**/__pycache__/
+*.py[cod]
+**/.venv/
+**/venv/
+**/site-packages/
+
+# API 키 등 로컬 비밀값
+**/.env
+**/.env.*
+!**/.env.example
+
+# IDE·컴파일 캐시
+**/.vscode/
+**/bin/
+*.class
+
+# 가상환경 이름을 프로젝트명처럼 만든 기존 디렉터리
+/day7_LLM_Transformer아키텍처/code/llm/
+/day7_LLM_Transformer아키텍처/code/prompt/
+/day8_LLM_Transformer 아키텍처/insurance/
+
+# Gradle 등에서 다시 생성할 수 있는 빌드 결과물
+**/.gradle/
+**/build/
+**/tmp/
+
+# GitHub에 올리지 않는 대용량 원본 데이터
+/day15_data/day2-practice1/sales_100k.csv

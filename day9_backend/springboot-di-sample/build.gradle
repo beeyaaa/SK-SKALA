@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.15'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Controller-Service-Repository dependency injection sample'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    // Spring Boot와 springdoc-openapi 라이브러리를 내려받는 중앙 저장소
+    mavenCentral()
+}
+
+dependencies {
+    // Spring MVC 기반 REST API와 내장 Tomcat
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Data JPA, Hibernate, 트랜잭션 기능
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // @Valid, @NotBlank, @Email 등 요청 데이터 검증
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Swagger UI + OpenAPI 3 문서 자동 생성
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.17'
+
+    // 개발 중 클래스 변경 감지 및 자동 재시작
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // 별도 설치 없이 사용할 수 있는 실습용 인메모리 데이터베이스
+    runtimeOnly 'com.h2database:h2'
+
+    // JUnit, AssertJ, Mockito, Spring Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

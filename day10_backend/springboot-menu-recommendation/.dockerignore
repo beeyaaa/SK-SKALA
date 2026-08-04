@@ -1,0 +1,7 @@
+.gradle
+.git
+.vscode
+bin
+build/classes
+build/reports
+build/test-results

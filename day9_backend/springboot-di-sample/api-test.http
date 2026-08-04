@@ -1,0 +1,23 @@
+### 1. 회원 등록
+POST http://localhost:8080/api/members
+Content-Type: application/json
+
+{
+  "name": "홍길동",
+  "email": "hong@example.com"
+}
+
+### 2. 전체 회원 조회
+GET http://localhost:8080/api/members
+
+### 3. 회원 단건 조회
+GET http://localhost:8080/api/members/1
+
+### 4. 검증 오류 확인
+POST http://localhost:8080/api/members
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "invalid-email"
+}
