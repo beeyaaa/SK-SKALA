@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "password": false,
+  "pid": 99679,
+  "port": 8888,
+  "root_dir": "/Users/beeyaaa/Workspace/SK-SKALA/day15_data/adult-marriage-education-analysis/notebooks",
+  "secure": false,
+  "sock": "",
+  "token": "734e81778a46c87e1b1e41211733c43d5d72193429d43972",
+  "url": "http://localhost:8888/",
+  "version": "2.20.0"
+}

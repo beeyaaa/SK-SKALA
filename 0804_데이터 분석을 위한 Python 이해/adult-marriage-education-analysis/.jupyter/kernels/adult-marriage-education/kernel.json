@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/Users/beeyaaa/Workspace/SK-SKALA/day15_data/.venv/bin/python",
+    "-m",
+    "ipykernel_launcher",
+    "-f",
+    "{connection_file}"
+  ],
+  "display_name": "Adult Marriage (.venv)",
+  "language": "python",
+  "metadata": {
+    "debugger": true
+  }
+}

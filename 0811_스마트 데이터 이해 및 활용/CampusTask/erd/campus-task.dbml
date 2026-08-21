@@ -1,0 +1,68 @@
+Project CampusTask {
+  database_type: 'PostgreSQL'
+  Note: '학생의 수강, 과제, 제출 및 채점을 관리하는 학사관리 시스템'
+}
+
+Table campus_task.students {
+  id bigint [pk, increment]
+  student_no varchar(20) [not null, unique]
+  name varchar(50) [not null]
+  email varchar(100) [not null, unique]
+  phone varchar(20)
+  enrolled boolean [not null, default: true]
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  Note: '학생 정보'
+}
+
+Table campus_task.courses {
+  id bigint [pk, increment]
+  course_code varchar(20) [not null, unique]
+  title varchar(100) [not null]
+
+  Note: '강좌 정보'
+}
+
+Table campus_task.enrollments {
+  student_id bigint [not null]
+  course_id bigint [not null]
+  enrolled_at date [not null, default: `CURRENT_DATE`]
+
+  indexes {
+    (student_id, course_id) [pk, name: 'pk_enrollments']
+    (course_id, student_id) [name: 'idx_enrollments_course_student']
+  }
+
+  Note: '학생과 강좌의 N:M 관계를 연결하는 수강신청 교차 테이블'
+}
+
+Table campus_task.assignments {
+  id bigint [pk, increment]
+  course_id bigint [not null]
+  title varchar(200) [not null]
+  due_at timestamptz [not null]
+
+  Note: '강좌별 과제 정보'
+}
+
+Table campus_task.submissions {
+  id bigint [pk, increment]
+  assignment_id bigint [not null]
+  student_id bigint [not null]
+  submitted_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  score numeric(5,2) [note: '0점 이상 100점 이하 또는 미채점(NULL)']
+  feedback text
+
+  indexes {
+    (assignment_id, student_id) [unique, name: 'uk_submissions_assignment_student']
+    (student_id) [name: 'idx_submissions_student']
+  }
+
+  Note: '학생의 과제 제출 및 채점 정보'
+}
+
+Ref: campus_task.enrollments.student_id > campus_task.students.id [delete: cascade]
+Ref: campus_task.enrollments.course_id > campus_task.courses.id [delete: cascade]
+Ref: campus_task.assignments.course_id > campus_task.courses.id [delete: cascade]
+Ref: campus_task.submissions.assignment_id > campus_task.assignments.id [delete: cascade]
+Ref: campus_task.submissions.student_id > campus_task.students.id [delete: cascade]

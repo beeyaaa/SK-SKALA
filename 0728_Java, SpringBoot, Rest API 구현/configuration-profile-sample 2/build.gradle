@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+description = 'Spring Boot Configuration & Profile Sample'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(
+            org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    )
+
+    // annotationProcessor에도 Spring Boot 버전 정보를 전달
+    annotationProcessor platform(
+            org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    )
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

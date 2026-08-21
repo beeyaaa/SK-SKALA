@@ -1,0 +1,82 @@
+SET
+DROP MATERIALIZED VIEW
+CREATE MATERIALIZED VIEW
+CREATE INDEX
+REFRESH MATERIALIZED VIEW
+ANALYZE
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=2498.98..2500.39 rows=30 width=44) (actual time=7.391..7.724 rows=30 loops=1)
+   Buffers: shared hit=359
+   ->  GroupAggregate  (cost=2498.98..2855.25 rows=7562 width=44) (actual time=7.391..7.722 rows=30 loops=1)
+         Group Key: ((date_trunc('day'::text, o.order_ts))::date)
+         Buffers: shared hit=359
+         ->  Sort  (cost=2498.98..2550.24 rows=20503 width=18) (actual time=7.377..7.473 rows=5384 loops=1)
+               Sort Key: ((date_trunc('day'::text, o.order_ts))::date) DESC, o.order_id
+               Sort Method: quicksort  Memory: 1570kB
+               Buffers: shared hit=359
+               ->  Hash Join  (cost=332.51..1030.60 rows=20503 width=18) (actual time=0.981..5.292 rows=20530 loops=1)
+                     Hash Cond: (oi.order_id = o.order_id)
+                     Buffers: shared hit=359
+                     ->  Seq Scan on order_items oi  (cost=0.00..525.15 rows=26815 width=14) (actual time=0.002..0.626 rows=26815 loops=1)
+                           Buffers: shared hit=257
+                     ->  Hash  (cost=237.99..237.99 rows=7562 width=16) (actual time=0.972..0.972 rows=7562 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 419kB
+                           Buffers: shared hit=102
+                           ->  Seq Scan on orders o  (cost=0.00..237.99 rows=7562 width=16) (actual time=0.002..0.722 rows=7562 loops=1)
+                                 Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                                 Rows Removed by Filter: 2328
+                                 Buffers: shared hit=102
+ Planning:
+   Buffers: shared hit=18
+ Planning Time: 0.144 ms
+ Execution Time: 7.740 ms
+(25 rows)
+
+                                                                         QUERY PLAN                                                                         
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.14..3.57 rows=30 width=20) (actual time=0.008..0.010 rows=30 loops=1)
+   Buffers: shared hit=1 read=1
+   ->  Index Scan Backward using ux_mv_daily_gmv_sales_day on mv_daily_gmv  (cost=0.14..13.96 rows=121 width=20) (actual time=0.008..0.009 rows=30 loops=1)
+         Buffers: shared hit=1 read=1
+ Planning:
+   Buffers: shared hit=11 read=1
+ Planning Time: 0.049 ms
+ Execution Time: 0.013 ms
+(8 rows)
+
+ sales_day  | order_count |   gmv    
+------------+-------------+----------
+ 2026-08-14 |          53 | 45553.54
+ 2026-08-13 |          86 | 89387.79
+ 2026-08-12 |          62 | 51891.97
+ 2026-08-11 |          64 | 60820.87
+ 2026-08-10 |          53 | 49868.00
+ 2026-08-09 |          73 | 73932.19
+ 2026-08-08 |          72 | 66220.79
+ 2026-08-07 |          52 | 53558.81
+ 2026-08-06 |          65 | 71343.26
+ 2026-08-05 |          75 | 72515.49
+ 2026-08-04 |          66 | 51424.02
+ 2026-08-03 |          72 | 63515.55
+ 2026-08-02 |          78 | 71500.33
+ 2026-08-01 |          75 | 70683.49
+ 2026-07-31 |          68 | 56039.71
+ 2026-07-30 |          70 | 76598.81
+ 2026-07-29 |          51 | 48456.18
+ 2026-07-28 |          69 | 79315.79
+ 2026-07-27 |          49 | 52304.42
+ 2026-07-26 |          70 | 63740.47
+ 2026-07-25 |          61 | 56771.12
+ 2026-07-24 |          64 | 66698.55
+ 2026-07-23 |          59 | 52070.86
+ 2026-07-22 |          60 | 59170.38
+ 2026-07-21 |          66 | 61702.48
+ 2026-07-20 |          72 | 72729.08
+ 2026-07-19 |          76 | 82359.30
+ 2026-07-18 |          56 | 49525.01
+ 2026-07-17 |          66 | 65044.54
+ 2026-07-16 |          71 | 56806.59
+(30 rows)
+
+REFRESH MATERIALIZED VIEW

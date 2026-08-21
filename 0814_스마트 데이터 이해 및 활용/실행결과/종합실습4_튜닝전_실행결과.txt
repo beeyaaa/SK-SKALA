@@ -1,0 +1,570 @@
+SET
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=21418.75..21418.76 rows=1 width=32) (actual time=2.579..2.580 rows=1 loops=1)
+   Buffers: shared hit=6220
+   ->  Seq Scan on orders o  (cost=0.00..336.89 rows=2521 width=8) (actual time=0.003..0.895 rows=2031 loops=1)
+         Filter: ((order_status = ANY ('{paid,shipped,delivered}'::text[])) AND ((order_ts)::date >= (CURRENT_DATE - 30)))
+         Rows Removed by Filter: 7859
+         Buffers: shared hit=102
+   SubPlan 1
+     ->  Aggregate  (cost=8.35..8.36 rows=1 width=32) (actual time=0.001..0.001 rows=1 loops=2031)
+           Buffers: shared hit=6118
+           ->  Index Scan using idx_order_items_order on order_items oi  (cost=0.29..8.34 rows=3 width=6) (actual time=0.000..0.000 rows=3 loops=2031)
+                 Index Cond: (order_id = o.order_id)
+                 Buffers: shared hit=6118
+ Planning:
+   Buffers: shared hit=229
+ Planning Time: 0.278 ms
+ Execution Time: 2.597 ms
+(16 rows)
+
+ total_sales_30d 
+-----------------
+      1942010.05
+(1 row)
+
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=2498.98..2930.87 rows=7562 width=76) (actual time=7.804..8.861 rows=5 loops=1)
+   Group Key: ((date_trunc('month'::text, o.order_ts))::date)
+   Buffers: shared hit=365
+   ->  Sort  (cost=2498.98..2550.24 rows=20503 width=18) (actual time=7.661..7.997 rows=20530 loops=1)
+         Sort Key: ((date_trunc('month'::text, o.order_ts))::date), o.order_id
+         Sort Method: quicksort  Memory: 1570kB
+         Buffers: shared hit=365
+         ->  Hash Join  (cost=332.51..1030.60 rows=20503 width=18) (actual time=0.872..5.162 rows=20530 loops=1)
+               Hash Cond: (oi.order_id = o.order_id)
+               Buffers: shared hit=359
+               ->  Seq Scan on order_items oi  (cost=0.00..525.15 rows=26815 width=14) (actual time=0.001..0.595 rows=26815 loops=1)
+                     Buffers: shared hit=257
+               ->  Hash  (cost=237.99..237.99 rows=7562 width=16) (actual time=0.863..0.863 rows=7562 loops=1)
+                     Buckets: 8192  Batches: 1  Memory Usage: 419kB
+                     Buffers: shared hit=102
+                     ->  Seq Scan on orders o  (cost=0.00..237.99 rows=7562 width=16) (actual time=0.002..0.577 rows=7562 loops=1)
+                           Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                           Rows Removed by Filter: 2328
+                           Buffers: shared hit=102
+ Planning:
+   Buffers: shared hit=55
+ Planning Time: 0.115 ms
+ Execution Time: 8.872 ms
+(23 rows)
+
+ sales_month | order_count |  revenue   |  aov   
+-------------+-------------+------------+--------
+ 2026-04-01  |         834 |  778166.88 | 933.05
+ 2026-05-01  |        1809 | 1669447.14 | 922.86
+ 2026-06-01  |        1867 | 1702834.48 | 912.07
+ 2026-07-01  |        2106 | 2013767.04 | 956.20
+ 2026-08-01  |         946 |  892216.10 | 943.15
+(5 rows)
+
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1127.97..1127.99 rows=10 width=72) (actual time=5.726..5.727 rows=10 loops=1)
+   Buffers: shared hit=370
+   ->  Sort  (cost=1127.97..1130.64 rows=1070 width=72) (actual time=5.725..5.726 rows=10 loops=1)
+         Sort Key: (round(sum(oi.line_total), 2)) DESC, c.category_id
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=370
+         ->  HashAggregate  (cost=1088.80..1104.85 rows=1070 width=72) (actual time=5.716..5.721 rows=10 loops=1)
+               Group Key: c.category_id
+               Batches: 1  Memory Usage: 73kB
+               Buffers: shared hit=367
+               ->  Hash Join  (cost=422.97..1054.62 rows=6835 width=46) (actual time=1.139..4.884 rows=15799 loops=1)
+                     Hash Cond: (p.category_id = c.category_id)
+                     Buffers: shared hit=367
+                     ->  Hash Join  (cost=388.90..1002.54 rows=6835 width=14) (actual time=1.132..4.012 rows=15799 loops=1)
+                           Hash Cond: (oi.product_id = p.product_id)
+                           Buffers: shared hit=366
+                           ->  Hash Join  (cost=368.40..963.97 rows=6835 width=14) (actual time=1.082..3.065 rows=15799 loops=1)
+                                 Hash Cond: (oi.order_id = o.order_id)
+                                 Buffers: shared hit=359
+                                 ->  Seq Scan on order_items oi  (cost=0.00..525.15 rows=26815 width=22) (actual time=0.001..0.599 rows=26815 loops=1)
+                                       Buffers: shared hit=257
+                                 ->  Hash  (cost=336.89..336.89 rows=2521 width=8) (actual time=1.079..1.079 rows=5825 loops=1)
+                                       Buckets: 8192 (originally 4096)  Batches: 1 (originally 1)  Memory Usage: 292kB
+                                       Buffers: shared hit=102
+                                       ->  Seq Scan on orders o  (cost=0.00..336.89 rows=2521 width=8) (actual time=0.001..0.885 rows=5825 loops=1)
+                                             Filter: ((order_status = ANY ('{paid,shipped,delivered}'::text[])) AND ((order_ts)::date >= (CURRENT_DATE - 90)))
+                                             Rows Removed by Filter: 4065
+                                             Buffers: shared hit=102
+                           ->  Hash  (cost=13.00..13.00 rows=600 width=16) (actual time=0.048..0.048 rows=600 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 37kB
+                                 Buffers: shared hit=7
+                                 ->  Seq Scan on products p  (cost=0.00..13.00 rows=600 width=16) (actual time=0.001..0.029 rows=600 loops=1)
+                                       Buffers: shared hit=7
+                     ->  Hash  (cost=20.70..20.70 rows=1070 width=40) (actual time=0.003..0.004 rows=14 loops=1)
+                           Buckets: 2048  Batches: 1  Memory Usage: 17kB
+                           Buffers: shared hit=1
+                           ->  Seq Scan on categories c  (cost=0.00..20.70 rows=1070 width=40) (actual time=0.002..0.002 rows=14 loops=1)
+                                 Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=151
+ Planning Time: 0.355 ms
+ Execution Time: 5.739 ms
+(42 rows)
+
+ category_id | category_name | revenue_90d 
+-------------+---------------+-------------
+          10 | Women         |  1898050.02
+           6 | Appliances    |  1231884.48
+           3 | Laptops       |   320214.57
+           7 | Cookware      |   303628.29
+          13 | Outdoor       |   301322.83
+          14 | Fitness       |   295701.91
+           4 | Audio         |   292053.17
+          11 | Shoes         |   275368.44
+           2 | Phones        |   273973.45
+           9 | Men           |   259652.63
+(10 rows)
+
+                                                                                   QUERY PLAN                                                                                   
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=388176.33..388176.83 rows=200 width=59) (actual time=29.541..29.542 rows=20 loops=1)
+   Sort Key: ranked.revenue_rank, ranked.product_id
+   Sort Method: quicksort  Memory: 26kB
+   Buffers: shared hit=179315
+   ->  Subquery Scan on ranked  (cost=310536.19..388168.69 rows=200 width=59) (actual time=29.532..29.540 rows=20 loops=1)
+         Buffers: shared hit=179315
+         ->  WindowAgg  (cost=310536.19..388168.19 rows=200 width=59) (actual time=29.531..29.537 rows=20 loops=1)
+               Run Condition: (rank() OVER (?) <= 20)
+               Buffers: shared hit=179315
+               ->  Sort  (cost=310536.18..310536.68 rows=200 width=51) (actual time=29.523..29.526 rows=21 loops=1)
+                     Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+                     Sort Method: quicksort  Memory: 53kB
+                     Buffers: shared hit=179315
+                     ->  Seq Scan on products p  (cost=0.00..310528.53 rows=200 width=51) (actual time=0.054..29.449 rows=600 loops=1)
+                           Filter: (COALESCE((SubPlan 2), '0'::numeric) > '0'::numeric)
+                           Buffers: shared hit=179315
+                           SubPlan 1
+                             ->  Aggregate  (cost=388.13..388.14 rows=1 width=32) (actual time=0.023..0.023 rows=1 loops=600)
+                                   Buffers: shared hit=89654
+                                   ->  Nested Loop  (cost=4.92..388.05 rows=34 width=6) (actual time=0.003..0.022 rows=34 loops=600)
+                                         Buffers: shared hit=89654
+                                         ->  Bitmap Heap Scan on order_items oi  (cost=4.64..122.26 rows=45 width=14) (actual time=0.001..0.004 rows=45 loops=600)
+                                               Recheck Cond: (product_id = p.product_id)
+                                               Heap Blocks: exact=8004
+                                               Buffers: shared hit=9209
+                                               ->  Bitmap Index Scan on idx_order_items_product  (cost=0.00..4.62 rows=45 width=0) (actual time=0.001..0.001 rows=45 loops=600)
+                                                     Index Cond: (product_id = p.product_id)
+                                                     Buffers: shared hit=1205
+                                         ->  Index Scan using orders_pkey on orders o  (cost=0.29..5.91 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=26815)
+                                               Index Cond: (order_id = oi.order_id)
+                                               Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                                               Rows Removed by Filter: 0
+                                               Buffers: shared hit=80445
+                           SubPlan 2
+                             ->  Aggregate  (cost=388.13..388.14 rows=1 width=32) (actual time=0.026..0.026 rows=1 loops=600)
+                                   Buffers: shared hit=89654
+                                   ->  Nested Loop  (cost=4.92..388.05 rows=34 width=6) (actual time=0.003..0.024 rows=34 loops=600)
+                                         Buffers: shared hit=89654
+                                         ->  Bitmap Heap Scan on order_items oi_1  (cost=4.64..122.26 rows=45 width=14) (actual time=0.002..0.005 rows=45 loops=600)
+                                               Recheck Cond: (product_id = p.product_id)
+                                               Heap Blocks: exact=8004
+                                               Buffers: shared hit=9209
+                                               ->  Bitmap Index Scan on idx_order_items_product  (cost=0.00..4.62 rows=45 width=0) (actual time=0.001..0.001 rows=45 loops=600)
+                                                     Index Cond: (product_id = p.product_id)
+                                                     Buffers: shared hit=1205
+                                         ->  Index Scan using orders_pkey on orders o_1  (cost=0.29..5.91 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=26815)
+                                               Index Cond: (order_id = oi_1.order_id)
+                                               Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                                               Rows Removed by Filter: 0
+                                               Buffers: shared hit=80445
+ Planning:
+   Buffers: shared hit=31
+ Planning Time: 0.134 ms
+ Execution Time: 29.564 ms
+(54 rows)
+
+ product_id | product_name |  revenue   | revenue_rank 
+------------+--------------+------------+--------------
+        508 | Product 469  | 2336193.30 |            1
+        183 | Product 364  |  934950.51 |            2
+         50 | Product 561  |   21780.21 |            3
+        179 | Product 13   |   21111.08 |            4
+        324 | Product 226  |   20482.30 |            5
+        118 | Product 372  |   18002.20 |            6
+        263 | Product 285  |   17051.22 |            7
+        524 | Product 89   |   16807.98 |            8
+        302 | Product 6    |   16741.17 |            9
+        543 | Product 70   |   16695.00 |           10
+        265 | Product 415  |   16692.88 |           11
+        330 | Product 286  |   16656.20 |           12
+        127 | Product 143  |   16581.96 |           13
+        537 | Product 319  |   16425.22 |           14
+        258 | Product 215  |   16416.67 |           15
+        373 | Product 97   |   15865.99 |           16
+        520 | Product 519  |   15641.28 |           17
+        581 | Product 100  |   15335.48 |           18
+        497 | Product 219  |   15210.33 |           19
+        248 | Product 5    |   15149.20 |           20
+(20 rows)
+
+                                                                                   QUERY PLAN                                                                                   
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=120382.95..121591.90 rows=20 width=65) (actual time=10.122..10.226 rows=20 loops=1)
+   Buffers: shared hit=34849
+   ->  Result  (cost=120382.95..301726.24 rows=3000 width=65) (actual time=10.122..10.226 rows=20 loops=1)
+         Buffers: shared hit=34849
+         ->  Sort  (cost=120382.95..120390.45 rows=3000 width=53) (actual time=10.110..10.112 rows=20 loops=1)
+               Sort Key: ((SubPlan 4)) DESC, c.customer_id
+               Sort Method: top-N heapsort  Memory: 26kB
+               Buffers: shared hit=34529
+               ->  Hash Join  (cost=323.83..120303.12 rows=3000 width=53) (actual time=1.046..9.979 rows=2229 loops=1)
+                     Hash Cond: (c.customer_id = o.customer_id)
+                     Buffers: shared hit=34529
+                     ->  Seq Scan on customers c  (cost=0.00..70.00 rows=3000 width=21) (actual time=0.001..0.095 rows=3000 loops=1)
+                           Buffers: shared hit=40
+                     ->  Hash  (cost=286.64..286.64 rows=2975 width=8) (actual time=1.009..1.009 rows=2229 loops=1)
+                           Buckets: 4096  Batches: 1  Memory Usage: 120kB
+                           Buffers: shared hit=102
+                           ->  HashAggregate  (cost=256.89..286.64 rows=2975 width=8) (actual time=0.866..0.934 rows=2229 loops=1)
+                                 Group Key: o.customer_id
+                                 Batches: 1  Memory Usage: 241kB
+                                 Buffers: shared hit=102
+                                 ->  Seq Scan on orders o  (cost=0.00..237.99 rows=7562 width=8) (actual time=0.001..0.535 rows=7562 loops=1)
+                                       Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                                       Rows Removed by Filter: 2328
+                                       Buffers: shared hit=102
+                     SubPlan 4
+                       ->  Aggregate  (cost=39.95..39.96 rows=1 width=32) (actual time=0.004..0.004 rows=1 loops=2229)
+                             Buffers: shared hit=34387
+                             ->  Nested Loop  (cost=4.60..39.92 rows=8 width=6) (actual time=0.001..0.003 rows=9 loops=2229)
+                                   Buffers: shared hit=34387
+                                   ->  Bitmap Heap Scan on orders o_3  (cost=4.31..14.81 rows=3 width=8) (actual time=0.001..0.001 rows=3 loops=2229)
+                                         Recheck Cond: (customer_id = c.customer_id)
+                                         Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                                         Rows Removed by Filter: 0
+                                         Heap Blocks: exact=7127
+                                         Buffers: shared hit=11586
+                                         ->  Bitmap Index Scan on idx_orders_customer_ts  (cost=0.00..4.31 rows=3 width=0) (actual time=0.000..0.000 rows=3 loops=2229)
+                                               Index Cond: (customer_id = c.customer_id)
+                                               Buffers: shared hit=4459
+                                   ->  Index Scan using idx_order_items_order on order_items oi  (cost=0.29..8.34 rows=3 width=14) (actual time=0.000..0.000 rows=3 loops=7562)
+                                         Index Cond: (order_id = o_3.order_id)
+                                         Buffers: shared hit=22801
+         SubPlan 2
+           ->  Result  (cost=5.63..5.64 rows=1 width=4) (actual time=0.001..0.001 rows=1 loops=20)
+                 Buffers: shared hit=60
+                 InitPlan 1
+                   ->  Limit  (cost=0.29..5.63 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=20)
+                         Buffers: shared hit=60
+                         ->  Index Scan using idx_orders_customer_ts on orders o_1  (cost=0.29..16.32 rows=3 width=8) (actual time=0.001..0.001 rows=1 loops=20)
+                               Index Cond: (customer_id = c.customer_id)
+                               Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                               Buffers: shared hit=60
+         SubPlan 3
+           ->  Aggregate  (cost=14.82..14.83 rows=1 width=8) (actual time=0.005..0.005 rows=1 loops=20)
+                 Buffers: shared hit=260
+                 ->  Bitmap Heap Scan on orders o_2  (cost=4.31..14.81 rows=3 width=0) (actual time=0.001..0.004 rows=26 loops=20)
+                       Recheck Cond: (customer_id = c.customer_id)
+                       Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                       Rows Removed by Filter: 0
+                       Heap Blocks: exact=220
+                       Buffers: shared hit=260
+                       ->  Bitmap Index Scan on idx_orders_customer_ts  (cost=0.00..4.31 rows=3 width=0) (actual time=0.001..0.001 rows=26 loops=20)
+                             Index Cond: (customer_id = c.customer_id)
+                             Buffers: shared hit=40
+ Planning:
+   Buffers: shared hit=140
+ Planning Time: 0.302 ms
+ Execution Time: 10.243 ms
+(67 rows)
+
+ customer_id |  full_name  | recency_days | frequency | monetary 
+-------------+-------------+--------------+-----------+----------
+          22 | Customer 22 |            1 |        26 | 36542.14
+           9 | Customer 9  |            2 |        26 | 35766.50
+           3 | Customer 3  |            5 |        26 | 34366.93
+          14 | Customer 14 |            4 |        26 | 34326.76
+          28 | Customer 28 |            0 |        26 | 32126.92
+           7 | Customer 7  |            2 |        26 | 31966.14
+           8 | Customer 8  |            1 |        26 | 30490.61
+          13 | Customer 13 |            0 |        26 | 30444.83
+           1 | Customer 1  |            0 |        26 | 30408.83
+          29 | Customer 29 |            1 |        23 | 30237.98
+          24 | Customer 24 |            0 |        26 | 30161.61
+          10 | Customer 10 |            5 |        26 | 30024.87
+          16 | Customer 16 |            0 |        26 | 30012.36
+          12 | Customer 12 |            0 |        26 | 29261.21
+          18 | Customer 18 |            0 |        26 | 29073.06
+           6 | Customer 6  |            4 |        26 | 28776.63
+          19 | Customer 19 |            5 |        26 | 28141.64
+          30 | Customer 30 |            0 |        26 | 27532.14
+          26 | Customer 26 |            0 |        23 | 27169.02
+          21 | Customer 21 |            4 |        26 | 26949.10
+(20 rows)
+
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=49794.67..49794.70 rows=1 width=48) (actual time=3.247..3.247 rows=1 loops=1)
+   Buffers: shared hit=11762
+   ->  HashAggregate  (cost=275.80..305.55 rows=2975 width=16) (actual time=0.904..0.999 rows=2229 loops=1)
+         Group Key: orders.customer_id
+         Batches: 1  Memory Usage: 369kB
+         Buffers: shared hit=102
+         ->  Seq Scan on orders  (cost=0.00..237.99 rows=7562 width=16) (actual time=0.001..0.508 rows=7562 loops=1)
+               Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+               Rows Removed by Filter: 2328
+               Buffers: shared hit=102
+   SubPlan 1
+     ->  Index Scan using idx_orders_customer_ts on orders o2  (cost=0.29..8.31 rows=1 width=0) (actual time=0.000..0.000 rows=1 loops=2229)
+           Index Cond: ((customer_id = orders.customer_id) AND (order_ts > (min(orders.order_ts))) AND (order_ts <= ((min(orders.order_ts)) + '30 days'::interval)))
+           Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+           Buffers: shared hit=5830
+   SubPlan 2
+     ->  Index Scan using idx_orders_customer_ts on orders o3  (cost=0.29..8.31 rows=1 width=0) (actual time=0.000..0.000 rows=1 loops=2229)
+           Index Cond: ((customer_id = orders.customer_id) AND (order_ts > (min(orders.order_ts))) AND (order_ts <= ((min(orders.order_ts)) + '30 days'::interval)))
+           Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+           Buffers: shared hit=5830
+ Planning:
+   Buffers: shared hit=6
+ Planning Time: 0.050 ms
+ Execution Time: 3.256 ms
+(24 rows)
+
+ purchasing_customers | repurchased_customers | repurchase_rate_pct 
+----------------------+-----------------------+---------------------
+                 2229 |                  1372 |               61.55
+(1 row)
+
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5022.35..5022.40 rows=20 width=42) (actual time=0.340..0.341 rows=20 loops=1)
+   Buffers: shared hit=1815
+   ->  Sort  (cost=5022.35..5022.85 rows=200 width=42) (actual time=0.340..0.341 rows=20 loops=1)
+         Sort Key: ((i.reorder_point - i.qty_on_hand)) DESC, p.product_id
+         Sort Method: top-N heapsort  Memory: 27kB
+         Buffers: shared hit=1815
+         ->  Hash Join  (cost=20.50..5017.02 rows=200 width=42) (actual time=0.054..0.332 rows=60 loops=1)
+               Hash Cond: (i.product_id = p.product_id)
+               Buffers: shared hit=1812
+               ->  Seq Scan on inventory i  (cost=0.00..4995.50 rows=200 width=16) (actual time=0.006..0.279 rows=60 loops=1)
+                     Filter: (qty_on_hand < (SubPlan 1))
+                     Rows Removed by Filter: 540
+                     Buffers: shared hit=1805
+                     SubPlan 1
+                       ->  Aggregate  (cost=8.29..8.30 rows=1 width=4) (actual time=0.000..0.000 rows=1 loops=600)
+                             Buffers: shared hit=1800
+                             ->  Index Scan using inventory_pkey on inventory i2  (cost=0.28..8.29 rows=1 width=4) (actual time=0.000..0.000 rows=1 loops=600)
+                                   Index Cond: (product_id = i.product_id)
+                                   Buffers: shared hit=1800
+               ->  Hash  (cost=13.00..13.00 rows=600 width=30) (actual time=0.047..0.047 rows=600 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 45kB
+                     Buffers: shared hit=7
+                     ->  Seq Scan on products p  (cost=0.00..13.00 rows=600 width=30) (actual time=0.001..0.023 rows=600 loops=1)
+                           Buffers: shared hit=7
+ Planning:
+   Buffers: shared hit=56
+ Planning Time: 0.134 ms
+ Execution Time: 0.348 ms
+(28 rows)
+
+ product_id |    sku     | product_name | qty_on_hand | reorder_point | shortage_qty 
+------------+------------+--------------+-------------+---------------+--------------
+        209 | SKU-000344 | Product 344  |           0 |            30 |           30
+        266 | SKU-000325 | Product 325  |           0 |            30 |           30
+        315 | SKU-000136 | Product 136  |           0 |            30 |           30
+        425 | SKU-000538 | Product 538  |           0 |            30 |           30
+        167 | SKU-000533 | Product 533  |           1 |            30 |           29
+        246 | SKU-000085 | Product 85   |           1 |            30 |           29
+        294 | SKU-000105 | Product 105  |           1 |            30 |           29
+        416 | SKU-000257 | Product 257  |           1 |            30 |           29
+        574 | SKU-000030 | Product 30   |           1 |            30 |           29
+        320 | SKU-000186 | Product 186  |           2 |            30 |           28
+        341 | SKU-000406 | Product 406  |           2 |            30 |           28
+        385 | SKU-000557 | Product 557  |           2 |            30 |           28
+        456 | SKU-000578 | Product 578  |           2 |            30 |           28
+        537 | SKU-000319 | Product 319  |           2 |            30 |           28
+         59 | SKU-000501 | Product 501  |           3 |            30 |           27
+        206 | SKU-000294 | Product 294  |           3 |            30 |           27
+        223 | SKU-000104 | Product 104  |           3 |            30 |           27
+        265 | SKU-000415 | Product 415  |           3 |            30 |           27
+        282 | SKU-000145 | Product 145  |           3 |            30 |           27
+        307 | SKU-000056 | Product 56   |           3 |            30 |           27
+(20 rows)
+
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=20060.25..20060.42 rows=67 width=59) (actual time=0.748..0.749 rows=12 loops=1)
+   Sort Key: (round((SubPlan 1), 2)) DESC, ((SubPlan 2)) DESC, p.product_id
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=1387
+   ->  Seq Scan on products p  (cost=0.00..20058.22 rows=67 width=59) (actual time=0.110..0.745 rows=12 loops=1)
+         Filter: (((SubPlan 4) >= 50) AND ((SubPlan 3) >= 4.5))
+         Rows Removed by Filter: 588
+         Buffers: shared hit=1387
+         SubPlan 1
+           ->  Aggregate  (cost=25.43..25.44 rows=1 width=32) (actual time=0.011..0.011 rows=1 loops=12)
+                 Buffers: shared hit=68
+                 ->  Bitmap Heap Scan on reviews r  (cost=4.40..25.39 rows=16 width=4) (actual time=0.003..0.007 rows=160 loops=12)
+                       Recheck Cond: (product_id = p.product_id)
+                       Heap Blocks: exact=35
+                       Buffers: shared hit=68
+                       ->  Bitmap Index Scan on reviews_product_id_customer_id_key  (cost=0.00..4.40 rows=16 width=0) (actual time=0.002..0.002 rows=160 loops=12)
+                             Index Cond: (product_id = p.product_id)
+                             Buffers: shared hit=33
+         SubPlan 2
+           ->  Aggregate  (cost=4.60..4.61 rows=1 width=8) (actual time=0.009..0.009 rows=1 loops=12)
+                 Buffers: shared hit=34
+                 ->  Index Only Scan using reviews_product_id_customer_id_key on reviews r_1  (cost=0.28..4.56 rows=16 width=0) (actual time=0.001..0.006 rows=160 loops=12)
+                       Index Cond: (product_id = p.product_id)
+                       Heap Fetches: 0
+                       Buffers: shared hit=34
+         SubPlan 4
+           ->  Aggregate  (cost=4.60..4.61 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=600)
+                 Buffers: shared hit=1210
+                 ->  Index Only Scan using reviews_product_id_customer_id_key on reviews r_3  (cost=0.28..4.56 rows=16 width=0) (actual time=0.000..0.000 rows=3 loops=600)
+                       Index Cond: (product_id = p.product_id)
+                       Heap Fetches: 0
+                       Buffers: shared hit=1210
+         SubPlan 3
+           ->  Aggregate  (cost=25.43..25.44 rows=1 width=32) (actual time=0.013..0.013 rows=1 loops=12)
+                 Buffers: shared hit=68
+                 ->  Bitmap Heap Scan on reviews r_2  (cost=4.40..25.39 rows=16 width=4) (actual time=0.004..0.009 rows=160 loops=12)
+                       Recheck Cond: (product_id = p.product_id)
+                       Heap Blocks: exact=35
+                       Buffers: shared hit=68
+                       ->  Bitmap Index Scan on reviews_product_id_customer_id_key  (cost=0.00..4.40 rows=16 width=0) (actual time=0.002..0.002 rows=160 loops=12)
+                             Index Cond: (product_id = p.product_id)
+                             Buffers: shared hit=33
+ Planning:
+   Buffers: shared hit=51
+ Planning Time: 0.100 ms
+ Execution Time: 0.758 ms
+(46 rows)
+
+ product_id | product_name | avg_rating | review_count 
+------------+--------------+------------+--------------
+        236 | Product 584  |       4.85 |          160
+        247 | Product 195  |       4.80 |          160
+        567 | Product 20   |       4.80 |          160
+        465 | Product 318  |       4.78 |          161
+        146 | Product 193  |       4.78 |          160
+        313 | Product 116  |       4.77 |          161
+        499 | Product 209  |       4.77 |          161
+        248 | Product 5    |       4.76 |          160
+        274 | Product 495  |       4.76 |          160
+        396 | Product 137  |       4.76 |          160
+        123 | Product 553  |       4.72 |          161
+        477 | Product 158  |       4.71 |          160
+(12 rows)
+
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=2396.46..2601.52 rows=1 width=72) (actual time=10.115..10.490 rows=2 loops=1)
+   Group Key: (CASE WHEN (o.coupon_code IS NULL) THEN '미사용'::text ELSE '사용'::text END)
+   Buffers: shared hit=362
+   ->  Sort  (cost=2396.46..2447.72 rows=20503 width=46) (actual time=9.210..9.557 rows=20530 loops=1)
+         Sort Key: (CASE WHEN (o.coupon_code IS NULL) THEN '미사용'::text ELSE '사용'::text END), o.order_id
+         Sort Method: quicksort  Memory: 1682kB
+         Buffers: shared hit=362
+         ->  Hash Join  (cost=332.51..928.09 rows=20503 width=46) (actual time=0.855..3.232 rows=20530 loops=1)
+               Hash Cond: (oi.order_id = o.order_id)
+               Buffers: shared hit=359
+               ->  Seq Scan on order_items oi  (cost=0.00..525.15 rows=26815 width=14) (actual time=0.001..0.624 rows=26815 loops=1)
+                     Buffers: shared hit=257
+               ->  Hash  (cost=237.99..237.99 rows=7562 width=15) (actual time=0.853..0.853 rows=7562 loops=1)
+                     Buckets: 8192  Batches: 1  Memory Usage: 374kB
+                     Buffers: shared hit=102
+                     ->  Seq Scan on orders o  (cost=0.00..237.99 rows=7562 width=15) (actual time=0.001..0.604 rows=7562 loops=1)
+                           Filter: (order_status = ANY ('{paid,shipped,delivered}'::text[]))
+                           Rows Removed by Filter: 2328
+                           Buffers: shared hit=102
+ Planning:
+   Buffers: shared hit=21
+ Planning Time: 0.050 ms
+ Execution Time: 10.496 ms
+(23 rows)
+
+ coupon_group | order_count |   aov   
+--------------+-------------+---------
+ 미사용       |        5764 |  657.37
+ 사용         |        1798 | 1817.21
+(2 rows)
+
+                                                                                       QUERY PLAN                                                                                       
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=116369.72..116372.22 rows=1000 width=85) (actual time=14.820..14.820 rows=20 loops=1)
+   Sort Key: (round(ranked.revenue_60d, 2)) DESC, ranked.customer_id
+   Sort Method: quicksort  Memory: 26kB
+   Buffers: shared hit=50453
+   ->  Subquery Scan on ranked  (cost=93059.40..116319.89 rows=1000 width=85) (actual time=14.804..14.814 rows=20 loops=1)
+         Buffers: shared hit=50453
+         ->  WindowAgg  (cost=93059.40..116309.89 rows=1000 width=61) (actual time=14.798..14.802 rows=20 loops=1)
+               Run Condition: (percent_rank() OVER (?) <= '0.01'::double precision)
+               Buffers: shared hit=50453
+               ->  Sort  (cost=93059.38..93061.88 rows=1000 width=53) (actual time=14.727..14.760 rows=1938 loops=1)
+                     Sort Key: ((SubPlan 1)) DESC
+                     Sort Method: quicksort  Memory: 140kB
+                     Buffers: shared hit=50453
+                     ->  Seq Scan on customers c  (cost=0.00..93009.55 rows=1000 width=53) (actual time=0.067..14.512 rows=1938 loops=1)
+                           Filter: ((SubPlan 2) > '0'::numeric)
+                           Rows Removed by Filter: 1062
+                           Buffers: shared hit=50453
+                           SubPlan 1
+                             ->  Aggregate  (cost=23.22..23.23 rows=1 width=32) (actual time=0.003..0.003 rows=1 loops=1938)
+                                   Buffers: shared hit=22542
+                                   ->  Nested Loop  (cost=4.60..23.21 rows=3 width=6) (actual time=0.002..0.003 rows=6 loops=1938)
+                                         Buffers: shared hit=22542
+                                         ->  Bitmap Heap Scan on orders o  (cost=4.31..14.84 rows=1 width=8) (actual time=0.001..0.001 rows=2 loops=1938)
+                                               Recheck Cond: (customer_id = c.customer_id)
+                                               Filter: ((order_status = ANY ('{paid,shipped,delivered}'::text[])) AND ((order_ts)::date >= (CURRENT_DATE - 60)))
+                                               Rows Removed by Filter: 1
+                                               Heap Blocks: exact=6235
+                                               Buffers: shared hit=10112
+                                               ->  Bitmap Index Scan on idx_orders_customer_ts  (cost=0.00..4.31 rows=3 width=0) (actual time=0.000..0.000 rows=3 loops=1938)
+                                                     Index Cond: (customer_id = c.customer_id)
+                                                     Buffers: shared hit=3877
+                                         ->  Index Scan using idx_order_items_order on order_items oi  (cost=0.29..8.34 rows=3 width=14) (actual time=0.000..0.000 rows=3 loops=4126)
+                                               Index Cond: (order_id = o.order_id)
+                                               Buffers: shared hit=12430
+                           SubPlan 2
+                             ->  Aggregate  (cost=23.22..23.23 rows=1 width=32) (actual time=0.003..0.003 rows=1 loops=3000)
+                                   Buffers: shared hit=27871
+                                   ->  Nested Loop  (cost=4.60..23.21 rows=3 width=6) (actual time=0.002..0.002 rows=4 loops=3000)
+                                         Buffers: shared hit=27871
+                                         ->  Bitmap Heap Scan on orders o_1  (cost=4.31..14.84 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=3000)
+                                               Recheck Cond: (customer_id = c.customer_id)
+                                               Filter: ((order_status = ANY ('{paid,shipped,delivered}'::text[])) AND ((order_ts)::date >= (CURRENT_DATE - 60)))
+                                               Rows Removed by Filter: 2
+                                               Heap Blocks: exact=9440
+                                               Buffers: shared hit=15441
+                                               ->  Bitmap Index Scan on idx_orders_customer_ts  (cost=0.00..4.31 rows=3 width=0) (actual time=0.000..0.000 rows=3 loops=3000)
+                                                     Index Cond: (customer_id = c.customer_id)
+                                                     Buffers: shared hit=6001
+                                         ->  Index Scan using idx_order_items_order on order_items oi_1  (cost=0.29..8.34 rows=3 width=14) (actual time=0.000..0.000 rows=3 loops=4126)
+                                               Index Cond: (order_id = o_1.order_id)
+                                               Buffers: shared hit=12430
+ Planning:
+   Buffers: shared hit=30
+ Planning Time: 0.166 ms
+ Execution Time: 14.839 ms
+(55 rows)
+
+ customer_id |  full_name  | revenue_60d | percentile_position_pct 
+-------------+-------------+-------------+-------------------------
+           9 | Customer 9  |    35400.86 |                  0.0000
+          22 | Customer 22 |    34927.00 |                  0.0516
+           3 | Customer 3  |    32471.29 |                  0.1033
+          28 | Customer 28 |    31978.30 |                  0.1549
+          14 | Customer 14 |    31634.86 |                  0.2065
+          29 | Customer 29 |    30237.98 |                  0.2581
+          16 | Customer 16 |    30012.36 |                  0.3098
+           8 | Customer 8  |    29514.29 |                  0.3614
+           7 | Customer 7  |    29453.50 |                  0.4130
+           6 | Customer 6  |    28616.19 |                  0.4646
+          24 | Customer 24 |    28546.47 |                  0.5163
+          30 | Customer 30 |    27532.14 |                  0.5679
+          26 | Customer 26 |    27169.02 |                  0.6195
+          10 | Customer 10 |    26971.49 |                  0.6711
+           1 | Customer 1  |    26819.63 |                  0.7228
+          21 | Customer 21 |    26343.58 |                  0.7744
+          18 | Customer 18 |    26322.82 |                  0.8260
+          12 | Customer 12 |    25697.05 |                  0.8776
+          19 | Customer 19 |    25633.36 |                  0.9293
+          11 | Customer 11 |    25417.23 |                  0.9809
+(20 rows)
+

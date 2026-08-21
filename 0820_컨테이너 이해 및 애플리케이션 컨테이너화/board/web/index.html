@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미니 게시판</title>
+    <style>
+        body {
+            max-width: 720px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: sans-serif;
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input, textarea, button {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .post {
+            margin-bottom: 12px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .post h3 {
+            margin: 0 0 8px;
+        }
+
+        #status {
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>미니 게시판</h1>
+
+    <!-- 수정: 사용자가 제목과 내용을 입력할 수 있는 글쓰기 폼 추가 -->
+    <form id="post-form">
+        <input id="title" type="text" placeholder="제목" maxlength="200" required>
+        <textarea id="content" placeholder="내용" required></textarea>
+        <button type="submit">글 저장</button>
+    </form>
+
+    <p id="status"></p>
+
+    <h2>게시글 목록</h2>
+    <div id="posts"></div>
+
+    <script>
+        // 수정: Mac의 5001번 포트로 열어둔 WAS API 주소
+        const API_URL = "http://localhost:5001/api/posts";
+        const form = document.getElementById("post-form");
+        const statusElement = document.getElementById("status");
+        const postsElement = document.getElementById("posts");
+
+        // 수정: WAS에서 DB의 게시글을 조회해 화면에 표시
+        async function loadPosts() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error("게시글 조회 실패");
+                }
+
+                const posts = await response.json();
+                postsElement.replaceChildren();
+
+                if (posts.length === 0) {
+                    postsElement.textContent = "아직 작성된 글이 없습니다.";
+                    return;
+                }
+
+                posts.forEach((post) => {
+                    const article = document.createElement("article");
+                    const title = document.createElement("h3");
+                    const content = document.createElement("p");
+
+                    article.className = "post";
+                    title.textContent = post.title;
+                    content.textContent = post.content;
+                    article.append(title, content);
+                    postsElement.appendChild(article);
+                });
+            } catch (error) {
+                postsElement.textContent = error.message;
+            }
+        }
+
+        // 수정: 글쓰기 폼을 제출하면 WAS가 PostgreSQL에 게시글을 저장
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            statusElement.textContent = "저장 중...";
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        title: document.getElementById("title").value,
+                        content: document.getElementById("content").value
+                    })
+                });
+
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || "게시글 저장 실패");
+                }
+
+                form.reset();
+                statusElement.textContent = `저장 완료 (ID: ${result.id})`;
+                await loadPosts();
+            } catch (error) {
+                statusElement.textContent = error.message;
+            }
+        });
+
+        loadPosts();
+    </script>
+</body>
+</html>

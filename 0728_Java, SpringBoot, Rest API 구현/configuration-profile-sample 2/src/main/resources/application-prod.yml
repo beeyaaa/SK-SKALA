@@ -1,0 +1,31 @@
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+app:
+  environment: production
+
+  external-api:
+    base-url: ${EXTERNAL_API_URL}
+    connect-timeout: ${EXTERNAL_API_CONNECT_TIMEOUT:5s}
+    read-timeout: ${EXTERNAL_API_READ_TIMEOUT:20s}
+    api-key: ${APP_API_KEY}
+
+  storage:
+    type: cloud
+    directory: ${STORAGE_DIRECTORY:/data/uploads}
+    max-file-size: ${STORAGE_MAX_FILE_SIZE:100MB}
+
+  security:
+    allowed-origins:
+      - ${FRONTEND_URL:https://www.example.com}
+    admin-email: ${ADMIN_EMAIL:admin@example.com}
+
+logging:
+  level:
+    root: WARN
+    com.example.configsample: INFO

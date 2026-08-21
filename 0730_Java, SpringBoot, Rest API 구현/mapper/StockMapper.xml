@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skala.stock.mapper.StockMapper">
+    <!-- StockMapper의 모든 쿼리가 제거되었습니다. -->
+    <!-- 교육생 실습을 위해 이 매퍼는 삭제되었습니다. -->
+</mapper>

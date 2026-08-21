@@ -1,0 +1,45 @@
+erDiagram
+    STUDENTS ||--o{ ENROLLMENTS : "수강신청한다"
+    COURSES ||--o{ ENROLLMENTS : "수강생을 가진다"
+    COURSES ||--o{ ASSIGNMENTS : "과제를 가진다"
+    STUDENTS ||--o{ SUBMISSIONS : "과제를 제출한다"
+    ASSIGNMENTS ||--o{ SUBMISSIONS : "제출물을 가진다"
+
+    STUDENTS {
+        BIGINT id PK
+        VARCHAR student_no UK
+        VARCHAR name
+        VARCHAR email UK
+        VARCHAR phone
+        BOOLEAN enrolled
+        TIMESTAMPTZ created_at
+    }
+
+    COURSES {
+        BIGINT id PK
+        VARCHAR course_code UK
+        VARCHAR title
+    }
+
+    ENROLLMENTS {
+        BIGINT student_id PK, FK
+        BIGINT course_id PK, FK
+        DATE enrolled_at
+    }
+
+    ASSIGNMENTS {
+        BIGINT id PK
+        BIGINT course_id FK
+        VARCHAR title
+        TIMESTAMPTZ due_at
+    }
+
+    SUBMISSIONS {
+        BIGINT id PK
+        BIGINT assignment_id FK
+        BIGINT student_id FK
+        TIMESTAMPTZ submitted_at
+        NUMERIC score
+        TEXT feedback
+    }
+

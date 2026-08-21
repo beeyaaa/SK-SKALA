@@ -1,0 +1,22 @@
+project:
+  name: adult-marriage-analysis
+  random_state: 42
+
+data:
+  train_url: https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data
+  test_size: 0.2
+
+target:
+  name: ever_married
+  never_married_value: Never-married
+
+evaluation:
+  primary_metric: roc_auc
+  practical_auc_margin: 0.02
+  cv_folds: 5
+  required_metrics:
+    - accuracy
+    - f1
+  probability_metrics:
+    - brier_score
+

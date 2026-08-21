@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- [빈칸 후보 1] 모바일 화면 크기 설정 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKALA 카페</title>
+
+  <!-- [빈칸 후보 2] 외부 CSS 연결 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="topbar">
+      <h1 class="logo">SKALA CAFE</h1>
+
+      <button
+        id="menuToggle"
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+      >
+        메뉴
+      </button>
+
+      <nav class="navigation">
+        <ul id="navList" class="nav-list">
+          <li><a href="#home">홈</a></li>
+          <li><a href="#menu">메뉴</a></li>
+          <li><a href="#contact">문의</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="menu" class="container">
+    <section class="intro">
+      <h2>오늘의 메뉴</h2>
+      <p>원하는 카테고리를 선택하세요.</p>
+    </section>
+
+    <section class="filter">
+      <!-- data-category는 JavaScript에서 사용할 값 -->
+      <button class="filter-btn active" data-category="all">
+        전체
+      </button>
+
+      <button class="filter-btn" data-category="coffee">
+        커피
+      </button>
+
+      <button class="filter-btn" data-category="dessert">
+        디저트
+      </button>
+    </section>
+
+    <!-- [빈칸 후보 3] JavaScript에서 선택할 id 작성 -->
+    <section id="menuGrid" class="menu-grid">
+
+      <article class="menu-card" data-category="coffee">
+        <span class="badge">BEST</span>
+        <h3>아메리카노</h3>
+        <p class="description">깔끔한 맛의 기본 커피</p>
+        <p class="price">4,000원</p>
+        <button class="order-btn" type="button">주문</button>
+      </article>
+
+      <article class="menu-card" data-category="coffee">
+        <h3>카페라테</h3>
+        <p class="description">우유가 들어간 부드러운 커피</p>
+        <p class="price">5,000원</p>
+        <button class="order-btn" type="button">주문</button>
+      </article>
+
+      <article class="menu-card" data-category="dessert">
+        <span class="badge">NEW</span>
+        <h3>초콜릿 케이크</h3>
+        <p class="description">진한 초콜릿 디저트</p>
+        <p class="price">6,500원</p>
+        <button class="order-btn" type="button">주문</button>
+      </article>
+
+      <article class="menu-card" data-category="dessert">
+        <h3>마카롱</h3>
+        <p class="description">달콤하고 부드러운 디저트</p>
+        <p class="price">3,000원</p>
+        <button class="order-btn" type="button">주문</button>
+      </article>
+    </section>
+
+    <p id="result" class="result" aria-live="polite"></p>
+  </main>
+
+  <!-- [빈칸 후보 4] 외부 JavaScript 연결 -->
+  <script src="app.js"></script>
+</body>
+</html>

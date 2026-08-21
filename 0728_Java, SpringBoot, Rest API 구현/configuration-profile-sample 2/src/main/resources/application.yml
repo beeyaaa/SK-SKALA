@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: configuration-profile-sample
+  profiles:
+    default: local
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
+app:
+  name: Configuration Profile Sample
+  description: Spring Boot Configuration 샘플 애플리케이션
+  environment: common
+
+  external-api:
+    base-url: https://api.example.com
+    connect-timeout: 3s
+    read-timeout: 5s
+    api-key: ${APP_API_KEY:local-test-key}
+
+  storage:
+    type: local
+    directory: ./uploads
+    max-file-size: 10MB
+
+  security:
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:5173
+    admin-email: admin@example.com
+
+logging:
+  level:
+    root: INFO
+    com.example.configsample: INFO

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<body>
+    <form>
+        <fieldset>
+            <legend>개인 프로필 정보</legend>
+            <p>
+                <label for="username">이름:</label>
+                <input type="text" id="username" name="username" p>
+            </p>
+            <p>
+                <label for="userBirth">생년월일:</label>
+                <input type="date" id="userBirth" name="userBirth" p>
+            </p>
+            
+            <p>
+                성별:
+                <label>
+                    <input type="radio" name="gender" value="male" checked>  남성
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="female" > 여성
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="none" > 선택 안함
+                </label>
+            </p>
+
+            <p>
+                관심 분야 (중복 선택 가능): <br>
+                <label><input type="checkbox" name="interest" value="frontend"> 웹프론트엔드 (Vue.js/HTML)</label><br>
+                <label><input type="checkbox" name="interest" value="uiux"> UI/UX 디자인 표준</label><br>
+                <label><input type="checkbox" name="interest" value="backend"> 벡엔드 & 데이터베이스 </label><br>   
+                <label><input type="checkbox" name="interest" value="devops"> 클라우드 & 인프라</label>
+            </p>
+                
+            
+    </form>
+</body>

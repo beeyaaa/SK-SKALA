@@ -1,0 +1,10 @@
+컬럼,역할,근거
+ever_married,Target,"Never-married=0, 그 외 혼인 상태=1"
+education-num,가설검정 변수,두 집단 평균 비교 대상
+marital-status,모델 입력 제외,Target 생성에 사용한 원본 컬럼
+relationship,모델 입력 제외,"Husband, Wife, Own-child 등이 혼인 상태를 직접 암시"
+education,모델 입력 제외,education-num과 같은 학력 정보를 중복 표현
+fnlwgt,모델 입력 제외,개인 특성이 아닌 Census 표본 가중치
+race,공정성 점검,민감 특성으로 기본 모델과 분리
+sex,공정성 점검,민감 특성으로 기본 모델과 분리
+native-country,공정성 점검,민감 특성으로 기본 모델과 분리

@@ -1,0 +1,225 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Ames Housing Question-Driven EDA",
+    "description": "교육용 Ames Housing 데이터의 핵심 특성과 전처리 이슈를 질문 중심으로 요약한 2페이지 보고서",
+    "generatedAt": "2026-08-05T00:00:00+09:00",
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "layout": "full",
+        "body": "# Ames Housing Question-Driven EDA"
+      },
+      {
+        "id": "technical-summary",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "src_csv",
+        "body": "## 핵심 결론\n**팀원: 박지훈 · 윤명진 · 홍은비**  |  분석 대상: 교육용 Ames Housing 2,930건\n\n가격은 오른쪽으로 크게 치우치며(왜도 1.74), 품질·생활면적·차고 규모가 가격 차이를 가장 잘 설명한다. 반면 차고 건축연도 결측의 대부분은 ‘누락’이 아니라 ‘차고 없음’이라는 구조적 의미를 가진다. 따라서 모델링 전에는 **의미 기반 결측 처리, 로그 변환, 오류·중복 검증, 희소 범주 통합, 인코딩과 스케일링**을 우선해야 한다."
+      },
+      {
+        "id": "headline-metrics",
+        "type": "metric-strip",
+        "layout": "full",
+        "cardIds": ["rows", "sale-skew", "garage-missing", "duplicates"]
+      },
+      {
+        "id": "key-findings-heading",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "src_csv",
+        "body": "## 가격을 설명하는 핵심 변수\nPearson 상관은 선형 관계의 강도를 비교한 값이다. `Overall_Qual`(0.799)이 가장 강했고 `Gr_Liv_Area`(0.707), `Garage_Cars`(0.648), `Total_Bsmt_SF`(0.632)가 뒤따랐다. 품질은 면적보다 가격 수준을 더 선명하게 층화하며, 동일 면적에서도 품질이 높을수록 가격대가 상승한다. 다만 상관은 인과를 뜻하지 않는다."
+      },
+      {
+        "id": "correlation-chart-block",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "correlation-chart"
+      },
+      {
+        "id": "distribution-and-categories",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "src_csv",
+        "body": "## 분포와 범주에서 드러난 패턴\n`SalePrice` 평균은 $180,796, 중앙값은 $160,000으로 고가 주택이 평균을 끌어올린다. `log1p(SalePrice)`의 왜도는 -0.01로 거의 대칭이 되어 회귀 타깃 변환 후보가 된다. 지역 중앙값은 MeadowV $88,250에서 StoneBr $319,000까지 약 3.6배 차이가 난다. 주방 품질 중앙값도 Fa $107,750 → TA $136,500 → Gd $201,000 → Ex $325,624로 순서형 효과가 뚜렷하다. 단, `Neighborhood`의 GrnHill(2건)·Landmrk(1건), `Kitchen_Qual=Po`(1건)는 추정이 불안정하므로 희소 범주 통합이나 교차검증이 필요하다."
+      },
+      {
+        "id": "quality-heading",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "src_csv",
+        "body": "## 데이터 품질 이슈는 ‘삭제’보다 ‘의미 확인’이 먼저\nIQR 후보는 오류 확정이 아니라 재검토 목록이다. `Overall_Cond`가 252건(8.60%)으로 가장 많지만 1~9의 유효 등급이므로 자동 제거하면 안 된다. 실제로 점검 우선순위가 높은 것은 `Garage_Yr_Blt=2207` 1건, 완전 중복 3행, 그리고 생활면적 4,000ft² 초과 5건 중 가격이 $160k~$185k에 그친 Edwards 3건이다. 후자는 실제 특수 매물일 수 있어 원자료 확인 후 처리한다."
+      },
+      {
+        "id": "outlier-chart-block",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "outlier-chart"
+      },
+      {
+        "id": "preprocessing-plan",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "src_csv",
+        "body": "## 권장 전처리 순서\n1. **결측 의미 보존** — `Garage_Yr_Blt` 159건 중 157건은 `Garage_Cars=0`; `Has_Garage`를 만들고 ‘차고 없음’과 진짜 누락 2건을 분리한다. `Total_Bsmt_SF`, `Garage_Cars` 각 1건은 원자료 확인 후 0 또는 조건부 중앙값으로 보완한다.\n2. **오류·중복 검증** — 2207년을 수정/결측화하고, 중복 3행이 동일 거래인지 확인 후 제거한다. 극단값은 영향도 분석 전 일괄 삭제하지 않는다.\n3. **분포 안정화** — `SalePrice`, `Lot_Area`, `Gr_Liv_Area`는 `log1p` 후보. 지하실 면적은 0이 구조적이므로 `Has_Basement`와 함께 분리한다.\n4. **범주 처리** — `Kitchen_Qual`, `Exter_Qual`은 순서형 인코딩; `Neighborhood`, `House_Style`은 원-핫 인코딩. 희소 범주는 `Other` 통합을 검토하고 학습 데이터에서만 기준을 정한다.\n5. **스케일링·검증** — 거리/규제 기반 모델에는 수치 스케일링을 적용하고, 모든 변환·대치·인코딩은 파이프라인 안에서 학습 세트에만 fit한다. 로그 타깃 모델은 원 단위 MAE/RMSE도 함께 비교한다."
+      },
+      {
+        "id": "limits-and-next",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "src_csv",
+        "body": "## 한계와 다음 질문\n본 분석은 단변량·이변량 EDA이며 시간·판매조건 등 생략 변수의 영향은 확인하지 못했다. 다음 단계에서는 (1) 고면적·저가격 3건 포함/제외 민감도, (2) 품질×생활면적 상호작용, (3) 지역별 표본 불균형을 고려한 교차검증, (4) 원 타깃 대비 로그 타깃의 검증 오차를 비교한다.\n\n*자료: day16 배포본 `ames_housing_edu.csv` · 분석일: 2026-08-05*"
+      }
+    ],
+    "cards": [
+      {
+        "id": "rows",
+        "description": "관측 단위는 주택 매매 1건",
+        "dataset": "summary",
+        "sourceId": "src_csv",
+        "metrics": [{"label": "관측치", "field": "rows", "format": "number"}]
+      },
+      {
+        "id": "sale-skew",
+        "description": "양수일수록 오른쪽 꼬리가 긴 분포",
+        "dataset": "summary",
+        "sourceId": "src_csv",
+        "metrics": [{"label": "가격 왜도", "field": "sale_skew", "format": "number"}]
+      },
+      {
+        "id": "garage-missing",
+        "description": "차고 건축연도 결측 비율",
+        "dataset": "summary",
+        "sourceId": "src_csv",
+        "metrics": [{"label": "Garage 연도 결측", "field": "garage_missing_rate", "format": "percent"}]
+      },
+      {
+        "id": "duplicates",
+        "description": "모든 15개 열이 동일한 행",
+        "dataset": "summary",
+        "sourceId": "src_csv",
+        "metrics": [{"label": "완전 중복", "field": "duplicates", "format": "number"}]
+      }
+    ],
+    "charts": [
+      {
+        "id": "correlation-chart",
+        "title": "수치형 변수와 SalePrice의 상관계수",
+        "subtitle": "전체 2,930건, Pearson r; 품질과 생활면적이 가장 강한 양의 관계",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "어떤 수치형 변수가 주택가격과 가장 강한 선형 관계를 보이는가?",
+        "rationale": "긴 변수명을 읽고 크기를 직접 비교하기 위해 내림차순 가로 막대를 사용했다.",
+        "comparisonContext": {"grain": "수치형 변수", "unit": "Pearson r", "denominator": "결측 제거 후 사용 가능한 관측치"},
+        "type": "horizontalBar",
+        "dataset": "correlations",
+        "sourceId": "src_csv",
+        "encodings": {
+          "x": {"field": "feature", "type": "nominal", "aggregate": "none", "label": "변수"},
+          "y": {"field": "correlation", "type": "quantitative", "aggregate": "none", "format": "number", "label": "상관계수"},
+          "tooltip": [
+            {"field": "feature", "type": "text", "label": "변수"},
+            {"field": "correlation", "type": "quantitative", "format": "number", "label": "Pearson r"},
+            {"field": "rank", "type": "quantitative", "format": "number", "label": "순위"}
+          ]
+        },
+        "valueFormat": "number",
+        "layout": "full",
+        "palette": {"kind": "sequential", "name": "blue"},
+        "labels": {"values": "all"},
+        "settings": {"orientation": "horizontal", "showValues": true, "sort": "descending"},
+        "surface": {"surface": "export", "showControls": false, "viewMode": "visualization"}
+      },
+      {
+        "id": "outlier-chart",
+        "title": "IQR 기준 이상치 후보 비율",
+        "subtitle": "전체 수치형 변수 중 후보 비율 상위 6개; 후보는 오류가 아니라 검토 대상",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "어떤 변수에서 IQR 이상치 후보가 많이 관측되는가?",
+        "rationale": "변수별 후보 비율을 정확히 비교하기 위해 내림차순 가로 막대를 사용했다.",
+        "comparisonContext": {"grain": "수치형 변수", "unit": "%", "denominator": "각 변수의 비결측 관측치"},
+        "type": "horizontalBar",
+        "dataset": "outliers",
+        "sourceId": "src_csv",
+        "encodings": {
+          "x": {"field": "feature", "type": "nominal", "aggregate": "none", "label": "변수"},
+          "y": {"field": "outlier_rate_pct", "type": "quantitative", "aggregate": "none", "format": "number", "label": "후보 비율"},
+          "tooltip": [
+            {"field": "feature", "type": "text", "label": "변수"},
+            {"field": "outlier_count", "type": "quantitative", "format": "number", "label": "후보 수"},
+            {"field": "outlier_rate_pct", "type": "quantitative", "format": "number", "label": "후보 비율(%)"}
+          ]
+        },
+        "valueFormat": "number",
+        "unit": "%",
+        "layout": "full",
+        "palette": {"kind": "sequential", "name": "orange"},
+        "labels": {"values": "all"},
+        "settings": {"orientation": "horizontal", "showValues": true, "sort": "descending"},
+        "surface": {"surface": "export", "showControls": false, "viewMode": "visualization"}
+      }
+    ],
+    "tables": [],
+    "sources": [
+      {
+        "id": "src_csv",
+        "label": "ames_housing_edu.csv",
+        "query": {
+          "language": "sql",
+          "engine": "DuckDB",
+          "description": "CSV 전체 행을 불러온 뒤 pandas로 구조, 기술통계, 결측, 왜도, IQR 이상치, 범주별 집계와 Pearson 상관을 계산",
+          "sql": "SELECT * FROM read_csv_auto('ames_housing_edu.csv');",
+          "filters": ["전체 2,930행 사용", "상관계수는 pairwise complete observations", "IQR 경계는 Q1-1.5*IQR, Q3+1.5*IQR"],
+          "metric_definitions": ["왜도: pandas Series.skew", "이상치 후보 비율: IQR 경계 밖 관측치 / 비결측 관측치", "범주별 가격은 중앙값"],
+          "tables_used": ["ames_housing_edu.csv"],
+          "executed_at": "2026-08-05T00:00:00+09:00"
+        }
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-05T00:00:00+09:00",
+    "status": "ready",
+    "datasets": {
+      "summary": [
+        {"rows": 2930, "columns": 15, "numeric_features_ex_target": 10, "categorical_features": 4, "sale_mean": 180796.06, "sale_median": 160000, "sale_skew": 1.7435, "garage_missing_rate": 0.054266, "duplicates": 3}
+      ],
+      "correlations": [
+        {"feature": "Overall_Qual", "correlation": 0.799, "rank": 1, "non_null_n": 2930},
+        {"feature": "Gr_Liv_Area", "correlation": 0.707, "rank": 2, "non_null_n": 2930},
+        {"feature": "Garage_Cars", "correlation": 0.648, "rank": 3, "non_null_n": 2929},
+        {"feature": "Total_Bsmt_SF", "correlation": 0.632, "rank": 4, "non_null_n": 2929},
+        {"feature": "Year_Built", "correlation": 0.558, "rank": 5, "non_null_n": 2930},
+        {"feature": "Full_Bath", "correlation": 0.546, "rank": 6, "non_null_n": 2930},
+        {"feature": "Garage_Yr_Blt", "correlation": 0.527, "rank": 7, "non_null_n": 2771},
+        {"feature": "Lot_Area", "correlation": 0.267, "rank": 8, "non_null_n": 2930}
+      ],
+      "outliers": [
+        {"feature": "Overall_Cond", "outlier_count": 252, "outlier_rate_pct": 8.60, "lower_bound": 3.5, "upper_bound": 7.5},
+        {"feature": "SalePrice", "outlier_count": 137, "outlier_rate_pct": 4.68, "lower_bound": 3500, "upper_bound": 339500},
+        {"feature": "Lot_Area", "outlier_count": 127, "outlier_rate_pct": 4.33, "lower_bound": 1267.75, "upper_bound": 17727.75},
+        {"feature": "Total_Bsmt_SF", "outlier_count": 123, "outlier_rate_pct": 4.20, "lower_bound": 29.5, "upper_bound": 2065.5},
+        {"feature": "Bedroom_AbvGr", "outlier_count": 78, "outlier_rate_pct": 2.66, "lower_bound": 0.5, "upper_bound": 4.5},
+        {"feature": "Gr_Liv_Area", "outlier_count": 75, "outlier_rate_pct": 2.56, "lower_bound": 200.875, "upper_bound": 2667.875}
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "src_csv",
+      "label": "ames_housing_edu.csv",
+      "query": {
+        "language": "sql",
+        "engine": "DuckDB",
+        "description": "교육용 CSV 전체 행을 불러와 pandas로 재현 분석",
+        "sql": "SELECT * FROM read_csv_auto('ames_housing_edu.csv');",
+        "tables_used": ["ames_housing_edu.csv"]
+      }
+    }
+  ]
+}

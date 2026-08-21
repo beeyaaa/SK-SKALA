@@ -1,0 +1,60 @@
+// 종합실습 3 HR DB ERD
+// dbdiagram.io에서 새 Diagram을 만든 뒤 아래 전체 내용을 붙여넣는다.
+
+Project HR_DB_PostgreSQL {
+  database_type: 'PostgreSQL'
+  Note: '종합실습 3 HR 데이터베이스 구조'
+}
+
+Table hr.locations {
+  location_id integer [pk, increment]
+  city text [not null]
+  country text [not null]
+  region text [not null]
+}
+
+Table hr.departments {
+  department_id integer [pk, increment]
+  department_name text [not null]
+  location_id integer [not null]
+}
+
+Table hr.jobs {
+  job_id integer [pk, increment]
+  job_title text [not null]
+  min_salary integer [not null]
+  max_salary integer [not null]
+}
+
+Table hr.employees {
+  employee_id bigint [pk, increment]
+  first_name text [not null]
+  last_name text [not null]
+  email text [not null, unique]
+  phone text
+  hire_date date [not null]
+  salary integer [not null]
+  manager_id bigint [note: '원본 SQL에는 FOREIGN KEY가 선언되어 있지 않음']
+  department_id integer [not null]
+  job_id integer [not null]
+  status text [not null, default: 'ACTIVE']
+}
+
+Table hr.job_history {
+  employee_id bigint [not null]
+  start_date date [not null]
+  end_date date [not null]
+  department_id integer [not null]
+  job_id integer [not null]
+
+  indexes {
+    (employee_id, start_date) [pk, name: 'job_history_pkey']
+  }
+}
+
+Ref fk_departments_location: hr.departments.location_id > hr.locations.location_id
+Ref fk_employees_department: hr.employees.department_id > hr.departments.department_id
+Ref fk_employees_job: hr.employees.job_id > hr.jobs.job_id
+Ref fk_job_history_employee: hr.job_history.employee_id > hr.employees.employee_id
+Ref fk_job_history_department: hr.job_history.department_id > hr.departments.department_id
+Ref fk_job_history_job: hr.job_history.job_id > hr.jobs.job_id

@@ -1,31 +1,65 @@
+# macOS
 .DS_Store
 
-# Python 캐시 및 일반적인 가상환경
+# Python 캐시 및 가상환경
 **/__pycache__/
 *.py[cod]
 **/.venv/
 **/venv/
 **/site-packages/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.ipynb_checkpoints/
 
 # API 키 등 로컬 비밀값
 **/.env
 **/.env.*
 !**/.env.example
 
-# IDE·컴파일 캐시
+# IDE·운영체제 임시 파일
 **/.vscode/
+**/.idea/
+**/.claude/
+**/.codex/
+*.swp
+*~
+
+# Node.js 패키지 및 프런트엔드 빌드 결과
+**/node_modules/
+**/dist/
+**/.next/
+
+# Java·Gradle 컴파일 및 빌드 결과
 **/bin/
 *.class
-
-# 가상환경 이름을 프로젝트명처럼 만든 기존 디렉터리
-/day7_LLM_Transformer아키텍처/code/llm/
-/day7_LLM_Transformer아키텍처/code/prompt/
-/day8_LLM_Transformer 아키텍처/insurance/
-
-# Gradle 등에서 다시 생성할 수 있는 빌드 결과물
 **/.gradle/
 **/build/
 **/tmp/
+**/target/
 
-# GitHub에 올리지 않는 대용량 원본 데이터
-/day15_data/day2-practice1/sales_100k.csv
+# 프로젝트명처럼 만든 기존 Python 가상환경
+/0723_LLM_Transformer아키텍처/code/llm/
+/0723_LLM_Transformer아키텍처/code/prompt/
+/0724_LLM_Transformer 아키텍처/insurance/
+
+# 머신러닝 다운로드 데이터·학습 모델·재생성 가능한 출력
+**/sales_100k.csv
+**/yellow_tripdata_*.parquet
+**/data/MNIST/raw/
+**/outputs/
+**/models/
+**/checkpoints/
+**/.cache/huggingface/
+**/wandb/
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.joblib
+
+# 로컬 로그와 데이터베이스 파일
+*.log
+*.sqlite
+*.sqlite3

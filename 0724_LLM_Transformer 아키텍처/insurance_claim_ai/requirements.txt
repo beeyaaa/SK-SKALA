@@ -1,0 +1,10 @@
+langchain
+langchain-core
+langchain-openai
+langchain-chroma
+langchain-text-splitters
+chromadb
+pydantic>=2
+pypdf
+pandas
+python-dotenv

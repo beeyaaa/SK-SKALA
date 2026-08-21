@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘 뭐 먹지?</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            font-family: Arial, "Apple SD Gothic Neo", sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+       main {
+        width: min(1100px, 95vw);
+        padding: 40px;
+        margin: 32px 0;
+        background: white;
+        border-radius: 18px;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, .12);
+    }
+        h1 { margin-top: 0; }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+        button {
+            padding: 14px 16px;
+            border: 0;
+            border-radius: 10px;
+            background: #a1e7eb;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button.unsupported {
+            background: #daf7b6;
+        }
+
+        button.unsupported:hover {
+            background: #d3f7b3;
+        }
+        button:hover { background: #59f2fa; }
+        /* 실습과제용 버튼은 색을 다르게 해서 구분합니다. */
+        button.task { background: #f59e0b; }
+        button.task:hover { background: #d97706; }
+        h2 {
+            margin: 32px 0 0;
+            font-size: 17px;
+            color: #374151;
+        }
+        h2 .badge {
+            margin-left: 8px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        .hint {
+            margin: 6px 0 0;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        #result {
+            min-height: 90px;
+            margin-top: 24px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #eef4ff;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>🍽️ 오늘 뭐 먹지?</h1>
+    <p>버튼을 누르면 Spring Boot REST API의 응답을 확인할 수 있습니다.</p>
+
+    <h2>기본 기능</h2>
+    <p class="hint">이미 만들어져 있는 API입니다. 눌러서 동작을 확인해 보세요.</p>
+
+    <div class="buttons">
+        <button data-url="/api/menu">기본 추천</button>
+        <button data-url="/api/menu/random">랜덤 추천</button>
+        <button data-url="/api/menu/korean">한식 추천</button>
+        <button data-url="/api/menu/chinese">중식 추천</button>
+        <button data-url="/api/menu/japanese">일식 추천</button>
+        <button data-url="/api/menu/json/korean">JSON 응답</button>
+    </div>
+
+    <!-- <div class="buttons">
+        <button class="task" data-task="1" data-url="/api/menu/weather/rainy">날씨별 추천</button>
+        <button class="task" data-task="2" data-url="/api/menu/mood/happy">기분별 추천</button>
+        <button class="task" data-task="3" data-url="/api/menu/price/search?min=5000&max=10000">가격대별 추천</button>
+        <button class="task" data-task="4" data-url="/api/menu/my/solo">나만의 추천</button>
+    </div> -->
+
+    <h2>날씨별 추천</h2>
+    <p class="hint">현재 날씨를 선택하세요.</p>
+
+    <div class="buttons">
+        <button data-url="/api/menu/weather/sunny">
+            ☀️ 맑음
+        </button>
+
+        <button data-url="/api/menu/weather/rainy">
+            🌧️ 비
+        </button>
+
+        <button data-url="/api/menu/weather/hot">
+            🔥 더움
+        </button>
+
+        <button data-url="/api/menu/weather/cold">
+            ❄️ 추움
+        </button>
+
+        <button class="unsupported"
+                data-url="/api/menu/weather/snowy">
+            🌨️ 눈 (미지원 예시)
+        </button>
+    </div>
+
+    <h2>기분별 추천</h2>
+    <p class="hint">현재 기분을 선택하세요.</p>
+
+    <div class="buttons">
+        <button data-url="/api/menu/mood/happy">
+            😊 행복
+        </button>
+
+        <button data-url="/api/menu/mood/sad">
+            😢 슬픔
+        </button>
+
+        <button data-url="/api/menu/mood/tired">
+            🥱 피곤
+        </button>
+
+        <button data-url="/api/menu/mood/stressed">
+            😤 스트레스
+        </button>
+
+        <button class="unsupported"
+                data-url="/api/menu/mood/excited">
+            🤩 신남 (미지원 예시)
+        </button>
+    </div>
+
+    <h2>가격대별 추천</h2>
+    <p class="hint">원하는 가격대를 선택하세요.</p>
+
+    <div class="buttons">
+        <button data-url="/api/menu/price/search?min=0&max=6000">
+            💸 6000원 이하
+        </button>
+
+        <button data-url="/api/menu/price/search?min=6000&max=12000">
+            💸 6000원 ~ 12,000원
+        </button>
+
+        <button data-url="/api/menu/price/search?min=12000&max=30000">
+            💸 12000원 이상
+        </button>
+
+        <button class="unsupported"
+                data-url="/api/menu/price/search?min=20000&max=5000">
+            ⚠️ 잘못된 가격 범위
+        </button>
+    </div>
+
+    <h2>같이 먹는 사람</h2>
+    <p class="hint">누구와 식사하는지 선택하세요.</p>
+
+    <div class="buttons">
+        <button data-url="/api/menu/my/solo">
+            🙋 혼밥
+        </button>
+
+        <button data-url="/api/menu/my/friend">
+            🧑‍🤝‍🧑 친구
+        </button>
+
+        <button data-url="/api/menu/my/family">
+            👨‍👩‍👧 가족
+        </button>
+
+        <button class="unsupported"
+                data-url="/api/menu/my/coworker">
+            💼 직장동료 (미지원 예시)
+        </button>
+    </div>
+
+    <div id="result">결과가 여기에 표시됩니다.</div>
+
+</main>
+<script>
+    const result = document.getElementById("result");
+
+    document.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", async () => {
+            result.textContent = "요청 중...";
+
+            const url = button.dataset.url;
+
+            try {
+                const response = await fetch(url);
+                const contentType = response.headers.get("content-type") ?? "";
+
+                // 실습과제 버튼인데 API가 아직 없으면(404) 안내 문구를 보여줍니다.
+                if (response.status === 404 && button.dataset.task) {
+                    result.textContent =
+                        `아직 만들지 않은 API입니다. (실습과제 ${button.dataset.task}번)\n\n`
+                        + `요청한 주소: GET ${url}\n\n`
+                        + `MenuService에 추천 로직을, MenuController에 이 주소를 처리할\n`
+                        + `메서드를 추가하면 이 버튼이 동작합니다.`;
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                if (contentType.includes("application/json")) {
+                    const data = await response.json();
+                    result.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    result.textContent = await response.text();
+                }
+            } catch (error) {
+                result.textContent = `오류: ${error.message}`;
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,4 +1,0 @@
-﻿policy_id,customer_id,product_code,상품명,보험사,계약시작일,계약종료일,약관버전,계약상태,차량번호
-P2026-00124,C1024,SMARTDRIVE-STANDARD,SmartDrive 자동차보험 - Standard Plan,가상손해보험 주식회사,2026-01-01,2026-12-31,SD-AUTO-2026.07-SAMPLE,정상,12가3456
-P2026-00125,C1025,AUTO-PERSONAL,개인용 자동차보험,SKALA손해보험(가상),2026-03-01,2027-02-28,TERMS-2026-03,정상,34나5678
-P2025-00988,C1026,AUTO-PERSONAL,개인용 자동차보험,SKALA손해보험(가상),2025-08-01,2026-07-31,TERMS-2025-08,해지예정,56다7890

@@ -1,0 +1,18 @@
+app:
+  environment: local
+
+  external-api:
+    base-url: http://localhost:9000
+    connect-timeout: 1s
+    read-timeout: 3s
+    api-key: local-api-key
+
+  storage:
+    type: local
+    directory: ./local-uploads
+    max-file-size: 20MB
+
+logging:
+  level:
+    root: INFO
+    com.example.configsample: DEBUG
