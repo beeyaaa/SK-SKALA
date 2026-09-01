@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: my-spring-ai
+
+  ai:
+    model:
+      chat: openai
+
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+
+weather:
+  api:
+    key: ${WEATHER_API_KEY}
+    base-url: https://api.openweathermap.org
+    path: /data/2.5/weather
+
+server:
+  # 10-1.mcp-client(8080)와 동시에 띄워야 하므로 MCP Server는 8081 포트를 사용한다.
+  port: 8081
+
+logging:
+  level:
+    '[org.springframework.ai]': INFO
+    '[org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor]': DEBUG

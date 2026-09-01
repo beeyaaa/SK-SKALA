@@ -1,0 +1,55 @@
+spring:
+  profiles:
+    active: stdio
+  application:
+    name: my-spring-ai
+
+  thymeleaf:
+    # 매 요청마다 템플릿을 다시 읽도록 캐시 비활성화
+    cache: false
+
+  web:
+    resources:
+      # 정적 리소스(css/js)도 매 요청마다 새로 내려받도록 캐시 비활성화
+      cache:
+        period: 0
+      chain:
+        cache: false
+
+  ai:
+    # 여러 Chat Model 스타터(openai/anthropic/google-genai)가 classpath에 함께 존재할 때
+    # 실제로 활성화할 모델을 지정한다. (ChatClient.Builder 자동구성 충돌 방지)
+    model:
+      chat: openai
+
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+
+    mcp:
+      client:
+        # stdio 방식: 클라이언트가 아래 command/args로 docker-mcp-server 프로세스를 직접
+        # 자식 프로세스로 실행하고 표준 입출력(stdin/stdout)으로 통신한다.
+        name: my-spring-ai-mcp-client
+        version: 1.0.0
+        type: SYNC
+        stdio:
+          connections:
+            docker-server:
+              command: npx
+              args:
+                - -y
+                - "@swartdraak/docker-mcp-server@latest"
+
+
+server:
+  port: 8080
+
+logging:
+  level:
+    '[org.springframework.ai]': INFO
+    '[org.springframework.ai.mcp]': DEBUG
+    '[org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor]': DEBUG

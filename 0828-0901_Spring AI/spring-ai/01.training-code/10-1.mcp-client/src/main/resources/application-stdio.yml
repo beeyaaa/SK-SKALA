@@ -1,0 +1,22 @@
+spring:
+  ai:
+    mcp:
+      client:
+        # stdio 방식은 별도 서버를 미리 기동할 필요 없이, 클라이언트가 아래 command/args로
+        # 10-2.mcp-server(=01-02.mcp-server) 프로세스를 직접 자식 프로세스로 실행하고
+        # 표준 입출력(stdin/stdout)으로 통신한다.
+        name: my-spring-ai-mcp-client
+        version: 1.0.0
+        type: SYNC
+        stdio:
+          connections:
+            tool-server:
+              command: java
+              args:
+                - -jar
+                - ../10-2.mcp-server/target/spring-mcp-server-0.0.1-SNAPSHOT.jar
+                - --spring.profiles.active=stdio
+
+logging:
+  level:
+    '[org.springframework.ai.mcp]': DEBUG

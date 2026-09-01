@@ -1,0 +1,84 @@
+# HTTP MCP Server - 공통 설정
+# Server 기본 포트 (프로파일별로 override)
+server:
+  port: 8081
+
+spring:
+  application:
+    name: http-mcp-server
+  profiles:
+    active: stateless # stateless, streamablehttp, sse
+
+  # H2 Database Configuration
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+
+  # MCP Server 공통 설정
+  ai:
+    mcp:
+      server:
+        enabled: true  # MCP 서버 활성화
+        name: http-mcp-server
+        version: 1.0.0
+        instructions: "HTTP MCP Server providing User and Product management tools"
+        type: SYNC  # 동기 방식
+        annotation-scanner:
+          enabled: true
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        
+        # Swagger/OpenAPI 설정
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    tags-sorter: alpha
+    operations-sorter: method
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    '[org.springframework.ai]': DEBUG
+    '[io.modelcontextprotocol]': DEBUG
+    '[com.example.http]': DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

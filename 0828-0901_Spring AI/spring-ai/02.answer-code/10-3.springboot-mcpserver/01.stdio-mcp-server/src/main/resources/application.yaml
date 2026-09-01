@@ -1,0 +1,58 @@
+# STDIO 모드에서는 웹 서버가 필요 없음
+spring:
+  application:
+    name: stdio-mcp-server
+  
+  main:
+    web-application-type: none  # 웹 서버 비활성화 (STDIO 전용)
+    banner-mode: log  # Spring Boot 배너 로그로 출력 (STDIO 보호)
+
+  # H2 Database Configuration
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+
+  # MCP Server Configuration (STDIO)
+  ai:
+    mcp:
+      server:
+        name: stdio-mcp-server
+        version: 1.0.0
+        instructions: "STDIO MCP Server providing User and Product management tools"
+        stdio: true  # STDIO 프로토콜 활성화
+        type: SYNC   # 동기 방식
+        annotation-scanner:
+          enabled: true
+
+# Actuator는 HTTP 없이 사용 불가하므로 제거 또는 비활성화
+# Swagger도 HTTP 없이 사용 불가하므로 제거
+
+# Logging Configuration
+# STDIO 모드: stdout은 MCP JSON-RPC 전용이므로 콘솔 출력 완전 비활성화
+logging:
+  pattern:
+    console:   # 콘솔(stdout) 출력 비활성화 - STDIO 프로토콜 보호
+  level:
+    root: WARN
+    '[org.springframework.ai]': INFO
+    '[io.modelcontextprotocol]': INFO
+    '[com.example.stdio]': INFO
+  file:
+    name: /tmp/stdio-mcp-server.log

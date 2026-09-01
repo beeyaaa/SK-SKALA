@@ -1,0 +1,19 @@
+spring:
+  ai:
+    mcp:
+      client:
+        # 10-2.mcp-server를 --spring.profiles.active=stateless-http 로 기동했을 때 노출되는
+        # Streamable HTTP(POST /mcp) 엔드포인트에 접속한다. 세션 상태를 서버에 보관하지 않는(stateless)
+        # 방식이라 클라이언트 쪽 커넥션 설정은 stateful과 동일하며, 차이는 서버 프로필에서 결정된다.
+        name: my-spring-ai-mcp-client
+        version: 1.0.0
+        type: SYNC
+        streamable-http:
+          connections:
+            tool-server:
+              url: http://localhost:8081
+              endpoint: /mcp
+
+logging:
+  level:
+    '[org.springframework.ai.mcp]': DEBUG

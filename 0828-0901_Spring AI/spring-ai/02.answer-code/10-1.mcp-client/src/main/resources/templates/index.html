@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 매 접속 시 새로 받아오도록 캐시 비활성화 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>SKALA Spring AI</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>SKALA Spring AI</h1>
+        </header>
+
+        <main class="chat-body">
+            <div id="messages" class="messages"></div>
+        </main>
+
+        <footer class="chat-footer">
+            <form id="chatForm">
+                <div class="label-row">
+                    <label for="userInput">
+                        대화를 위한 질문을 입력하세요 (예: "지금 시간은 어떻게 되나요?", "현재 디렉토리내 파일과 디렉토리 목록을 검색해줘", "파일 내용을 확인해서 요약 해줘")
+                    </label>
+                </div>
+                <div class="input-row">
+                    <textarea id="userInput" rows="2" placeholder="질문을 입력하세요...">지금 시간은 어떻게 되나요?</textarea>
+                    <button type="submit" id="sendBtn">전송</button>
+                </div>
+            </form>
+        </footer>
+    </div>
+
+    <!-- 마크다운 렌더링 및 XSS 방지를 위한 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+    <script th:src="@{/js/chat.js}"></script>
+</body>
+</html>

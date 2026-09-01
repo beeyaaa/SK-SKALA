@@ -1,0 +1,19 @@
+spring:
+  config:
+    activate:
+      on-profile: baai
+
+  ai:
+    # 11436 포트에서 실행 중인 Ollama BAAI 임베딩 컨테이너를 사용한다.
+    model:
+      embedding: ollama
+
+    ollama:
+      base-url: ${BAAI_OLLAMA_BASE_URL:http://localhost:11436}
+      embedding:
+        model: ${BAAI_EMBEDDING_MODEL:bge-m3}
+
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        remove-existing-vector-store-table: true

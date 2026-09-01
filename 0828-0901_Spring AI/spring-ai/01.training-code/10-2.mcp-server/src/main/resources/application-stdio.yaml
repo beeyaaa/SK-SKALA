@@ -1,0 +1,32 @@
+spring:
+  main:
+    # STDIO는 표준 입출력으로 통신하므로 내장 웹 서버(Tomcat)를 띄우지 않는다.
+    web-application-type: none
+    # 배너를 표준출력(stdout)에 찍으면 JSON-RPC 메시지 스트림에 섞여 클라이언트 파싱 에러가 나므로 끈다.
+    banner-mode: off
+
+  ai:
+    mcp:
+      server:
+        # 전송 방식(stdio/protocol)과 type(SYNC/ASYNC)은 프로필별로 다르므로
+        # application-stdio.yaml, application-streamable-http.yaml,
+        # application-stateless-http.yaml 에서 각각 설정한다.
+        # 실행 시 --spring.profiles.active=stdio|streamable-http|stateless-http 로 선택한다.
+        name: my-spring-ai-mcp-server
+        version: 1.0.0
+        annotation-scanner:
+          enabled: true    # default는 true
+        # protocol 속성은 사용하지 않는다. stdio=true 이면 protocol 설정은 무시된다.
+        stdio: true
+        type: SYNC
+
+logging:
+  # STDIO 전송은 표준출력(stdout)을 그대로 JSON-RPC 메시지 채널로 사용하므로, 로그가 콘솔에
+  # 한 줄이라도 섞이면 클라이언트가 그 줄을 메시지로 오인해 파싱 에러를 낸다. 콘솔 출력은 비우고
+  # 로그는 파일로만 남긴다.
+  pattern:
+    console:
+  file:
+    name: logs/mcp-server-stdio.log
+  level:
+    '[org.springframework.ai.mcp]': DEBUG

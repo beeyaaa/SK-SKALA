@@ -1,0 +1,25 @@
+# Stateless Profile
+# Stateless MCP 서버는 세션 상태를 유지하지 않는 무상태 방식으로,
+# 마이크로서비스 아키텍처와 클라우드 네이티브 배포에 적합합니다.
+# Spring AI 1.1.0 기준: STATELESS 프로토콜 설정
+# 참고: Stateless 서버는 클라이언트로의 메시지 요청(elicitation, sampling, ping)을 지원하지 않음
+
+spring:
+  config:
+    activate:
+      on-profile: stateless
+  
+  ai:
+    mcp:
+      server:
+        protocol: STATELESS  # Stateless 프로토콜 활성화
+        resource-change-notification: true  # 리소스 변경 알림 활성화
+        tool-change-notification: true  # 도구 변경 알림 활성화
+        prompt-change-notification: true  # 프롬프트 변경 알림 활성화
+        streamable-http:
+          mcp-endpoint: /mcp  # MCP 엔드포인트 경로
+          keep-alive-interval: 30s  # 연결 유지 간격
+
+logging:
+  file:
+    name: logs/http-mcp-server-stateless.log

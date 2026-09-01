@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "stdio-mcp-server": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "/Users/himang10/mydev/skala/skala-cloud/spring-mcp-server/02.first-mcp-server/01.stdio-mcp-server/target/stdio-mcp-server-1.0.0.jar"
+      ],
+      "env": {
+        "JAVA_HOME": "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home"
+      }
+    },
+    "kubernetes-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "kubernetes-mcp-server@latest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+spring:
+  ai:
+    mcp:
+      server:
+        # 전송 방식(stdio/protocol)과 type(SYNC/ASYNC)은 프로필별로 다르므로
+        # application-stdio.yaml, application-streamable-http.yaml,
+        # application-stateless-http.yaml 에서 각각 설정한다.
+        # 실행 시 --spring.profiles.active=stdio|streamable-http|stateless-http 로 선택한다.
+        name: my-spring-ai-mcp-server
+        version: 1.0.0
+        annotation-scanner:
+          enabled: true    # default는 true
+        # 세션 상태를 보관하지 않는 Streamable HTTP. 요청마다 독립적으로 처리되어
+        # 여러 인스턴스로 수평 확장하기 쉽다(클라우드 네이티브 배포에 적합).
+        protocol: STATELESS
+        type: SYNC
+
+logging:
+  level:
+    '[org.springframework.ai.mcp]': DEBUG

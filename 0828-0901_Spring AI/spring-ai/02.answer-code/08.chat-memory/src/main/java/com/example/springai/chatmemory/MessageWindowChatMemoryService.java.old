@@ -1,0 +1,67 @@
+package com.example.springai.chatmemory;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * MessageWindowChatMemory + MessageChatMemoryAdvisor 예제.
+ *
+ * <p>대화가 계속될수록 메시지가 무한정 쌓이면 프롬프트 길이가 길어져 비용과
+ * 응답 속도에 부담을 준다. {@link MessageWindowChatMemory}는 최근 N개의
+ * 메시지만 유지하는 "슬라이딩 윈도우" 방식으로 이 문제를 해결한다.
+ *
+ * <p>대화 구분은 {@code conversationId}로 이루어지며, 동일한 대화 내에서만
+ * 메모리(이전 메시지)가 공유된다.
+ */
+@Service
+@Slf4j
+public class MessageWindowChatMemoryService {
+
+    /** 메모리(MessageChatMemoryAdvisor)가 적용된 ChatClient */
+    private final ChatClient chatClient;
+
+    /** 최근 N개의 메시지만 유지하는 윈도우 방식 채팅 메모리 */
+    private final MessageWindowChatMemory messageWindowChatMemory;
+
+    public MessageWindowChatMemoryService(ChatClient.Builder chatClientBuilder) {
+        // 1) 최근 10개의 메시지만 저장하는 윈도우 메모리 생성
+        this.messageWindowChatMemory = MessageWindowChatMemory.builder()
+            .maxMessages(10)
+            .build();
+
+        // 2) ChatClient에 메모리 어드바이저를 등록하여 대화 이력을 자동 관리
+        this.chatClient = chatClientBuilder
+            .defaultAdvisors(
+                // MessageWindowChatMemory를 사용하는 MessageChatMemoryAdvisor:
+                // 매 요청마다 conversationId에 해당하는 이전 메시지들을 프롬프트에 포함시킨다.
+                MessageChatMemoryAdvisor.builder(messageWindowChatMemory).build(),
+                // 요청/응답 로그를 남기는 로깅 어드바이저 (가장 낮은 우선순위로 마지막에 실행)
+                new SimpleLoggerAdvisor(Ordered.LOWEST_PRECEDENCE - 1)
+            )
+            .build();
+    }
+
+    /**
+     * 사용자 메시지를 전달하고 답변을 반환한다.
+     *
+     * @param userText       사용자 입력
+     * @param conversationId 대화(세션)를 구분하는 식별자 - 동일 값이면 이전 대화 이력이 이어진다
+     * @return 모델의 응답 텍스트
+     */
+    public String chat(String userText, String conversationId) {
+        return chatClient.prompt()
+            .user(userText)
+            .advisors(advisorSpec -> advisorSpec.param(
+                ChatMemory.CONVERSATION_ID, conversationId
+            ))
+            .call()
+            .content();
+    }
+}

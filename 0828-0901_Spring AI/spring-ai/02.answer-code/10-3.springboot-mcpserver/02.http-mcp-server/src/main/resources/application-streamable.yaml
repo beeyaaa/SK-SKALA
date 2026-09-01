@@ -1,0 +1,24 @@
+# Streamable HTTP Profile
+# Streamable HTTP는 HTTP POST/GET 요청으로 MCP 서버와 통신하며,
+# 선택적으로 SSE 스트리밍을 지원하는 프로토콜입니다.
+# Spring AI 1.1.0 기준: STREAMABLE 프로토콜 설정
+
+spring:
+  config:
+    activate:
+      on-profile: streamable
+  
+  ai:
+    mcp:
+      server:
+        protocol: STREAMABLE  # Streamable HTTP 프로토콜 활성화
+        resource-change-notification: true  # 리소스 변경 알림 활성화
+        tool-change-notification: true  # 도구 변경 알림 활성화
+        prompt-change-notification: true  # 프롬프트 변경 알림 활성화
+        streamable-http:
+          mcp-endpoint: /mcp  # MCP 엔드포인트 경로
+          keep-alive-interval: 30s  # 연결 유지 간격
+
+logging:
+  file:
+    name: logs/http-mcp-server-streamable.log

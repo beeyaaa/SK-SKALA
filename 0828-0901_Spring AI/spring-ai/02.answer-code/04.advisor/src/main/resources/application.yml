@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: my-spring-ai
+
+  thymeleaf:
+    # 매 요청마다 템플릿을 다시 읽도록 캐시 비활성화
+    cache: false
+
+  web:
+    resources:
+      # 정적 리소스(css/js)도 매 요청마다 새로 내려받도록 캐시 비활성화
+      cache:
+        period: 0
+      chain:
+        cache: false
+
+  ai:
+    # 여러 Chat Model 스타터(openai/anthropic/google-genai)가 classpath에 함께 존재할 때
+    # 실제로 활성화할 모델을 지정한다. (ChatClient.Builder 자동구성 충돌 방지)
+    model:
+      chat: openai
+
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+    # ------------------------------------------------------------
+    # 1) OpenAI (ChatGPT) - 활성화
+    #    spring.ai.model.chat 값을 openai로 변경하세요.
+    # ------------------------------------------------------------
+    # openai:
+    #   api-key: ${OPENAI_API_KEY}
+    #   chat:
+    #     options:
+    #       model: gpt-4o-mini
+    #       temperature: 0.7
+    # ------------------------------------------------------------
+    # 2) Anthropic (Claude) - 사용하려면 아래 주석을 해제하고
+    #    spring.ai.model.chat 값을 anthropic 으로 변경하세요.
+    # ------------------------------------------------------------
+    # anthropic:
+    #   api-key: ${ANTHROPIC_API_KEY}
+    #   chat:
+    #     model: claude-sonnet-4-20250514
+    #     temperature: 0.7
+
+    # ------------------------------------------------------------
+    # 3) Gemini (Google GenAI) - 사용하려면 아래 주석을 해제하고
+    #    spring.ai.model.chat 값을 google-genai 로 변경하세요.
+    # ------------------------------------------------------------
+    # google:
+    #   genai:
+    #     api-key: ${GOOGLE_API_KEY}
+    #     chat:
+    #       model: gemini-2.5-flash
+    #       temperature: 0.7
+
+    # ------------------------------------------------------------
+    # 4) Ollama (로컬 실행, ChatGPT 대체) - 사용하려면 아래 주석을 해제하고
+    #    spring.ai.model.chat 값을 ollama 로 변경하세요.
+    #    사전에 ollama-embedding/local-ollama.sh 로 로컬 Ollama 컨테이너를 실행해야 합니다.
+    # ------------------------------------------------------------
+    # ollama:
+    #   base-url: http://localhost:11434
+    #   chat:
+    #     model: qwen3:4b-instruct
+    #     options:
+    #       temperature: 0.7
+
+server:
+  port: 8080
+
+logging:
+  level:
+    '[org.springframework.ai]': INFO
+    '[org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor]': DEBUG
