@@ -63,3 +63,5 @@
 *.log
 *.sqlite
 *.sqlite3
+/0824_Front-framework_Vue-js/skala-vue/
+/0827_Front-framework_Vue-js/
