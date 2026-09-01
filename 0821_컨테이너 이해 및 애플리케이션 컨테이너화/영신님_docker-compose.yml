@@ -1,0 +1,35 @@
+services:
+  web:
+    build: ./web
+    ports:
+      - "8081:80"
+    depends_on:
+      - was
+
+  was:
+    build: ./was
+    ports:
+      - "5001:5000"
+    environment: # .env 파일에 작성해둔 환경변수를 변수명으로 불러옴
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports: # 외부 확인을 위해 포트 명시
+      - "5433:5432"
+    volumes: # volume을 어디에 연결할지 지정
+      - board-data:/var/lib/postgresql/data
+
+volumes: # volume 자체가 뭔지 정의
+  board-data:
+    external: true # 1일차 때 만들었던 걸 가져다 쓰기 위해 작성
+    # external: true가 없다면 새로이 volume을 생성하여 연결함

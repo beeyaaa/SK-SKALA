@@ -1,0 +1,27 @@
+# 작성자: 홍은비
+# 작성일자: 2026-08-21
+# 변경사항: WAS 이미지 빌드에 불필요한 캐시·가상환경·비밀정보·개발 파일 제외
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+
+# Local virtual environments
+.venv/
+venv/
+
+# Local secrets and configuration
+.env
+.env.*
+
+# Development and repository files
+.git/
+.gitignore
+.DS_Store
+.idea/
+.vscode/
+
+# Test and coverage output
+.pytest_cache/
+.coverage
+htmlcov/

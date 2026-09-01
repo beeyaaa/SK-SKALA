@@ -1,0 +1,30 @@
+# 작성자: 홍은비
+# 작성일자: 2026-08-21
+# 변경사항: 소스 Bind Mount, Flask Debug, PostgreSQL 개발 포트 구성
+# 로컬 개발용 설정이며 docker compose up 실행 시 기본 설정과 자동 병합된다.
+services:
+  board-web:
+    volumes:
+      # 호스트 파일을 Read-Only Bind Mount하여 이미지 재빌드 없이 HTML/Nginx 설정을 확인한다.
+      - ./web/index.html:/usr/share/nginx/html/index.html:ro
+      - ./web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  board-was:
+    volumes:
+      # Flask 소스를 Read-Only로 Mount하고 Debug Reloader가 변경을 감지하게 한다.
+      - ./was/app.py:/app/app.py:ro
+    environment:
+      FLASK_DEBUG: "1"
+    command:
+      # 기본 Dockerfile CMD를 개발용 Debug 실행 명령으로 Override한다.
+      - python
+      - -c
+      - >-
+        from app import init_db, app;
+        init_db();
+        app.run(host="0.0.0.0", port=5000, debug=True)
+
+  board-db:
+    ports:
+      # DBeaver 등 호스트 프로그램의 접속을 위해 개발 환경에서만 DB 포트를 공개한다.
+      - "5433:5432"

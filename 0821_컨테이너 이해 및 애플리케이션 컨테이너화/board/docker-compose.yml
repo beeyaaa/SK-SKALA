@@ -1,0 +1,78 @@
+# 작성자: 홍은비
+# 작성일자: 2026-08-21
+# 변경사항: 3-tier 콘텐츠 아카이브 구성, 서비스·포트·볼륨·Health Check 설명 주석 보강
+
+services:
+  # DB 계층: 콘텐츠 데이터를 영속적으로 저장하는 PostgreSQL 서비스
+  board-db:
+    image: postgres:16-alpine
+    environment:
+      # .env 값이 없으면 :? 뒤의 메시지를 출력하고 Compose 실행을 중단한다.
+      # PostgreSQL 이미지가 요구하는 변수명에 공통 DB_* 값을 매핑한다.
+      POSTGRES_DB: ${DB_NAME:?DB_NAME variable is not set}
+      POSTGRES_USER: ${DB_USER:?DB_USER variable is not set}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD variable is not set}
+    volumes:
+      # Named Volume을 DB 데이터 디렉터리에 Mount하여 컨테이너 재생성 후에도 데이터를 보존한다.
+      - board-data:/var/lib/postgresql/data
+    healthcheck:
+      # pg_isready로 PostgreSQL이 실제 연결 요청을 받을 준비가 됐는지 검사한다.
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  # WAS 계층: REST API와 DB 접근 로직을 실행하는 Flask 서비스
+  board-was:
+    build:
+      # ./was/Dockerfile을 Build Context로 사용해 로컬 이미지를 생성한다.
+      context: ./was
+    ports:
+      # 호스트 5001번 요청을 컨테이너의 Flask 5000번 포트로 전달한다.
+      - "5001:5000"
+    environment:
+      # .env의 DB_HOST 값은 Compose 서비스명 board-db와 일치해야 한다.
+      DB_HOST: ${DB_HOST:?DB_HOST variable is not set}
+      DB_PORT: ${DB_PORT:?DB_PORT variable is not set}
+      DB_NAME: ${DB_NAME:?DB_NAME variable is not set}
+      DB_USER: ${DB_USER:?DB_USER variable is not set}
+      DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD variable is not set}
+    depends_on:
+      # 단순 Start 순서가 아니라 DB Health Check 통과 후 WAS를 시작한다.
+      board-db:
+        condition: service_healthy
+    healthcheck:
+      # Python 표준 라이브러리로 /health를 호출해 WAS와 DB 연결을 함께 확인한다.
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health')
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  # Web 계층: 정적 SPA를 제공하고 /api 요청을 WAS로 Proxy하는 Nginx 서비스
+  board-web:
+    build:
+      context: ./web
+    ports:
+      # 사용자는 http://localhost:8080으로 접속하고 Nginx는 내부 80번에서 수신한다.
+      - "8080:80"
+    depends_on:
+      # WAS가 요청 처리 가능 상태가 된 뒤 Web 서비스를 시작한다.
+      board-was:
+        condition: service_healthy
+    healthcheck:
+      # localhost가 IPv6(::1)로 해석되는 환경에서도 Nginx IPv4 포트를 정확히 확인한다.
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1/ || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
+volumes:
+  # Compose가 관리하는 PostgreSQL 데이터 영속화용 Named Volume
+  board-data:

@@ -1,0 +1,6 @@
+# 작성자: 홍은비
+# 작성일자: 2026-08-21
+# 변경사항: Flask REST API와 PostgreSQL 연결에 필요한 패키지 정의
+
+flask
+psycopg2-binary
