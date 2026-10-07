@@ -1,0 +1,46 @@
+# 운영체제 / IDE
+.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# 비밀정보와 로컬 환경설정
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.jks
+
+# Java / Gradle 산출물
+**/.gradle/
+**/build/
+**/bin/
+**/out/
+
+# Python 산출물
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.venv/
+
+# Node / Vite 산출물
+**/node_modules/
+**/dist/
+**/.vite/
+**/npm-debug.log*
+
+# 로컬 컨테이너 이미지와 분할 압축 파일
+*.tar
+*.tar.gz
+msa-lecture-images.part.*
+
+# 임시 파일
+*.tmp
+*.swp
+*~

@@ -1,0 +1,29 @@
+services:
+  # ── Airflow standalone 컨테이너 하나 ─────────────────────────────────────
+  # `airflow standalone`이 컨테이너 안에서 Scheduler + Triggerer + DAG Processor +
+  # API Server(웹 UI)를 전부 띄운다. Metastore는 기본값인 SQLite
+  # (/opt/airflow/airflow.db), Executor는 기본값인 LocalExecutor —
+  # "기본 구성 그대로의 Airflow"를 관찰하는 것이 이 실습의 목적이므로
+  # 일부러 아무 것도 바꾸지 않는다(예제 DAG 로드만 끔).
+  airflow:
+    build: .
+    ports:
+      - "8280:8080"          # 웹 UI: http://localhost:8280
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./dags:/opt/airflow/dags                       # DAG 정의 (Python 코드)
+      - ./plugins:/opt/airflow/plugins                 # 커스텀 트리거 — Triggerer도 import 가능해야 함
+      - ./data:/opt/airflow/data                       # 파이프라인 산출물 (모델/피처)
+      - ./watched_uploads:/opt/airflow/watched_uploads # Sensor·AssetWatcher 감시 대상
+    # FileSensor의 fs_default 커넥션을 만들어준 뒤 standalone 기동
+    command: >
+      bash -c "airflow db migrate &&
+               airflow connections create-default-connections &&
+               exec airflow standalone"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v2/monitor/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+      start_period: 30s

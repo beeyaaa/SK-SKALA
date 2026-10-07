@@ -1,0 +1,63 @@
+services:
+  # ── MLflow Tracking Server + Model Registry ──────────────────────────────
+  # backend-store-uri(sqlite)   = 파라미터/지표/모델버전 메타데이터
+  # artifacts-destination       = confusion_matrix.png, model/ 폴더 등 실제 파일
+  # 둘 다 named volume(mlflow-data)에 저장돼 컨테이너를 내렸다 올려도 유지된다.
+  #
+  # ⚠️ 왜 --default-artifact-root(로컬경로)가 아니라 --serve-artifacts +
+  #    --artifacts-destination 인가:
+  #    로컬경로 방식은 "클라이언트가 그 경로에 직접 파일을 쓴다"고 가정한다. 하지만
+  #    trainer/verify 컨테이너에는 그 경로(mlflow-data 볼륨)가 없어서 아티팩트가
+  #    엉뚱한 곳(클라이언트의 휘발성 FS)에 떨어지고 서버는 못 찾는다. --serve-artifacts로
+  #    두면 클라이언트가 파일을 HTTP로 서버에 올리고 서버가 자기 볼륨에 저장하므로,
+  #    어느 컨테이너에서 실행하든 아티팩트·모델이 정상 저장·조회된다.
+  mlflow-server:
+    build: .
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --serve-artifacts
+      --artifacts-destination /mlflow/artifacts
+      --host 0.0.0.0
+      --port 5000
+    ports:
+      # 호스트 5555 → 컨테이너 5000. (macOS는 AirPlay Receiver가 5000을 점유하는
+      # 경우가 많아 호스트 쪽을 5555로 옮겼다 — 컨테이너 내부 포트와 서비스 간
+      # MLFLOW_TRACKING_URI(http://mlflow-server:5000)는 그대로다.)
+      - "5555:5000"
+    volumes:
+      - mlflow-data:/mlflow
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # ── 학습자가 채울 exercise.py (또는 정답 solution.py)를 실행하는 클라이언트 ──
+  # MLFLOW_TRACKING_URI로 mlflow-server를 가리키기만 하면, 이 컨테이너 안의
+  # 코드는 로컬에 서버가 떠 있는 것과 완전히 동일하게 동작한다.
+  trainer:
+    build: .
+    depends_on:
+      mlflow-server:
+        condition: service_healthy
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow-server:5000
+    volumes:
+      - .:/app
+    command: ["python", "solution.py"]
+
+  # ── 체크리스트 자동 검증 (Run/아티팩트/모델/레지스트리 등록 여부 확인) ──────
+  verify:
+    build: .
+    depends_on:
+      mlflow-server:
+        condition: service_healthy
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow-server:5000
+    volumes:
+      - .:/app
+    command: ["python", "verify.py"]
+
+volumes:
+  mlflow-data:

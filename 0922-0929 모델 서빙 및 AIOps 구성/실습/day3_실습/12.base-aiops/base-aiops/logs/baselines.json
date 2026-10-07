@@ -1,0 +1,12 @@
+{
+  "checkout-api": {
+    "mean": 81.5,
+    "stdev": 3.91,
+    "window": 10
+  },
+  "payment-gateway": {
+    "mean": 152.4,
+    "stdev": 4.79,
+    "window": 10
+  }
+}

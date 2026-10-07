@@ -1,0 +1,13 @@
+# Prometheus가 checkout 앱을 스크레이핑하고, 수집한 메트릭을 Mimir로 remote_write한다.
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+remote_write:
+  - url: "http://mimir:9009/api/v1/push"
+    # mimir.yaml에서 multitenancy_enabled: false로 뒀기 때문에 X-Scope-OrgID 헤더는 필요 없다.
+
+scrape_configs:
+  - job_name: "checkout-service"
+    static_configs:
+      - targets: ["checkout-app:8000"]

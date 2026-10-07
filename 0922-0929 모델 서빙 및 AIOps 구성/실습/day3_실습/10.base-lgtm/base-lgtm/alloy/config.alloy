@@ -1,0 +1,36 @@
+// Grafana Alloy — checkout 앱이 보낸 OTLP(로그+트레이스)를 받아
+// 로그는 Loki로, 트레이스는 Tempo로 각각 라우팅한다.
+// (메트릭은 이 다이어그램에서 Prometheus가 별도로 스크레이핑하므로 여기서 다루지 않는다.)
+
+otelcol.receiver.otlp "checkout" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+
+  output {
+    logs   = [otelcol.exporter.loki.to_loki.input]
+    traces = [otelcol.exporter.otlp.to_tempo.input]
+  }
+}
+
+otelcol.exporter.loki "to_loki" {
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
+
+otelcol.exporter.otlp "to_tempo" {
+  client {
+    endpoint = "tempo:4317"
+    tls {
+      insecure = true
+    }
+  }
+}

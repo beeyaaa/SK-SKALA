@@ -1,0 +1,25 @@
+{
+  "static_alert_count": 69,
+  "anomaly_count": 19,
+  "anomalies": [
+    "[AIOPS] t=19 checkout-api latency=88.5ms (z=2.46, baseline~79.6ms)",
+    "[AIOPS] t=35 checkout-api latency=88.5ms (z=2.19, baseline~79.2ms)",
+    "[AIOPS] t=63 checkout-api latency=86.1ms (z=2.32, baseline~80.8ms)",
+    "[AIOPS] t=66 checkout-api latency=91.4ms (z=3.79, baseline~81.4ms)",
+    "[AIOPS] t=106 checkout-api latency=87.8ms (z=2.04, baseline~76.7ms)",
+    "[AIOPS] t=45 payment-gateway latency=159.2ms (z=2.05, baseline~148.5ms)",
+    "[AIOPS] t=54 payment-gateway latency=162.9ms (z=2.09, baseline~151.6ms)",
+    "[AIOPS] t=64 payment-gateway latency=163.6ms (z=2.53, baseline~147.6ms)",
+    "[AIOPS] t=71 payment-gateway latency=169.0ms (z=2.66, baseline~150.0ms)",
+    "[AIOPS] t=86 payment-gateway latency=163.9ms (z=2.09, baseline~151.7ms)",
+    "[AIOPS] t=91 payment-gateway latency=164.0ms (z=2.18, baseline~151.0ms)",
+    "[AIOPS] t=92 payment-gateway latency=178.7ms (z=3.72, baseline~152.1ms)",
+    "[AIOPS] t=93 payment-gateway latency=185.2ms (z=2.87, baseline~154.4ms)",
+    "[AIOPS] t=94 payment-gateway latency=194.5ms (z=2.64, baseline~158.3ms)",
+    "[AIOPS] t=95 payment-gateway latency=211.5ms (z=2.84, baseline~162.4ms)",
+    "[AIOPS] t=96 payment-gateway latency=224.2ms (z=2.51, baseline~168.2ms)",
+    "[AIOPS] t=97 payment-gateway latency=231.0ms (z=2.04, baseline~174.3ms)",
+    "[AIOPS] t=99 payment-gateway latency=269.1ms (z=2.42, baseline~192.2ms)",
+    "[AIOPS] t=102 payment-gateway latency=306.0ms (z=2.24, baseline~228.2ms)"
+  ]
+}

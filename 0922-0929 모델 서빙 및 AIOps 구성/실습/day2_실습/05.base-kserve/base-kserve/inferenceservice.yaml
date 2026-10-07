@@ -1,0 +1,22 @@
+apiVersion: serving.kserve.io/v1beta1  # KServe 자체 API 그룹 — K8s CRD 컨벤션 위에 KServe가 독자 설계
+kind: InferenceService                 # 사용자가 선언하는 최상위 리소스 — predictor(필수) + transformer/explainer(선택)를 하나의 스펙으로 묶음
+metadata:
+  name: sklearn-iris                   # 배포 이름 — 추론 엔드포인트 경로에도 그대로 쓰인다 (/v1/models/sklearn-iris:predict)
+  namespace: ml-serving
+  annotations:
+    serving.kserve.io/deploymentMode: Standard  # Standard 모드 — Knative/Istio/Gateway API 없이 일반 K8s Deployment+Service로 배포
+spec:
+  predictor:                           # 필수 하위 컴포넌트 — 실제 추론을 수행하는 Pod (storage-initializer → kserve-container 2단계로 기동)
+    minReplicas: 1                     # 최소 replica 수 (Serverless 모드라면 0으로 둬서 스케일-투-제로도 가능)
+    maxReplicas: 3                     # 최대 replica 수 — 이 범위 안에서 트래픽에 따라 오토스케일
+    model:
+      modelFormat:
+        name: sklearn                  # 모델 포맷 선언 — 이 값으로 ClusterServingRuntime(kserve-sklearnserver)이 자동 매칭됨
+      storageUri: gs://kfserving-examples/models/sklearn/1.0/model  # 모델 아티팩트 위치(pull 전용) — storage-initializer가 여기서 내려받아 Pod 로컬 볼륨에 저장
+      resources:
+        requests:                      # Pod 스케줄링 시 최소 보장 리소스
+          cpu: 100m
+          memory: 256Mi
+        limits:                        # Pod가 쓸 수 있는 리소스 상한 — 초과 시 CPU는 스로틀링, 메모리는 OOMKilled
+          cpu: "1"
+          memory: 1Gi

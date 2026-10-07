@@ -1,0 +1,26 @@
+[
+  {
+    "id": "dep-101",
+    "service": "payment-gateway",
+    "time": 88,
+    "commits": [
+      "a1b2c3d retry 로직 타임아웃 5s→2s로 단축"
+    ]
+  },
+  {
+    "id": "dep-102",
+    "service": "checkout-api",
+    "time": 40,
+    "commits": [
+      "9f8e7d6 장바구니 캐시 TTL 조정"
+    ]
+  },
+  {
+    "id": "dep-103",
+    "service": "payment-gateway",
+    "time": 15,
+    "commits": [
+      "3c4d5e6 결제 수단 추가(카카오페이)"
+    ]
+  }
+]

@@ -65,3 +65,38 @@
 *.sqlite3
 /0824_Front-framework_Vue-js/skala-vue/
 /0827_Front-framework_Vue-js/
+
+# 임시 슬라이드 편집 산출물
+**/.codex-ppt-*/
+**/.codex-review-*/
+**/~$*
+
+# 대용량 컨테이너 이미지와 중복 압축본
+/0902_Agile 방법론 및 MSA 개발/msa-lecture-ref/*.tar
+/0902_Agile 방법론 및 MSA 개발/msa-lecture-ref/*.tar.gz
+/0902_Agile 방법론 및 MSA 개발/msa-lecture-ref/*.part.*
+/0902_Agile 방법론 및 MSA 개발/msa-lecture.zip
+/portfolio/0902_Agile 방법론 및 MSA 개발/msa-lecture.zip
+
+# 로컬 쿠버네티스 인증 정보와 런타임 데이터
+/0918-0921_쿠버네티스 이해 및 애플리케이션 배포/setup-k8s-pg/
+/0918-0921_쿠버네티스 이해 및 애플리케이션 배포/setup-k8s-pg.tar
+/1006_Vector DB/qdrant_storage/
+
+# 실제 비밀번호가 기입된 샘플 설정
+/0902_Agile 방법론 및 MSA 개발/최종_백엔드_env포함/.env.example
+/portfolio/0902_Agile 방법론 및 MSA 개발/최종_백엔드_env포함/.env.example
+/portfolio/0821_컨테이너 이해 및 애플리케이션 컨테이너화/board/.env.example
+
+# 압축본 내부에 설정 예시가 포함되어 있어 게시 전 별도 검토가 필요한 파일
+/0922-0929 모델 서빙 및 AIOps 구성/실습/day3_실습.zip
+/1006_Vector DB/판교_5반_홍은비.zip
+/portfolio/0827_Front-framework_Vue-js/판교_5반_홍은비_Vue종합실습.zip
+
+# 별도 원격 저장소를 사용하는 참조 프로젝트
+/0902_Agile 방법론 및 MSA 개발/msa-lecture/
+/0918-0921_쿠버네티스 이해 및 애플리케이션 배포/skala-kube/
+/0930-1002_RAG Pipeline 설계 및 구축/rag-pipeline-lab2026/
+/portfolio/0824_오늘뭐입지_Front-framework_Vue-js/오늘뭐입지/
+/portfolio/0827_Front-framework_Vue-js/판교_5반_홍은비_Vue종합실습/
+/portfolio/0902_Agile 방법론 및 MSA 개발/msa-lecture/

@@ -1,0 +1,37 @@
+{
+  "title": "LGTM 실습 — checkout 서비스 상관관계",
+  "uid": "lgtm-checkout",
+  "timezone": "browser",
+  "time": {"from": "now-15m", "to": "now"},
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "메트릭(Mimir) — status별 요청 수",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 24, "x": 0, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "PAE45454D0EDB9216"},
+      "targets": [
+        {
+          "expr": "sum(http_requests_total) by (status)",
+          "legendFormat": "status {{status}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "로그(Loki) — checkout 서비스",
+      "type": "logs",
+      "gridPos": {"h": 12, "w": 24, "x": 0, "y": 9},
+      "datasource": {"type": "loki", "uid": "P8E80F9AEF21F6940"},
+      "targets": [
+        {
+          "expr": "{service_name=\"checkout\"}",
+          "refId": "A"
+        }
+      ],
+      "options": {"showTime": true, "wrapLogMessage": true}
+    }
+  ]
+}

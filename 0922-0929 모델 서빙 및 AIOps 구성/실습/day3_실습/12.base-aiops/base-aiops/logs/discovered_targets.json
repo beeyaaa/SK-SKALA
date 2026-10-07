@@ -1,0 +1,13 @@
+{
+  "final_target_list": [
+    "checkout-api",
+    "payment-gateway",
+    "recommendation-engine"
+  ],
+  "added_at_t1": [
+    "recommendation-engine"
+  ],
+  "removed_at_t1": [
+    "fraud-detector"
+  ]
+}

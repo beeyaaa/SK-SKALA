@@ -1,0 +1,26 @@
+services:
+  recommend-service:
+    environment:
+      # 로컬에서만 Gateway/JWT 인증을 우회한다.
+      LOCAL_DEV_BYPASS_AUTH: "true"
+
+      # Recommend 컨테이너 내부에서는 localhost가 아니라 Docker service name으로 접근해야 한다.
+      USER_SERVICE_URL: "http://user-service:8081"
+      COURSE_SERVICE_URL: "http://course-service:8082"
+      ENROLLMENT_SERVICE_URL: "http://enrollment-service:8083"
+
+      # OpenAI 관련 값은 root .env가 있으면 Docker 환경변수로 전달된다.
+      # root .env에 키가 없더라도 아래 /app/.env 마운트 + settings.py fallback으로
+      # recommend-service/.env의 키를 읽을 수 있다.
+      OPENAI_MODEL: "${OPENAI_MODEL:-gpt-5-nano}"
+      OPENAI_BASE_URL: "${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+      OPENAI_TIMEOUT_SECONDS: "${OPENAI_TIMEOUT_SECONDS:-60}"
+
+    volumes:
+      # 교수자 제공 Recommend 이미지는 다시 빌드하지 않는다.
+      # 대신 현재 로컬의 최신 Recommend 소스를 기존 이미지 위에 read-only로 마운트한다.
+      - ./recommend-service/main.py:/app/main.py:ro
+      - ./recommend-service/app:/app/app:ro
+
+      # 사용자가 기존에 쓰던 recommend-service/.env를 그대로 활용한다.
+      - ./recommend-service/.env:/app/.env:ro

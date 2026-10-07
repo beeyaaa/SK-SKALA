@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<!--
+작성자: 홍은비
+작성일자: 2026-08-21
+변경사항: 콘텐츠 아카이브 SPA UI와 REST CRUD 구현, 화면 구조·비동기 처리 흐름 주석 보강
+-->
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="2026년에 본 영화, 예능, 전시, 책과 듣고 즐긴 음악·팟캐스트를 정리하는 개인 콘텐츠 아카이브">
+    <title>My 2026 Culture Wrapped</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="shell">
+        <!-- 상단 브랜드와 WAS/DB Health Check 결과를 표시하는 영역 -->
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">26</div>
+                <div>
+                    <strong>MY 2026 CONTENTS WRAPPED</strong>
+                </div>
+            </div>
+            <div id="server-state" class="server-state" role="status">
+                <span class="state-dot" aria-hidden="true"></span>
+                <span id="server-state-text">서버 확인 중</span>
+            </div>
+        </header>
+
+        <!-- 서비스 소개와 전체 데이터를 기준으로 계산한 카테고리별 통계 영역 -->
+        <section class="hero">
+            <div>
+                <p class="eyebrow">2026</p>
+                <h1>콘텐츠 연말정산</h1>
+                <p class="hero-copy">
+                    2026년에 본 영화, 예능, 전시, 책과 듣고 즐긴 음악·팟캐스트를 기록합니다.<br>
+                    카테고리별 기록과 평점을 한눈에 확인할 수 있습니다.
+                </p>
+            </div>
+            <div class="hero-stats" aria-label="작품 기록 통계">
+                <div class="stat">
+                    <strong id="movie-average">-</strong>
+                    <span>영화 · <b id="movie-count">0</b>개</span>
+                </div>
+                <div class="stat">
+                    <strong id="music-average">-</strong>
+                    <span>음악 · <b id="music-count">0</b>개</span>
+                </div>
+                <div class="stat">
+                    <strong id="book-average">-</strong>
+                    <span>도서 · <b id="book-count">0</b>개</span>
+                </div>
+                <div class="stat">
+                    <strong id="exhibition-average">-</strong>
+                    <span>전시 · <b id="exhibition-count">0</b>개</span>
+                </div>
+                <div class="stat">
+                    <strong id="variety-average">-</strong>
+                    <span>예능 · <b id="variety-count">0</b>개</span>
+                </div>
+                <div class="stat">
+                    <strong id="podcast-average">-</strong>
+                    <span>팟캐스트 · <b id="podcast-count">0</b>개</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 왼쪽 입력 폼과 오른쪽 조회 목록을 나란히 배치하는 주 작업 영역 -->
+        <div class="workspace">
+            <!-- 등록과 수정이 동일한 form을 공유하며 JavaScript가 현재 모드를 전환한다. -->
+            <section id="composer" class="panel composer" aria-labelledby="form-title">
+                <div class="panel-heading">
+                    <div>
+                        <h2 id="form-title">올해의 기록 추가</h2>
+                        <p id="form-description">작품 정보와 평점을 입력하세요.</p>
+                    </div>
+                    <span class="edit-badge">수정 중</span>
+                </div>
+
+                <form id="post-form">
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="category">카테고리</label>
+                            <select id="category" required>
+                                <option value="movie">🎬 영화</option>
+                                <option value="music">🎧 음악</option>
+                                <option value="book">📚 도서</option>
+                                <option value="exhibition">🖼 전시</option>
+                                <option value="variety">📺 예능</option>
+                                <option value="podcast">🎙 팟캐스트</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="rating">평점</label>
+                            <select id="rating" required>
+                                <option value="5">5.0</option>
+                                <option value="4.5">4.5</option>
+                                <option value="4" selected>4.0</option>
+                                <option value="3.5">3.5</option>
+                                <option value="3">3.0</option>
+                                <option value="2.5">2.5</option>
+                                <option value="2">2.0</option>
+                                <option value="1.5">1.5</option>
+                                <option value="1">1.0</option>
+                                <option value="0.5">0.5</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="title">작품명</label>
+                        <input id="title" type="text" maxlength="200" placeholder="작품명을 입력하세요" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="creator">만든 사람</label>
+                        <input id="creator" type="text" maxlength="120" placeholder="감독, 작가, 아티스트 등" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="content">감상</label>
+                        <textarea id="content" maxlength="5000" placeholder="감상을 입력하세요" required></textarea>
+                        <div class="field-meta"><span id="content-count">0</span>&nbsp;/ 5,000</div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="cancel-button" class="button button-secondary" type="button">취소</button>
+                        <button id="submit-button" class="button button-primary" type="submit">기록 추가</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- REST API로 조회한 기록을 검색·필터·정렬하여 출력하는 아카이브 영역 -->
+            <section class="panel collection" aria-labelledby="collection-title">
+                <div class="collection-heading">
+                    <div>
+                        <h2 id="collection-title">2026 아카이브</h2>
+                        <p id="result-summary">기록을 불러오는 중입니다.</p>
+                    </div>
+                </div>
+
+                <form id="search-form" class="searchbar" role="search">
+                    <input id="search-input" type="search" placeholder="작품, 만든 사람, 감상 검색" aria-label="작품 검색">
+                    <select id="sort-select" aria-label="정렬 기준">
+                        <option value="latest">최신순</option>
+                        <option value="rating">평점순</option>
+                        <option value="title">작품명순</option>
+                    </select>
+                    <button class="search-button" type="submit" aria-label="검색">⌕</button>
+                </form>
+
+                <div id="category-tabs" class="category-tabs" aria-label="카테고리 필터">
+                    <button class="category-tab active" type="button" data-category="all">전체</button>
+                    <button class="category-tab" type="button" data-category="movie">🎬 영화</button>
+                    <button class="category-tab" type="button" data-category="music">🎧 음악</button>
+                    <button class="category-tab" type="button" data-category="book">📚 도서</button>
+                    <button class="category-tab" type="button" data-category="exhibition">🖼 전시</button>
+                    <button class="category-tab" type="button" data-category="variety">📺 예능</button>
+                    <button class="category-tab" type="button" data-category="podcast">🎙 팟캐스트</button>
+                </div>
+
+                <!-- aria-live는 목록 변경을 보조 기술에 자동으로 알리기 위한 접근성 속성이다. -->
+                <div id="post-list" class="post-list" aria-live="polite"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 등록·수정·삭제 결과나 오류 메시지를 잠시 보여주는 Toast 알림 -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        // Nginx가 /api 요청을 board-was:5000으로 Reverse Proxy하므로 브라우저는 동일 출처 URL만 사용한다.
+        const API_URL = "/api/posts";
+
+        // DB에는 영문 식별자를 저장하고, 화면에서는 한글 라벨과 아이콘으로 변환한다.
+        const CATEGORY_META = {
+            movie: {label: "영화", icon: "🎬"},
+            music: {label: "음악", icon: "🎧"},
+            book: {label: "도서", icon: "📚"},
+            exhibition: {label: "전시", icon: "🖼"},
+            variety: {label: "예능", icon: "📺"},
+            podcast: {label: "팟캐스트", icon: "🎙"}
+        };
+
+        // 화면 전체가 공유하는 최소 상태: 수정 대상 ID, 현재 필터, 마지막 조회 결과.
+        const state = {
+            editingId: null,
+            category: "all",
+            posts: []
+        };
+
+        // 반복적인 DOM 탐색을 줄이기 위해 자주 사용하는 요소를 한 번만 조회해 보관한다.
+        const elements = {
+            composer: document.getElementById("composer"),
+            form: document.getElementById("post-form"),
+            formTitle: document.getElementById("form-title"),
+            formDescription: document.getElementById("form-description"),
+            category: document.getElementById("category"),
+            rating: document.getElementById("rating"),
+            title: document.getElementById("title"),
+            creator: document.getElementById("creator"),
+            content: document.getElementById("content"),
+            contentCount: document.getElementById("content-count"),
+            submitButton: document.getElementById("submit-button"),
+            cancelButton: document.getElementById("cancel-button"),
+            searchForm: document.getElementById("search-form"),
+            searchInput: document.getElementById("search-input"),
+            sortSelect: document.getElementById("sort-select"),
+            categoryTabs: document.getElementById("category-tabs"),
+            postList: document.getElementById("post-list"),
+            resultSummary: document.getElementById("result-summary"),
+            movieCount: document.getElementById("movie-count"),
+            movieAverage: document.getElementById("movie-average"),
+            musicCount: document.getElementById("music-count"),
+            musicAverage: document.getElementById("music-average"),
+            bookCount: document.getElementById("book-count"),
+            bookAverage: document.getElementById("book-average"),
+            exhibitionCount: document.getElementById("exhibition-count"),
+            exhibitionAverage: document.getElementById("exhibition-average"),
+            varietyCount: document.getElementById("variety-count"),
+            varietyAverage: document.getElementById("variety-average"),
+            podcastCount: document.getElementById("podcast-count"),
+            podcastAverage: document.getElementById("podcast-average"),
+            serverState: document.getElementById("server-state"),
+            serverStateText: document.getElementById("server-state-text"),
+            toast: document.getElementById("toast")
+        };
+
+        let toastTimer;
+
+        /**
+         * Fetch API를 공통 처리하는 비동기 함수.
+         * 204 No Content는 본문 없이 반환하고, 4xx/5xx 응답은 Error로 변환해 호출부의 catch로 전달한다.
+         */
+        async function apiRequest(url, options = {}) {
+            const response = await fetch(url, options);
+            if (response.status === 204) {
+                return null;
+            }
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.error || "요청을 처리하지 못했습니다.");
+            }
+            return data;
+        }
+
+        // 동일한 Toast가 겹치지 않도록 기존 Timer를 취소한 뒤 2.8초 동안 메시지를 노출한다.
+        function showToast(message, type = "success") {
+            window.clearTimeout(toastTimer);
+            elements.toast.textContent = message;
+            elements.toast.classList.toggle("error", type === "error");
+            elements.toast.classList.add("show");
+            toastTimer = window.setTimeout(() => elements.toast.classList.remove("show"), 2800);
+        }
+
+        // 서버의 ISO 8601 날짜 문자열을 날짜와 시간이 줄바꿈된 한국어 형식으로 변환한다.
+        function formatDate(value) {
+            const date = new Date(value);
+            const dateText = new Intl.DateTimeFormat("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }).format(date);
+            const timeText = new Intl.DateTimeFormat("ko-KR", {
+                hour: "2-digit",
+                minute: "2-digit"
+            }).format(date);
+
+            return `${dateText}\n${timeText}`;
+        }
+
+        // 조회 중·검색 결과 없음·연결 실패 상태에서 공통으로 사용하는 DOM 요소를 생성한다.
+        function createEmptyState(title, description, icon = "◫") {
+            const container = document.createElement("div");
+            const content = document.createElement("div");
+            const iconElement = document.createElement("span");
+            const titleElement = document.createElement("strong");
+            const descriptionElement = document.createElement("span");
+
+            container.className = "empty-state";
+            iconElement.className = "empty-icon";
+            iconElement.textContent = icon;
+            titleElement.textContent = title;
+            descriptionElement.textContent = description;
+            content.append(iconElement, titleElement, descriptionElement);
+            container.appendChild(content);
+            return container;
+        }
+
+        /**
+         * API가 반환한 기록 객체 하나를 article 카드로 변환한다.
+         * 사용자 입력은 innerHTML이 아닌 textContent에 넣어 HTML 주입(XSS) 가능성을 낮춘다.
+         */
+        function createPostCard(post) {
+            const meta = CATEGORY_META[post.category] || CATEGORY_META.movie;
+            const article = document.createElement("article");
+            const top = document.createElement("div");
+            const badge = document.createElement("span");
+            const rating = document.createElement("span");
+            const title = document.createElement("h3");
+            const creator = document.createElement("p");
+            const review = document.createElement("p");
+            const footer = document.createElement("div");
+            const date = document.createElement("span");
+            const actions = document.createElement("div");
+            const editButton = document.createElement("button");
+            const deleteButton = document.createElement("button");
+
+            article.className = "post-card";
+            // 작품 카드 상단 바는 라임 배경과 구분되는 차분한 올리브색을 사용한다.
+            article.style.setProperty("--category-color", "var(--olive)");
+            top.className = "card-top";
+            badge.className = "category-badge";
+            badge.textContent = `${meta.icon} ${meta.label}`;
+            rating.className = "rating";
+            rating.textContent = `★ ${Number(post.rating).toFixed(1)}`;
+            title.className = "post-title";
+            title.textContent = post.title;
+            creator.className = "creator";
+            creator.textContent = `by ${post.creator}`;
+            review.className = "review";
+            review.textContent = post.content;
+            footer.className = "card-footer";
+            date.className = "post-date";
+            date.textContent = post.updated_at !== post.created_at
+                ? `${formatDate(post.updated_at)} 수정`
+                : formatDate(post.created_at);
+            actions.className = "card-actions";
+
+            editButton.className = "icon-button";
+            editButton.type = "button";
+            editButton.textContent = "수정";
+            editButton.addEventListener("click", () => startEditing(post));
+
+            deleteButton.className = "icon-button delete";
+            deleteButton.type = "button";
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", () => deletePost(post));
+
+            top.append(badge, rating);
+            actions.append(editButton, deleteButton);
+            footer.append(date, actions);
+            article.append(top, title, creator, review, footer);
+            return article;
+        }
+
+        // 기존 목록을 교체하고, 데이터 유무에 따라 카드 목록 또는 빈 상태를 렌더링한다.
+        function renderPosts(posts) {
+            elements.postList.replaceChildren();
+            if (posts.length === 0) {
+                const hasFilter = state.category !== "all" || elements.searchInput.value.trim();
+                elements.postList.appendChild(createEmptyState(
+                    hasFilter ? "검색 결과가 없습니다" : "등록된 작품이 없습니다",
+                    hasFilter ? "다른 검색어나 카테고리를 선택하세요." : "왼쪽 입력란에서 작품을 추가하세요.",
+                    hasFilter ? "⌕" : "◫"
+                ));
+                return;
+            }
+            posts.forEach((post) => elements.postList.appendChild(createPostCard(post)));
+        }
+
+        // 필터되지 않은 전체 기록을 카테고리별로 그룹화한 뒤 개수와 산술평균을 계산한다.
+        function updateStats(posts) {
+            const groupedPosts = {
+                movie: posts.filter((post) => post.category === "movie"),
+                music: posts.filter((post) => post.category === "music"),
+                book: posts.filter((post) => post.category === "book"),
+                exhibition: posts.filter((post) => post.category === "exhibition"),
+                variety: posts.filter((post) => post.category === "variety"),
+                podcast: posts.filter((post) => post.category === "podcast")
+            };
+            const averageOf = (items) => {
+                if (items.length === 0) {
+                    return "-";
+                }
+                const sum = items.reduce((total, post) => total + Number(post.rating), 0);
+                return (sum / items.length).toFixed(1);
+            };
+
+            elements.movieCount.textContent = String(groupedPosts.movie.length);
+            elements.movieAverage.textContent = averageOf(groupedPosts.movie);
+            elements.musicCount.textContent = String(groupedPosts.music.length);
+            elements.musicAverage.textContent = averageOf(groupedPosts.music);
+            elements.bookCount.textContent = String(groupedPosts.book.length);
+            elements.bookAverage.textContent = averageOf(groupedPosts.book);
+            elements.exhibitionCount.textContent = String(groupedPosts.exhibition.length);
+            elements.exhibitionAverage.textContent = averageOf(groupedPosts.exhibition);
+            elements.varietyCount.textContent = String(groupedPosts.variety.length);
+            elements.varietyAverage.textContent = averageOf(groupedPosts.variety);
+            elements.podcastCount.textContent = String(groupedPosts.podcast.length);
+            elements.podcastAverage.textContent = averageOf(groupedPosts.podcast);
+        }
+
+        // 현재 검색/필터와 무관한 전체 통계를 유지하기 위해 별도의 전체 목록 요청을 보낸다.
+        async function loadStats() {
+            try {
+                const allPosts = await apiRequest(`${API_URL}?category=all&sort=latest`);
+                updateStats(allPosts);
+            } catch (error) {
+                updateStats([]);
+            }
+        }
+
+        /**
+         * 현재 UI 조건을 URL Query Parameter로 직렬화하여 목록을 조회한다.
+         * 예: /api/posts?category=book&sort=rating&q=검색어
+         */
+        async function loadPosts() {
+            elements.resultSummary.textContent = "작품 기록을 불러오는 중입니다.";
+            elements.postList.replaceChildren(createEmptyState("불러오는 중", "아카이브를 정리하고 있어요.", "⋯"));
+
+            const params = new URLSearchParams({
+                category: state.category,
+                sort: elements.sortSelect.value
+            });
+            const keyword = elements.searchInput.value.trim();
+            if (keyword) {
+                params.set("q", keyword);
+            }
+
+            try {
+                state.posts = await apiRequest(`${API_URL}?${params.toString()}`);
+                renderPosts(state.posts);
+                elements.resultSummary.textContent = `${state.posts.length}개의 작품을 기록했습니다.`;
+            } catch (error) {
+                state.posts = [];
+                elements.resultSummary.textContent = "기록을 불러오지 못했습니다.";
+                elements.postList.replaceChildren(createEmptyState("연결할 수 없어요", error.message, "!"));
+                showToast(error.message, "error");
+            }
+        }
+
+        // /health 응답으로 WAS와 DB 연결 상태를 확인하여 상단 상태 표시를 갱신한다.
+        async function checkHealth() {
+            try {
+                await apiRequest("/health");
+                elements.serverState.className = "server-state healthy";
+                elements.serverStateText.textContent = "서버 연결 정상";
+            } catch (error) {
+                elements.serverState.className = "server-state unhealthy";
+                elements.serverStateText.textContent = "서버 연결 실패";
+            }
+        }
+
+        // 등록 완료·수정 취소 후 form과 수정 상태를 최초 등록 모드로 되돌린다.
+        function resetForm() {
+            state.editingId = null;
+            elements.form.reset();
+            elements.rating.value = "4";
+            elements.contentCount.textContent = "0";
+            elements.composer.classList.remove("editing");
+            elements.formTitle.textContent = "올해의 기록 추가";
+            elements.formDescription.textContent = "작품 정보와 평점을 입력하세요.";
+            elements.submitButton.textContent = "기록 추가";
+        }
+
+        // 선택한 카드 데이터를 form에 채우고 POST 등록 모드에서 PUT 수정 모드로 전환한다.
+        function startEditing(post) {
+            state.editingId = post.id;
+            elements.category.value = post.category;
+            elements.rating.value = String(Number(post.rating));
+            elements.title.value = post.title;
+            elements.creator.value = post.creator;
+            elements.content.value = post.content;
+            elements.contentCount.textContent = String(post.content.length);
+            elements.composer.classList.add("editing");
+            elements.formTitle.textContent = "작품 기록 수정";
+            elements.formDescription.textContent = "달라진 감상을 새롭게 정리해보세요.";
+            elements.submitButton.textContent = "수정 내용 저장";
+            elements.composer.scrollIntoView({behavior: "smooth", block: "start"});
+            elements.title.focus({preventScroll: true});
+        }
+
+        // 사용자 확인 후 DELETE 요청을 보내며, 성공하면 목록과 전체 통계를 동시에 다시 조회한다.
+        async function deletePost(post) {
+            if (!window.confirm(`‘${post.title}’ 기록을 아카이브에서 삭제할까요?`)) {
+                return;
+            }
+            try {
+                await apiRequest(`${API_URL}/${post.id}`, {method: "DELETE"});
+                if (state.editingId === post.id) {
+                    resetForm();
+                }
+                showToast("작품 기록을 삭제했습니다.");
+                await Promise.all([loadPosts(), loadStats()]);
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        }
+
+        /**
+         * 동일한 Submit Event에서 editingId 유무에 따라 POST(등록) 또는 PUT(전체 수정)을 선택한다.
+         * 요청 본문은 JSON으로 직렬화하고 Content-Type을 application/json으로 명시한다.
+         */
+        elements.form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const isEditing = state.editingId !== null;
+            const url = isEditing ? `${API_URL}/${state.editingId}` : API_URL;
+            const method = isEditing ? "PUT" : "POST";
+            const payload = {
+                category: elements.category.value,
+                rating: Number(elements.rating.value),
+                title: elements.title.value,
+                creator: elements.creator.value,
+                content: elements.content.value
+            };
+
+            elements.submitButton.disabled = true;
+            elements.submitButton.textContent = isEditing ? "수정 중..." : "기록 중...";
+            try {
+                await apiRequest(url, {
+                    method,
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
+                });
+                showToast(isEditing ? "작품 기록을 수정했습니다." : "올해의 작품을 아카이브에 추가했습니다.");
+                resetForm();
+                await Promise.all([loadPosts(), loadStats()]);
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                elements.submitButton.disabled = false;
+                elements.submitButton.textContent = state.editingId === null ? "기록 추가" : "수정 내용 저장";
+            }
+        });
+
+        // 사용자 입력 및 검색·정렬·필터 인터랙션을 각 처리 함수와 연결한다.
+        elements.cancelButton.addEventListener("click", resetForm);
+        elements.content.addEventListener("input", () => {
+            elements.contentCount.textContent = String(elements.content.value.length);
+        });
+        elements.searchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            loadPosts();
+        });
+        elements.sortSelect.addEventListener("change", loadPosts);
+        elements.categoryTabs.addEventListener("click", (event) => {
+            const button = event.target.closest("[data-category]");
+            if (!button) {
+                return;
+            }
+            state.category = button.dataset.category;
+            elements.categoryTabs.querySelectorAll(".category-tab").forEach((tab) => {
+                tab.classList.toggle("active", tab === button);
+            });
+            loadPosts();
+        });
+
+        // 초기 진입 시 서버 상태, 전체 통계, 현재 조건의 목록을 각각 비동기로 불러온다.
+        checkHealth();
+        loadStats();
+        loadPosts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "incident_time": 66,
+  "incident_service": "checkout-api",
+  "candidate_deploys": [
+    "dep-102"
+  ],
+  "related_commits": [
+    "9f8e7d6 장바구니 캐시 TTL 조정"
+  ]
+}

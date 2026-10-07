@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DocuFit — 기업대출 제출서류 사전검수 서비스 (프로토타입)</title>
+<style>
+:root{
+  --red:#EA002C; --ink:#23272f; --muted:#6b7280; --line:#dfe3e8;
+  --bg:#f6f7f9; --card:#fff; --ok:#1f7a45; --okbg:#e3f3e9;
+  --warn:#a86412; --warnbg:#fff3e0; --err:#c0281f; --errbg:#fdeaea;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Apple SD Gothic Neo","맑은 고딕",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+button{font:inherit;cursor:pointer;border:none;border-radius:5px}
+.btn{background:var(--red);color:#fff;padding:11px 18px;font-weight:700}
+.btn.o{background:#fff;color:var(--red);border:1.5px solid var(--red)}
+.btn.d{background:#e5e7eb;color:#9aa1ad;cursor:not-allowed}
+.btn.sm{padding:7px 13px;font-size:13px}
+.btn.dark{background:var(--ink);color:#fff}
+.bg{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:11px}
+.bg.ok{background:var(--okbg);color:var(--ok)} .bg.no{background:var(--errbg);color:var(--err)}
+.bg.wait{background:var(--warnbg);color:var(--warn)} .bg.gray{background:#eceef1;color:var(--muted)}
+
+/* 데모 바 */
+#demobar{background:var(--ink);color:#cfd4dc;font-size:12px;padding:7px 16px;display:flex;
+  align-items:center;gap:12px;flex-wrap:wrap}
+#demobar b{color:#fff}
+#demobar button{background:#3a4150;color:#e6eaf0;padding:4px 10px;font-size:12px}
+#demobar .sp{margin-left:auto}
+
+.appbar{background:var(--ink);color:#fff;padding:13px 22px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:17px;font-weight:800}
+.usermenu{font-size:13px;color:#cfd4dc;display:flex;gap:10px;align-items:center}
+.usermenu button{background:transparent;color:#cfd4dc;text-decoration:underline;padding:0;font-size:13px}
+main{max-width:1120px;margin:0 auto;padding:20px 22px 60px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:16px 18px;margin-bottom:14px}
+.hdr{font-size:15px;font-weight:800;margin-bottom:11px;display:flex;align-items:center;gap:8px}
+.lbl{font-size:12px;color:var(--muted);margin-bottom:4px}
+.val{font-size:14px;font-weight:600}
+.row{display:flex;gap:14px}.row>*{flex:1}
+.note{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+th{background:#eef0f3;font-size:12.5px;font-weight:700}
+.banner{background:#fff6f6;border:1.5px solid #f0b8b3;border-radius:6px;padding:14px 16px;margin-bottom:14px}
+.dash{border:1.5px dashed #b9c0ca;border-radius:6px;background:#fbfbfc;padding:16px;text-align:center;
+  color:#9aa1ad;font-size:13px;cursor:pointer}
+.dash:hover{border-color:var(--red);color:var(--red)}
+.mask{position:fixed;inset:0;background:rgba(20,24,32,.5);display:flex;align-items:center;
+  justify-content:center;z-index:50;padding:20px}
+.modal{background:#fff;border-radius:9px;width:100%;max-width:440px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.3)}
+.modal h3{padding:15px 18px;border-bottom:1px solid var(--line);font-size:16px}
+.modal .mb{padding:17px 18px}
+.modal .mf{padding:0 18px 18px;display:flex;gap:9px}.modal .mf>*{flex:1}
+input,textarea,select{width:100%;border:1.5px solid var(--line);border-radius:5px;padding:10px 12px;
+  font:inherit;margin-bottom:9px}
+textarea{height:86px;resize:vertical}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tabs button{background:#fff;color:var(--ink);border:1.5px solid var(--line);padding:9px 15px;font-size:13px}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;background:var(--ink);color:#fff;
+  padding:12px 20px;border-radius:7px;font-size:14px;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.pill{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#eef0f3;color:#4b5563;
+  padding:2px 7px;border-radius:4px}
+.api{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8b93a1}
+.center{max-width:430px;margin:60px auto}
+h1.lg{font-size:30px;text-align:center;margin-bottom:8px}
+.sub{text-align:center;color:var(--muted);margin-bottom:26px;font-size:13.5px}
+.err{color:var(--err);font-size:12.5px;margin-top:-4px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div id="demobar">
+  <b>DocuFit 프로토타입</b>
+  <span>정적 데모 · 백엔드 없음 · 데이터는 새로고침하면 초기화</span>
+  <span class="sp"></span>
+  <span id="dbg"></span>
+  <button onclick="reset()">시나리오 초기화</button>
+</div>
+
+<div id="app"></div>
+<div id="overlay"></div>
+
+<script>
+/* ─────────── 상수 (설계 문서와 동일) ─────────── */
+const DOC = {
+  BUSINESS_LICENSE:{ko:'사업자등록증', fields:['COMPANY_NAME','BUSINESS_NO','REPRESENTATIVE','OPEN_DATE']},
+  TAX_CERTIFICATE :{ko:'납세증명서',   fields:['COMPANY_NAME','BUSINESS_NO','ISSUED_AT','VALID_UNTIL']},
+  FINANCIAL_STATEMENT:{ko:'재무제표',  fields:['COMPANY_NAME','BUSINESS_NO','FISCAL_YEAR','REVENUE','TOTAL_ASSETS']},
+};
+const TYPES = Object.keys(DOC);
+const FIELD_KO = {COMPANY_NAME:'기업명', BUSINESS_NO:'사업자등록번호', REPRESENTATIVE:'대표자명',
+  OPEN_DATE:'개업일', ISSUED_AT:'발급일', VALID_UNTIL:'유효기간', FISCAL_YEAR:'사업연도',
+  REVENUE:'매출액', TOTAL_ASSETS:'자산총계'};
+const STATUS_KO = {DRAFT:'준비 중', REVIEW_PENDING:'검토 대기', REVISION_REQUESTED:'보완 요청',
+  RESUBMITTED:'재제출', DOCUMENTS_APPROVED:'서류 확인 완료'};
+const TODAY = '2026-09-09';
+
+/* 업로드 시 고를 수 있는 샘플 파일 — 오류를 일부러 만들 수 있게 준비 */
+const SAMPLES = {
+  BUSINESS_LICENSE:[
+    {n:'사업자등록증_정상.pdf', ok:true,  f:{COMPANY_NAME:'(주)한빛정밀',BUSINESS_NO:'127-81-00000',REPRESENTATIVE:'홍길동',OPEN_DATE:'2014-03-02'}},
+    {n:'사업자등록증_타사.pdf', ok:true,  f:{COMPANY_NAME:'(주)대성테크',BUSINESS_NO:'214-88-01234',REPRESENTATIVE:'김대성',OPEN_DATE:'2011-07-19'}},
+  ],
+  TAX_CERTIFICATE:[
+    {n:'납세증명서_최신.jpg', ok:true, f:{COMPANY_NAME:'(주)한빛정밀',BUSINESS_NO:'127-81-00000',ISSUED_AT:'2026-09-05',VALID_UNTIL:'2026-10-05'}},
+    {n:'납세증명서_만료.jpg', ok:true, f:{COMPANY_NAME:'(주)한빛정밀',BUSINESS_NO:'127-81-00000',ISSUED_AT:'2026-07-01',VALID_UNTIL:'2026-08-31'}},
+    {n:'납세증명서_번호오타.jpg', ok:true, f:{COMPANY_NAME:'(주)한빛정밀',BUSINESS_NO:'127-81-00009',ISSUED_AT:'2026-09-05',VALID_UNTIL:'2026-10-05'}},
+    {n:'납세증명서_스캔불량.jpg', ok:false, f:null},
+  ],
+  FINANCIAL_STATEMENT:[
+    {n:'재무제표_2025.pdf', ok:true, f:{COMPANY_NAME:'(주)한빛정밀',BUSINESS_NO:'127-81-00000',FISCAL_YEAR:'2025',REVENUE:'8,420,000,000',TOTAL_ASSETS:'6,110,000,000'}},
+    {n:'재무제표_2024.pdf', ok:true, f:{COMPANY_NAME:'(주)한빛정밀',BUSINESS_NO:'127-81-00000',FISCAL_YEAR:'2024',REVENUE:'7,980,000,000',TOTAL_ASSETS:'5,740,000,000'}},
+  ],
+};
+
+/* ─────────── 상태 (DB 테이블 구조와 1:1) ─────────── */
+let S, view, tab;
+function reset(){
+  S = {
+    role:null,
+    company:{business_no:'1278100000', name:'(주)한빛정밀'},          // companies
+    user:{company:'홍길동', bank:'김검토'},                            // users
+    app:{no:'DF-2026-000172', product:'중소기업 운전자금대출',           // loan_applications
+         required_fiscal_year:2025, status:'DRAFT', submitted_at:null},
+    docs:{},                                                          // submitted_documents + extracted_fields
+    reviews:[],                                                       // reviews
+  };
+  view='login'; tab='BUSINESS_LICENSE';
+  render();
+}
+
+/* ─────────── 검증 엔진 : 오류 6종을 실제로 판정 ─────────── */
+function validate(){
+  const out=[], d=S.docs, base=S.company;
+  for(const t of TYPES){
+    if(!d[t]) out.push({type:'MISSING_DOCUMENT', target:t,
+      msg:`${DOC[t].ko}가 제출되지 않았습니다.`, act:`${DOC[t].ko} 업로드`});
+  }
+  for(const t of TYPES){
+    if(d[t] && d[t].ocr==='FAILED') out.push({type:'OCR_SERVICE_FAILURE', target:t,
+      msg:`${DOC[t].ko}의 문서 분석을 완료하지 못했습니다.`, act:'분석 재시도'});
+  }
+  const tax=d.TAX_CERTIFICATE;
+  if(tax && tax.ocr==='COMPLETED' && tax.f.VALID_UNTIL < TODAY)
+    out.push({type:'EXPIRED_TAX_CERTIFICATE', target:'TAX_CERTIFICATE',
+      msg:`납세증명서의 유효기간이 지났습니다. (${tax.f.VALID_UNTIL} 까지)`, act:'유효한 문서 재업로드'});
+  for(const t of TYPES){
+    const x=d[t]; if(!x || x.ocr!=='COMPLETED') continue;
+    if(x.f.COMPANY_NAME && x.f.COMPANY_NAME!==base.name)
+      out.push({type:'COMPANY_NAME_MISMATCH', target:t,
+        msg:`${DOC[t].ko}의 기업명이 다른 문서와 일치하지 않습니다. (${x.f.COMPANY_NAME} ↔ ${base.name})`,
+        act:'대상 문서 확인·재업로드'});
+    if(x.f.BUSINESS_NO && x.f.BUSINESS_NO.replace(/-/g,'')!==base.business_no)
+      out.push({type:'BUSINESS_NO_MISMATCH', target:t,
+        msg:`${DOC[t].ko}의 사업자등록번호가 문서 간 일치하지 않습니다. (${x.f.BUSINESS_NO})`,
+        act:'대상 문서 확인·재업로드'});
+  }
+  const fs_=d.FINANCIAL_STATEMENT;
+  if(fs_ && fs_.ocr==='COMPLETED' && Number(fs_.f.FISCAL_YEAR)!==S.app.required_fiscal_year)
+    out.push({type:'FISCAL_YEAR_MISMATCH', target:'FINANCIAL_STATEMENT',
+      msg:`요구 사업연도(${S.app.required_fiscal_year})와 재무제표의 사업연도(${fs_.f.FISCAL_YEAR})가 다릅니다.`,
+      act:'요구 연도 문서 재업로드'});
+  return out;
+}
+const processing = () => TYPES.some(t=>S.docs[t] && S.docs[t].ocr==='PROCESSING');
+const revisionCount = () => S.reviews.filter(r=>r.decision==='REVISION_REQUESTED').length;
+const lastRevision  = () => [...S.reviews].reverse().find(r=>r.decision==='REVISION_REQUESTED');
+
+/* ─────────── 동작 ─────────── */
+function login(role){ S.role=role; view = role==='COMPANY_USER' ? 'comp1' : 'rev1'; render(); }
+function logout(){ S.role=null; view='login'; render(); }
+function go(v){ view=v; render(); window.scrollTo(0,0); }
+
+function pickFile(t){
+  modal(`<h3>${DOC[t].ko} 업로드</h3><div class="mb">
+    <div class="note" style="margin:0 0 10px">JPG · PNG · PDF / 최대 10MB. 데모용 샘플 파일을 고르세요.</div>
+    ${SAMPLES[t].map((s,i)=>`<button class="btn o" style="width:100%;margin-bottom:8px;text-align:left"
+      onclick="upload('${t}',${i})">${s.n}${s.ok?'':' <span class="bg no">OCR 실패 유발</span>'}</button>`).join('')}
+    </div><div class="mf"><button class="btn o" onclick="closeModal()">취소</button></div>`);
+}
+function upload(t,i){
+  closeModal();
+  const s=SAMPLES[t][i], prev=S.docs[t];
+  S.docs[t]={name:s.n, ver:prev?prev.ver+1:1, at:'2026-09-09 09:41', ocr:'PROCESSING', retry:0, sample:i, f:null};
+  toast(`업로드 성공 (201) · ${DOC[t].ko} v${S.docs[t].ver} · OCR 분석 시작`);
+  render();
+  setTimeout(()=>{ // 외부 OCR 분석 (모의)
+    const d=S.docs[t]; if(!d) return;
+    if(s.ok){ d.ocr='COMPLETED'; d.f=s.f; } else { d.ocr='FAILED'; }
+    render();
+  },1400);
+}
+function retry(t){
+  const d=S.docs[t];
+  if(d.retry>=3){ toast('422 · 재시도 3회를 초과했습니다. 새 파일로 재업로드해 주세요.'); return; }
+  d.retry++; d.ocr='PROCESSING'; render();
+  setTimeout(()=>{ // 2회차부터 성공하도록 모의
+    if(d.retry>=2){ const s=SAMPLES[t][d.sample]; d.ocr='COMPLETED';
+      d.f={COMPANY_NAME:S.company.name,BUSINESS_NO:'127-81-00000',ISSUED_AT:'2026-09-05',VALID_UNTIL:'2026-10-05'};
+      toast('재분석 성공 (200)'); }
+    else d.ocr='FAILED';
+    render();
+  },1300);
+}
+function submit(){
+  const iss=validate();
+  if(processing()){ toast('422 · OCR 분석이 끝나지 않았습니다.'); return; }
+  if(iss.length){ toast(`422 · 차단 오류 ${iss.length}건이 남아 있습니다.`); return; }
+  modal(`<h3>최종 제출 확인</h3><div class="mb">
+    제출하면 은행 담당자의 서류 검토가 시작되며, 이 버전은 수정할 수 없습니다.
+    <div class="note">상태가 <b>${S.app.status==='REVISION_REQUESTED'?'RESUBMITTED':'REVIEW_PENDING'}</b> 로 변경됩니다.</div></div>
+    <div class="mf"><button class="btn o" onclick="closeModal()">취소</button>
+    <button class="btn" onclick="doSubmit()">제출</button></div>`);
+}
+function doSubmit(){
+  closeModal();
+  S.app.status = revisionCount()>0 ? 'RESUBMITTED' : 'REVIEW_PENDING';
+  S.app.submitted_at='2026-09-09 09:48';
+  toast(`제출 완료 (200) · 상태 ${S.app.status}`);
+  go('comp1');
+}
+function approve(){
+  modal(`<h3>서류 확인 완료</h3><div class="mb">
+    제출된 서류의 형식 검토를 완료합니다.
+    <div class="note" style="color:var(--err);font-weight:700">서류 확인 완료는 대출 승인·신용 판단을 의미하지 않습니다.</div></div>
+    <div class="mf"><button class="btn o" onclick="closeModal()">취소</button>
+    <button class="btn" onclick="doApprove()">확인 완료</button></div>`);
+}
+function doApprove(){
+  closeModal();
+  if(S.app.status==='DOCUMENTS_APPROVED'){ toast('409 · 이미 처리된 신청 건입니다.'); return; }
+  S.reviews.push({decision:'DOCUMENTS_APPROVED', reviewer:S.user.bank, at:'2026-09-09 10:02'});
+  S.app.status='DOCUMENTS_APPROVED';
+  toast('결정 저장 (200) · DOCUMENTS_APPROVED');
+  go('rev1');
+}
+function revise(){
+  modal(`<h3>보완 요청</h3><div class="mb">
+    <div class="lbl">대상 문서 (한 건만 선택)</div>
+    ${TYPES.map((t,i)=>`<label style="display:block;margin:6px 0;font-size:13.5px">
+      <input type="radio" name="tdt" value="${t}" style="width:auto;margin-right:7px" ${i===1?'checked':''}>${DOC[t].ko}</label>`).join('')}
+    <div class="lbl" style="margin-top:12px">보완 사유 (필수)</div>
+    <textarea id="rsn" placeholder="기업 고객이 이해할 수 있는 구체적인 사유를 입력하세요">제출하신 납세증명서의 유효기간이 지났습니다. 최근 발급본으로 다시 올려 주세요.</textarea>
+    <div class="note">여러 문서의 보완이 필요하면 문서별로 요청을 등록합니다. (reviews.target_doc_type 단일 코드)</div></div>
+    <div class="mf"><button class="btn o" onclick="closeModal()">취소</button>
+    <button class="btn" onclick="doRevise()">보완 요청 보내기</button></div>`);
+}
+function doRevise(){
+  const t=document.querySelector('input[name=tdt]:checked').value;
+  const r=document.getElementById('rsn').value.trim();
+  if(!r){ toast('400 · 보완 사유를 입력해 주세요.'); return; }
+  closeModal();
+  S.reviews.push({decision:'REVISION_REQUESTED', target:t, reason:r, reviewer:S.user.bank, at:'2026-09-09 10:02'});
+  S.app.status='REVISION_REQUESTED';
+  toast('보완 요청 전송 (200) · REVISION_REQUESTED');
+  go('rev1');
+}
+function fixDoc(t){ go('comp1'); setTimeout(()=>{
+  const el=document.getElementById('card-'+t);
+  if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); el.style.outline='3px solid var(--red)';
+    setTimeout(()=>el.style.outline='',1800); }
+},60); }
+
+/* ─────────── 공통 UI ─────────── */
+function modal(html){ document.getElementById('overlay').innerHTML=
+  `<div class="mask" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`; }
+function closeModal(){ document.getElementById('overlay').innerHTML=''; }
+let tt;
+function toast(m){ clearTimeout(tt);
+  const o=document.getElementById('overlay');
+  const e=document.createElement('div'); e.className='toast'; e.textContent=m; o.appendChild(e);
+  tt=setTimeout(()=>e.remove(),2600); }
+
+function bar(title){ return `<div class="appbar"><div class="brand">${title}</div>
+  <div class="usermenu">${S.role==='COMPANY_USER'?S.company.name+' · '+S.user.company:'기업금융부 '+S.user.bank}
+  <button onclick="logout()">로그아웃</button></div></div>`; }
+
+/* ─────────── 화면 ─────────── */
+function vLogin(){ return `<main><div class="center">
+  <h1 class="lg">DocuFit</h1>
+  <div class="sub">기업대출 서류, 제출 전에 한 번에 확인하세요</div>
+  <div class="box">
+    <div class="hdr" style="justify-content:center">시스템 로그인</div>
+    <div class="lbl">아이디 / 업무용 이메일</div><input value="manager@hanbit.co.kr">
+    <div class="lbl">비밀번호</div><input type="password" value="demo1234">
+    <button class="btn" style="width:100%;margin-top:6px" onclick="login('COMPANY_USER')">기업 고객 담당자로 로그인</button>
+    <button class="btn dark" style="width:100%;margin-top:8px" onclick="login('BANK_REVIEWER')">은행 기업금융 담당자로 로그인</button>
+    <div class="note" style="text-align:center">데모라 역할을 직접 고릅니다. 실제로는 users.role 로 분기합니다.
+    <br>공개 회원가입 없음 — 초대 링크 <span class="pill">/activate?token=…</span> 로만 계정 활성화</div>
+  </div></div></main>`; }
+
+function docCard(t){
+  const d=S.docs[t], iss=validate().filter(i=>i.target===t);
+  let badge, body, action;
+  if(!d){ badge='<span class="bg gray">미제출</span>';
+    body='<div class="note">JPG · PNG · PDF / 최대 10MB</div>';
+    action=`<div class="dash" onclick="pickFile('${t}')">파일 선택 또는 드래그앤드롭</div>`; }
+  else if(d.ocr==='PROCESSING'){ badge='<span class="bg wait">◷ PROCESSING</span>';
+    body=`<div class="lbl">파일 / 버전</div><div class="val">${d.name} · v${d.ver}</div>`;
+    action='<button class="btn d" style="width:100%">분석 중 · 업로드 잠금</button>'; }
+  else if(d.ocr==='FAILED'){ badge='<span class="bg no">✕ FAILED</span>';
+    body=`<div class="lbl">파일 / 버전</div><div class="val">${d.name} · v${d.ver}</div>
+      <div class="note">문서 분석 실패 · 재시도 ${d.retry}/3 · 원본은 보존됩니다</div>`;
+    action=`<button class="btn o" style="width:100%" onclick="retry('${t}')">분석 재시도</button>
+      <div class="api" style="margin-top:5px">POST /api/documents/{id}/retry</div>`; }
+  else { badge='<span class="bg ok">✓ COMPLETED</span>';
+    body=`<div class="lbl">파일 / 버전</div><div class="val">${d.name} · v${d.ver}</div>
+      <div class="note">업로드 ${d.at}</div>`;
+    action=`<button class="btn o" style="width:100%" onclick="pickFile('${t}')">다시 올리기</button>`; }
+  const locked=['REVIEW_PENDING','RESUBMITTED','DOCUMENTS_APPROVED'].includes(S.app.status);
+  return `<div class="box" id="card-${t}">
+    <div class="hdr">${DOC[t].ko}</div>${body}
+    <div style="margin:9px 0">${badge}${iss.length?' <span class="bg no">오류 '+iss.length+'</span>':''}</div>
+    ${locked?'<button class="btn d" style="width:100%">제출 완료 · 수정 불가</button>':action}</div>`;
+}
+
+function vComp1(){
+  const rev=lastRevision(), iss=validate();
+  return bar('DocuFit') + `<main>
+  <div class="box"><div class="hdr">신청 요약</div><div class="row">
+    <div><div class="lbl">접수번호</div><div class="val">${S.app.no}</div></div>
+    <div><div class="lbl">상품명</div><div class="val">${S.app.product}</div></div>
+    <div><div class="lbl">요구 사업연도</div><div class="val">${S.app.required_fiscal_year}</div></div>
+    <div><div class="lbl">신청 상태</div><div class="val"><span class="bg ${S.app.status==='DOCUMENTS_APPROVED'?'ok':S.app.status==='DRAFT'?'gray':'wait'}">${S.app.status}</span></div></div>
+  </div><div class="api" style="margin-top:9px">GET /api/loan-applications/me</div></div>
+
+  ${S.app.status==='REVISION_REQUESTED'&&rev?`<div class="banner"><div style="display:flex;align-items:center;gap:12px">
+    <div style="flex:1"><div style="font-weight:800;color:var(--err)">보완 요청 — ${DOC[rev.target].ko}</div>
+    <div style="margin-top:4px">${rev.reason}</div>
+    <div class="note">요청일 ${rev.at} · 은행 담당자 ${rev.reviewer}</div></div>
+    <button class="btn o sm" onclick="fixDoc('${rev.target}')">대상 문서로 이동</button></div></div>`:''}
+
+  <div class="row">${TYPES.map(docCard).join('')}</div>
+
+  <div class="box" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <div style="flex:1;min-width:260px">
+      <div class="val">문서 ${TYPES.filter(t=>S.docs[t]&&S.docs[t].ocr==='COMPLETED').length} / 3 분석 완료${processing()?' · 분석 중':''}</div>
+      <div class="note">30초가 지나도 완료되지 않으면 지연 안내와 재조회 버튼을 표시합니다.
+      이 화면은 <b>처리 상태만</b> 보여주고 추출값·검증 결과는 다음 화면에서 확인합니다.</div>
+    </div>
+    <button class="btn ${processing()?'d':''}" onclick="if(!processing())go('comp2')">사전검증 결과 확인 →</button>
+  </div></main>`;
+}
+
+function vComp2(){
+  const iss=validate(), ok=iss.length===0 && !processing();
+  const checks=[
+    ['납세증명서 유효기간', !iss.some(i=>i.type==='EXPIRED_TAX_CERTIFICATE'), !!S.docs.TAX_CERTIFICATE],
+    ['기업명 일치',        !iss.some(i=>i.type==='COMPANY_NAME_MISMATCH'), true],
+    ['사업자등록번호 일치', !iss.some(i=>i.type==='BUSINESS_NO_MISMATCH'), true],
+    ['요구 사업연도',      !iss.some(i=>i.type==='FISCAL_YEAR_MISMATCH'), !!S.docs.FINANCIAL_STATEMENT],
+  ];
+  const keys=['COMPANY_NAME','BUSINESS_NO','VALID_UNTIL','FISCAL_YEAR'];
+  return bar('DocuFit') + `<main>
+  <div class="box"><div class="lbl">접수번호 / 기업명 / 요구 사업연도 / 상태</div>
+    <div class="val">${S.app.no} · ${S.company.name} · ${S.app.required_fiscal_year} · ${S.app.status}</div>
+    <div class="api" style="margin-top:8px">GET /api/loan-applications/{id}/validation</div></div>
+
+  <div class="box" style="background:${ok?'#f2fbf5':'#fff6f6'};border-color:${ok?'#bfe3cc':'#f0b8b3'}">
+    <div style="font-size:21px;font-weight:800;color:${ok?'var(--ok)':'var(--err)'}">
+      ${ok?'제출 가능 · 차단 오류 0건':'보완 필요 · 차단 오류 '+iss.length+'건'}</div>
+    <div class="note">차단 오류가 하나라도 있으면 최종 제출할 수 없습니다.</div></div>
+
+  <div class="row">
+    <div class="box"><div class="hdr">서류 3종 상태</div><table>${TYPES.map(t=>{
+      const d=S.docs[t];
+      return `<tr><td>${DOC[t].ko}</td><td style="width:110px">${d?(d.ocr==='COMPLETED'
+        ?`<span class="bg ok">완료 v${d.ver}</span>`:`<span class="bg wait">${d.ocr}</span>`)
+        :'<span class="bg no">미제출</span>'}</td></tr>`;}).join('')}</table></div>
+    <div class="box"><div class="hdr">교차검증 요약</div><table>${checks.map(([n,pass,avail])=>
+      `<tr><td>${n}</td><td style="width:98px">${!avail?'<span class="bg gray">확인 불가</span>'
+        :pass?'<span class="bg ok">통과</span>':'<span class="bg no">오류</span>'}</td></tr>`).join('')}</table></div>
+  </div>
+
+  <div class="box"><div class="hdr">오류 카드 목록 — 대상 / 원인 / 해결 행동</div>
+    ${iss.length?iss.map(i=>`<div class="banner" style="margin-bottom:9px;display:flex;align-items:center;gap:12px">
+      <div style="flex:1"><div style="font-weight:800;font-size:13px">${i.type} · ${DOC[i.target].ko}</div>
+      <div style="margin-top:3px">${i.msg}</div></div>
+      <button class="btn o sm" onclick="fixDoc('${i.target}')">${i.act} →</button></div>`).join('')
+      :'<div class="note">해결해야 할 오류가 없습니다.</div>'}</div>
+
+  <div class="box"><div class="hdr">문서별 주요 추출값 비교 <span class="note" style="margin:0">OCR 원본값 · 읽기 전용</span></div>
+    <table><tr><th>항목</th>${TYPES.map(t=>`<th>${DOC[t].ko}</th>`).join('')}</tr>
+    ${keys.map(k=>`<tr><td>${FIELD_KO[k]}</td>${TYPES.map(t=>{
+      const d=S.docs[t]; if(!d||d.ocr!=='COMPLETED'||!d.f[k]) return '<td>—</td>';
+      const bad=(k==='COMPANY_NAME'&&d.f[k]!==S.company.name)
+        ||(k==='BUSINESS_NO'&&d.f[k].replace(/-/g,'')!==S.company.business_no)
+        ||(k==='VALID_UNTIL'&&d.f[k]<TODAY)
+        ||(k==='FISCAL_YEAR'&&Number(d.f[k])!==S.app.required_fiscal_year);
+      return `<td style="${bad?'color:var(--err);font-weight:700':''}">${d.f[k]}</td>`;}).join('')}</tr>`).join('')}
+    </table></div>
+
+  <div style="display:flex;gap:12px;align-items:center">
+    <button class="btn o" onclick="go('comp1')">← 서류 다시 올리기</button>
+    <div style="flex:1"></div>
+    <button class="btn ${ok?'':'d'}" ${ok?'onclick="submit()"':''}>
+      ${ok?'최종 제출':'최종 제출 (차단 오류 '+iss.length+'건)'}</button>
+  </div>
+  <div class="api" style="text-align:right;margin-top:6px">POST /api/loan-applications/{id}/submit</div>
+  </main>`;
+}
+
+function vRev1(){
+  const listed=['REVIEW_PENDING','RESUBMITTED'].includes(S.app.status);
+  return bar('DocuFit 은행 서류 검토') + `<main>
+  <div class="box"><div class="tabs" style="margin:0">
+    <button class="on">전체 ${listed?1:0}</button>
+    <button>검토 대기 ${S.app.status==='REVIEW_PENDING'?1:0}</button>
+    <button>재제출 ${S.app.status==='RESUBMITTED'?1:0}</button></div>
+    <div class="api" style="margin-top:9px">GET /api/review/loan-applications</div></div>
+  <div class="box" style="padding:0;overflow:hidden">
+    <table><tr><th>기업명</th><th>접수번호</th><th>최근 제출 시각</th><th>보완 요청 횟수 · 상태</th><th style="width:120px">상세</th></tr>
+    ${listed?`<tr><td>${S.company.name}</td><td>${S.app.no}</td><td>${S.app.submitted_at}</td>
+      <td>보완 ${revisionCount()}회 <span class="bg ${S.app.status==='RESUBMITTED'?'wait':'gray'}">${S.app.status}</span></td>
+      <td><button class="btn o sm" onclick="go('rev2')">상세 검토</button></td></tr>`
+      :`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:34px">
+        현재 검토할 제출 건이 없습니다. <span class="pill">200 · 빈 배열</span></td></tr>`}
+    </table></div>
+  <div class="note">차단 오류가 있으면 기업이 최종 제출할 수 없으므로, 목록에는 오류 건수 대신 <b>보완 요청 횟수</b>를 표시합니다.</div>
+  </main>`;
+}
+
+function vRev2(){
+  const d=S.docs[tab], done=S.app.status==='DOCUMENTS_APPROVED';
+  return bar('DocuFit 은행 서류 검토') + `<main>
+  <div class="box" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px"><div class="lbl">기업명 / 접수번호 / 요구 사업연도 / 제출 시각 / 상태</div>
+    <div class="val">${S.company.name} · ${S.app.no} · ${S.app.required_fiscal_year} · ${S.app.submitted_at} ·
+    <span class="bg ${done?'ok':'wait'}">${S.app.status}</span></div></div>
+    <button class="btn o sm" onclick="go('rev1')">← 목록으로</button>
+    <div class="api" style="flex-basis:100%">GET /api/review/loan-applications/{id}</div></div>
+
+  <div class="tabs">${TYPES.map(t=>`<button class="${tab===t?'on':''}" onclick="tab='${t}';render()">
+    ${DOC[t].ko}${S.docs[t]?' v'+S.docs[t].ver:''}</button>`).join('')}</div>
+
+  <div class="row">
+    <div class="box" style="flex:1.2"><div class="hdr">최신 원본 미리보기</div>
+      <div class="dash" style="height:230px;display:flex;align-items:center;justify-content:center;cursor:default">
+        ${d?d.name+'<br>(원본 미리보기 · 만료 시간이 있는 조회용 URL)':'미제출'}</div></div>
+    <div class="box"><div class="hdr">OCR 추출값</div>
+      ${d&&d.ocr==='COMPLETED'?`<table>${DOC[tab].fields.map(k=>
+        `<tr><td>${FIELD_KO[k]}</td><td>${d.f[k]||'—'}</td></tr>`).join('')}</table>
+        <div class="note">읽기 전용 · 직접 수정 기능 없음</div>`:'<div class="note">추출값 없음</div>'}</div>
+    <div class="box"><div class="hdr">검증 결과</div>
+      <table>${validate().length?validate().map(i=>`<tr><td>${i.type}</td><td>${DOC[i.target].ko}</td></tr>`).join('')
+        :'<tr><td>필수서류 3종</td><td><span class="bg ok">통과</span></td></tr>'+
+         '<tr><td>유효기간·기업정보·사업연도</td><td><span class="bg ok">통과</span></td></tr>'}</table>
+      <div class="note">시스템 검증 결과는 참고 정보입니다. 원본을 직접 확인하세요.</div></div>
+  </div>
+
+  <div class="box"><div class="hdr">버전 · 이전 검토 이력</div>
+    <table><tr><th>일시</th><th>내용</th><th style="width:110px">처리자</th></tr>
+    ${[...S.reviews].reverse().map(r=>`<tr><td>${r.at}</td>
+      <td>${r.decision==='REVISION_REQUESTED'?'보완 요청 — '+DOC[r.target].ko+' : '+r.reason:'서류 확인 완료'}</td>
+      <td>${r.reviewer}</td></tr>`).join('')}
+    <tr><td>${S.app.submitted_at}</td><td>${revisionCount()?'재제출 (RESUBMITTED)':'최초 제출 (REVIEW_PENDING)'}</td>
+    <td>${S.user.company}</td></tr></table></div>
+
+  <div class="box" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:260px;color:var(--err);font-weight:700">
+      서류 확인 완료는 대출 승인 · 신용 판단을 의미하지 않습니다.</div>
+    <button class="btn ${done?'d':''}" ${done?'':'onclick="approve()"'}>서류 확인 완료</button>
+    <button class="btn o" ${done?'disabled':'onclick="revise()"'}>보완 요청</button>
+    <div class="api" style="flex-basis:100%;text-align:right">POST /api/review/loan-applications/{id}/decision</div>
+  </div></main>`;
+}
+
+/* ─────────── 렌더 ─────────── */
+function render(){
+  const V={login:vLogin, comp1:vComp1, comp2:vComp2, rev1:vRev1, rev2:vRev2};
+  document.getElementById('app').innerHTML=V[view]();
+  document.getElementById('dbg').textContent =
+    `상태 ${S.app.status} · 문서 ${TYPES.filter(t=>S.docs[t]).length}/3 · 차단 오류 ${validate().length} · 보완 ${revisionCount()}회`;
+}
+reset();
+</script>
+</body>
+</html>

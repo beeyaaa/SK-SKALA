@@ -1,0 +1,13 @@
+# Ray Serve config — `serve run serve_config.yaml`로 띄운다.
+#
+# 컨테이너 밖(호스트)에서 접속하려면 프록시가 0.0.0.0에 바인딩돼야 한다.
+# 최신 Ray의 `serve run`에는 --host 플래그가 없어서(제거됨), HTTP 바인딩 host/port는
+# 이 config의 http_options로 지정한다.
+http_options:
+  host: 0.0.0.0
+  port: 8000
+
+applications:
+  - name: greeter_app
+    import_path: app:app   # app.py의 app 객체 (Driver.bind(...))
+    route_prefix: /

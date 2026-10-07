@@ -1,0 +1,28 @@
+services:
+  # ── Ray Serve 단일 컨테이너 ──────────────────────────────────────────────
+  # 컨테이너 안에서 `serve run app:app`이 Ray를 자동 기동(serve run은 실행 중인
+  # Ray가 없으면 로컬 head를 알아서 띄운다)하고 app.py의 Driver를 8000 포트로 서빙한다.
+  # 온프레미스(1_onprem)가 호스트 venv + `ray start --head`를 직접 했던 것과 달리,
+  # 여기서는 그 전부가 이미지 하나 안에 캡슐화돼 `docker compose up`만으로 끝난다.
+  rayserve:
+    build: .
+    # Ray object store는 /dev/shm을 쓴다 — 기본 64MB로는 경고가 뜨므로 넉넉히 준다.
+    shm_size: "2gb"
+    ports:
+      - "8010:8000"     # Serve HTTP 엔드포인트 → http://localhost:8010
+      - "8275:8265"     # Ray Dashboard        → http://localhost:8275
+    # 1) ray head를 dashboard-host=0.0.0.0으로 먼저 띄운다 — 이래야 Ray Dashboard(8265)를
+    #    컨테이너 밖(호스트)에서 열 수 있다(기본값 127.0.0.1은 컨테이너 내부에서만 접속됨).
+    # 2) 그 위에서 serve run을 포그라운드(--blocking 기본)로 실행해 컨테이너를 살려둔다.
+    #    (serve HTTP의 0.0.0.0 바인딩은 serve_config.yaml의 http_options.host가 담당)
+    command: >
+      bash -c "ray start --head --dashboard-host=0.0.0.0 --port=6379 &&
+               exec serve run serve_config.yaml"
+    healthcheck:
+      # Serve 엔드포인트가 실제 200을 줄 때까지 기다린다(Dashboard가 아니라 앱 자체).
+      # rayproject 이미지엔 curl이 없어서, 이미지에 있는 python으로 확인한다.
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/?name=probe',timeout=3).status==200 else 1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 40s

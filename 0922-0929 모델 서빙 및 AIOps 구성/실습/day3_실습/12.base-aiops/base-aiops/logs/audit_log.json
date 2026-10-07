@@ -1,0 +1,12 @@
+{
+  "service": "checkout-api",
+  "action": "rollback_deployment",
+  "guardrail": {
+    "action": "rollback_deployment",
+    "approved": true,
+    "reason": "allowed_actions 통과"
+  },
+  "dry_run": true,
+  "executed": false,
+  "note": "실제 kubectl 실행 대신 감사 로그 기록으로 대체(로컬 실습 환경에 클러스터 없음)"
+}

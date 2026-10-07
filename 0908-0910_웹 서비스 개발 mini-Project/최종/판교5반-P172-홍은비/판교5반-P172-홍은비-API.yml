@@ -1,0 +1,1054 @@
+openapi: 3.0.3
+
+info:
+  title: DocuFit API
+  version: "1.2"
+  description: |
+    기업대출 제출서류 사전검수 및 보완관리 서비스 API
+
+    작성자 : 판교5 / P172 / 홍은비 · 작성일 2026-09-08
+    기준 문서 : 판교5반-P172-홍은비-요구사항정의서, 판교5반-P172-홍은비-화면설계서, 판교5반-P172-홍은비-DB.dbml
+
+    핵심 흐름
+    은행이 신청 건과 초대를 생성 → 기업 담당자가 초대 링크로 계정 활성화
+    → 필수서류 3종 업로드 → 외부 OCR 자동 분석 → 누락·유효기간·기업정보·사업연도 교차검증
+    → 차단 오류 0건이면 최종 제출 → 은행 담당자가 서류 확인 완료 또는 보완 요청
+
+    설계 원칙
+    - 화면 디스크립션의 '호출 API'에 있는 Path만 정의한다. 화면 없는 API는 만들지 않는다.
+    - 외부 OCR 호출은 이 서비스가 제공하는 API가 아니므로 명세에 넣지 않고 연동 실패를 502·504로 표현한다.
+    - 비밀번호, 초대 토큰, 원본 저장 경로는 어떤 응답에도 반환하지 않는다 (REQ-NFN-002).
+    - 사용하는 상태 코드는 200 · 201 · 400 · 401 · 403 · 404 · 409 · 422 · 500 · 502 · 504 로 제한한다.
+    - 로그인 이후 API는 Bearer JWT 인증을 사용하며 역할과 소속 기업에 따라 접근을 제한한다 (REQ-NFN-002).
+
+servers:
+  - url: http://localhost:8080
+    description: 로컬 개발 서버
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: auth
+    description: 초대 계정 활성화와 로그인 (REQ-FUNC-001 · SCR-AUTH-001)
+  - name: company
+    description: 기업 고객의 서류 제출과 사전검증 (REQ-FUNC-002~004 · SCR-COMP-001, SCR-COMP-002)
+  - name: review
+    description: 은행 담당자의 검토와 결정 (REQ-FUNC-005~006 · SCR-REV-001, SCR-REV-002)
+
+paths:
+
+  /api/auth/invitations/{token}:
+    get:
+      security: []
+      tags: [auth]
+      summary: 초대 정보 조회
+      description: |
+        초대 링크로 진입했을 때 활성화 화면에 표시할 기업명·초대 이메일·만료 시각을 조회한다.
+        토큰이 만료되었거나 이미 사용되었으면 401 을 반환해 재발급을 안내한다.
+        토큰 원문은 응답에 포함하지 않는다.
+        - 요구사항 : REQ-FUNC-001 (AC-01, AC-02)
+        - 화면 : SCR-AUTH-001 ⑦
+        - 테이블 : invitations, companies
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: 초대 링크의 토큰. 서버는 해시로 대조한다 (invitations.token_hash)
+          schema:
+            type: string
+            example: 9f2b7c1a4d8e
+      responses:
+        '200':
+          description: 사용 가능한 초대. 활성화 모달을 자동으로 연다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationInfo'
+        '401':
+          description: 만료되었거나 이미 사용한 초대 토큰. 재발급 안내를 표시한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: 존재하지 않는 토큰
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/auth/activate:
+    post:
+      security: []
+      tags: [auth]
+      summary: 초대 계정 활성화
+      description: |
+        은행이 발송한 일회성 초대 링크의 토큰으로 기업 고객 담당자 계정을 활성화한다.
+        토큰의 유효기간과 사용 여부, 초대에 연결된 기업·이메일 일치를 검증한다.
+        - 요구사항 : REQ-FUNC-001 (AC-01, AC-02)
+        - 화면 : SCR-AUTH-001 ⑦~⑪
+        - 테이블 : invitations, users, companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateRequest'
+      responses:
+        '201':
+          description: 계정 활성화 성공. 비밀번호와 초대 토큰은 응답에 포함하지 않는다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '400':
+          description: 필수값 누락, 비밀번호 불일치, 약관 미동의, 사업자등록번호·이메일 불일치
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '401':
+          description: 만료되었거나 이미 사용한 초대 토큰. 재발급 안내를 표시한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/auth/login:
+    post:
+      security: []
+      tags: [auth]
+      summary: 로그인
+      description: |
+        활성화된 기업 고객 담당자와 은행 기업금융 담당자가 아이디와 비밀번호로 로그인한다.
+        성공 시 역할에 따라 기업은 SCR-COMP-001, 은행은 SCR-REV-001 로 이동한다.
+        - 요구사항 : REQ-FUNC-001 (AC-03), REQ-NFN-002
+        - 화면 : SCR-AUTH-001 ②③④
+        - 테이블 : users, companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: 아이디 또는 비밀번호 불일치. 계정 존재 여부를 구분하지 않는 공통 문구를 반환한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/loan-applications/me:
+    get:
+      tags: [company]
+      summary: 신청·서류 현황 조회
+      description: |
+        로그인한 기업 고객의 소속 기업 신청 건과 필수서류 3종의 최신 제출 상태를 조회한다.
+        보완 요청 상태이면 대상 문서와 보완 사유를 함께 반환한다.
+        - 요구사항 : REQ-FUNC-002
+        - 화면 : SCR-COMP-001 ③④⑤⑥⑦⑧
+        - 테이블 : companies, loan_applications, submitted_documents, reviews
+      responses:
+        '200':
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: 진행 중인 서류 제출 건이 없음. 빈 화면 안내를 표시한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/loan-applications/{applicationId}/documents:
+    post:
+      tags: [company]
+      summary: 필수서류 업로드
+      description: |
+        문서 유형을 지정해 JPG, PNG 또는 PDF 파일을 업로드한다. 파일당 최대 10MB.
+        같은 유형을 다시 업로드하면 이전 파일을 덮어쓰지 않고 version_no 를 증가시키며
+        업로드 성공 즉시 외부 OCR 분석을 시작한다.
+        - 요구사항 : REQ-FUNC-003 (AC-01~AC-03), REQ-NFN-004
+        - 화면 : SCR-COMP-001 ⑤⑥⑦
+        - 테이블 : submitted_documents, extracted_fields
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [docType, file]
+              properties:
+                docType:
+                  $ref: '#/components/schemas/DocType'
+                file:
+                  type: string
+                  format: binary
+                  description: JPG, PNG 또는 PDF. 최대 10MB
+      responses:
+        '201':
+          description: 업로드 성공. OCR 분석이 PROCESSING 상태로 시작된다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          description: 지원하지 않는 파일 형식이거나 10MB 초과, 또는 docType 누락
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: 이미 최종 제출·확인 완료된 신청 건이라 업로드할 수 없음
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/OcrFailure'
+
+  /api/documents/{documentId}/retry:
+    post:
+      tags: [company]
+      summary: OCR 분석 재시도
+      description: |
+        OCR 분석이 FAILED 인 문서를 재업로드 없이 같은 원본으로 다시 분석한다.
+        원본과 신청 상태는 보존하며 최대 3회까지 재시도할 수 있다.
+        - 요구사항 : REQ-FUNC-003 (AC-03), REQ-NFN-004
+        - 화면 : SCR-COMP-001 ⑧
+        - 테이블 : submitted_documents.ocr_retry_count, extracted_fields
+      parameters:
+        - $ref: '#/components/parameters/DocumentId'
+      responses:
+        '200':
+          description: 재분석 요청 성공. 처리 상태가 PROCESSING 으로 변경된다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: 이미 분석 중이거나 이미 COMPLETED 인 문서
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '422':
+          description: 재시도 3회를 초과함. 새 파일로 재업로드해야 한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/OcrFailure'
+        '504':
+          description: 외부 OCR 응답 지연. 원본을 보존하고 다시 시도할 수 있다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /api/loan-applications/{applicationId}/validation:
+    get:
+      tags: [company]
+      summary: 사전검증 결과 조회
+      description: |
+        필수서류 누락, 납세증명서 유효기간, 문서 간 기업명·사업자등록번호,
+        요구 사업연도를 검증한 결과와 문서별 추출값 비교표를 반환한다.
+        모든 오류는 차단 오류이며 하나라도 남으면 최종 제출할 수 없다.
+        - 요구사항 : REQ-FUNC-004 (AC-01~AC-04)
+        - 화면 : SCR-COMP-002 ②③④⑤⑥
+        - 테이블 : companies, loan_applications, submitted_documents, extracted_fields, validation_issues
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      responses:
+        '200':
+          description: 검증 결과 조회 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/loan-applications/{applicationId}/submit:
+    post:
+      tags: [company]
+      summary: 최종 제출 및 보완 재제출
+      description: |
+        차단 오류가 없고 분석 중인 문서가 없을 때만 제출할 수 있다.
+        최초 제출이면 REVIEW_PENDING, 보완 요청 이후의 제출이면 RESUBMITTED 로 변경하고
+        제출된 문서 버전을 잠근다.
+        - 요구사항 : REQ-FUNC-004 (AC-02, AC-05)
+        - 화면 : SCR-COMP-002 ⑧⑨
+        - 테이블 : loan_applications, submitted_documents, validation_issues
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      responses:
+        '200':
+          description: 제출 성공. 변경된 신청 상태와 제출 시각을 반환한다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: 이미 제출되어 검토 대기 중이거나 확인 완료된 신청 건. 최신 상태를 재조회한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '422':
+          description: 차단 오류가 남아 있거나 OCR 분석이 끝나지 않음. 해결할 항목 목록을 반환한다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/review/loan-applications:
+    get:
+      tags: [review]
+      summary: 검토 대상 목록 조회
+      description: |
+        은행 담당자가 검토 대기(REVIEW_PENDING)와 재제출(RESUBMITTED) 상태의 신청 건을 조회한다.
+        차단 오류가 남은 신청은 최종 제출될 수 없으므로 목록에 오류 건수를 반환하지 않고
+        보완 요청 횟수를 반환한다.
+        - 요구사항 : REQ-FUNC-005 (AC-01~AC-03)
+        - 화면 : SCR-REV-001 ③~⑨
+        - 테이블 : companies, loan_applications, reviews
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: 생략하면 REVIEW_PENDING 과 RESUBMITTED 를 모두 조회한다
+          schema:
+            type: string
+            enum: [REVIEW_PENDING, RESUBMITTED]
+      responses:
+        '200':
+          description: 조회 성공. 대상이 없으면 빈 배열을 반환하고 화면은 빈 목록 안내를 표시한다
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReviewListItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/review/loan-applications/{applicationId}:
+    get:
+      tags: [review]
+      summary: 서류 상세 검토 조회
+      description: |
+        문서 3종의 최신 원본, OCR 추출값, 규칙별 검증 결과와 문서 업로드·검토 이력을 함께 반환한다.
+        OCR 추출값은 읽기 전용이며 원본 저장 경로 대신 만료 시간이 있는 조회용 URL을 반환한다.
+        - 요구사항 : REQ-FUNC-006, REQ-NFN-002, REQ-NFN-004
+        - 화면 : SCR-REV-002 ①③④⑤⑥⑦
+        - 테이블 : companies, loan_applications, users, submitted_documents, extracted_fields, validation_issues, reviews
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      responses:
+        '200':
+          description: 상세 조회 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/review/loan-applications/{applicationId}/decision:
+    post:
+      tags: [review]
+      summary: 서류 확인 완료 또는 보완 요청
+      description: |
+        은행 담당자가 검토 결과를 저장한다.
+        DOCUMENTS_APPROVED 는 서류 확인 완료이며 대출 승인이나 신용 판단을 의미하지 않는다.
+        REVISION_REQUESTED 는 대상 문서 1건과 보완 사유를 필수로 받는다.
+        여러 문서의 보완이 필요하면 문서별로 요청을 등록한다.
+        - 요구사항 : REQ-FUNC-006 (AC-01~AC-04)
+        - 화면 : SCR-REV-002 ⑨⑩⑪⑫⑬
+        - 테이블 : loan_applications, reviews
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: 결정 저장 성공. 변경된 신청 상태를 반환한다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionResponse'
+        '400':
+          description: REVISION_REQUESTED 인데 대상 문서 또는 보완 사유가 없음
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: 다른 담당자가 이미 처리한 신청 건. 최신 상태를 재조회한다
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: POST /api/auth/login 에서 발급한 accessToken
+
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: 서류 제출 건 식별자 (loan_applications.id)
+      schema:
+        type: integer
+        format: int64
+        example: 172
+    DocumentId:
+      name: documentId
+      in: path
+      required: true
+      description: 제출 문서 식별자 (submitted_documents.id)
+      schema:
+        type: integer
+        format: int64
+        example: 5031
+
+  responses:
+    BadRequest:
+      description: 필수값 누락 또는 형식 오류. 오류 위치와 해결 방법을 함께 반환한다
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unauthorized:
+      description: 로그인이 필요하거나 세션이 만료됨
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Forbidden:
+      description: 다른 기업의 데이터에 접근하거나 역할에 맞지 않는 API를 호출함 (REQ-NFN-002)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: 신청 건 또는 문서를 찾을 수 없음
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    InternalError:
+      description: 서버 내부 오류. 잠시 후 다시 시도해 주세요 안내와 재시도를 제공한다
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    OcrFailure:
+      description: 외부 OCR 연동 실패. 원본을 보존하고 재시도할 수 있다
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+
+  schemas:
+
+    DocType:
+      type: string
+      description: MVP 고정 3종 문서 유형 (submitted_documents.doc_type)
+      enum: [BUSINESS_LICENSE, TAX_CERTIFICATE, FINANCIAL_STATEMENT]
+      example: TAX_CERTIFICATE
+
+    OcrStatus:
+      type: string
+      description: 문서 처리 상태 (submitted_documents.ocr_status)
+      enum: [PROCESSING, COMPLETED, FAILED]
+
+    ApplicationStatus:
+      type: string
+      description: 신청 상태. DOCUMENTS_APPROVED 는 서류 확인 완료이며 대출 승인이 아니다
+      enum: [DRAFT, REVIEW_PENDING, REVISION_REQUESTED, RESUBMITTED, DOCUMENTS_APPROVED]
+
+    IssueType:
+      type: string
+      description: 검증 오류 유형 6종. 모두 차단 오류다 (validation_issues.issue_type)
+      enum:
+        - MISSING_DOCUMENT
+        - EXPIRED_TAX_CERTIFICATE
+        - COMPANY_NAME_MISMATCH
+        - BUSINESS_NO_MISMATCH
+        - FISCAL_YEAR_MISMATCH
+        - OCR_SERVICE_FAILURE
+
+    Role:
+      type: string
+      description: 사용자 역할 (users.role)
+      enum: [COMPANY_USER, BANK_REVIEWER]
+
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: 오류 코드
+          example: EXPIRED_INVITATION
+        message:
+          type: string
+          description: 사용자에게 보여줄 문구. 코드보다 해결 행동을 먼저 안내한다
+          example: 사용할 수 없는 초대입니다. 은행 담당자에게 재발급을 요청해 주세요.
+        field:
+          type: string
+          description: 입력 오류일 때 해당 필드명. 화면은 그 필드 아래에 문구를 표시한다
+          example: businessNo
+
+    UnprocessableError:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            blockingIssues:
+              type: array
+              description: 제출 전에 해결해야 할 차단 오류 목록
+              items:
+                $ref: '#/components/schemas/ValidationIssue'
+
+    InvitationInfo:
+      type: object
+      description: 활성화 화면 상단에 표시하는 초대 정보. 토큰은 반환하지 않는다 (REQ-NFN-002)
+      required: [companyName, email, expiresAt]
+      properties:
+        companyName:
+          type: string
+          description: 초대에 연결된 기업명 (companies.name)
+          example: (주)한빛정밀
+        email:
+          type: string
+          format: email
+          description: 초대받은 업무용 이메일. 활성화 시 수정할 수 없다
+          example: manager@hanbit.co.kr
+        expiresAt:
+          type: string
+          format: date-time
+          description: 초대 유효기간 (invitations.expires_at)
+
+    ActivateRequest:
+      type: object
+      required: [token, businessNo, name, email, password, passwordConfirm, termsAgreed]
+      properties:
+        token:
+          type: string
+          description: 초대 링크의 토큰. 서버는 해시로만 저장한다 (invitations.token_hash)
+          example: 9f2b7c1a4d8e
+        businessNo:
+          type: string
+          description: 사업자등록번호 10자리, 하이픈 제외. 초대에 연결된 기업과 일치해야 한다
+          pattern: '^[0-9]{10}$'
+          example: "1278100000"
+        name:
+          type: string
+          maxLength: 50
+          example: 홍길동
+        email:
+          type: string
+          format: email
+          description: 초대받은 업무용 이메일과 일치해야 한다
+          example: manager@hanbit.co.kr
+        password:
+          type: string
+          format: password
+          minLength: 8
+          description: 단방향 해시로 저장하며 응답에 반환하지 않는다 (REQ-NFN-002)
+        passwordConfirm:
+          type: string
+          format: password
+        termsAgreed:
+          type: boolean
+          description: 필수 약관 동의
+          example: true
+
+    LoginRequest:
+      type: object
+      required: [loginId, password]
+      properties:
+        loginId:
+          type: string
+          description: 아이디 또는 업무용 이메일 (users.login_id)
+          example: manager@hanbit.co.kr
+        password:
+          type: string
+          format: password
+
+    UserProfile:
+      type: object
+      required: [userId, name, role]
+      properties:
+        userId:
+          type: integer
+          format: int64
+          example: 41
+        name:
+          type: string
+          example: 홍길동
+        role:
+          $ref: '#/components/schemas/Role'
+        companyName:
+          type: string
+          description: COMPANY_USER 만 값을 가진다
+          example: (주)한빛정밀
+
+    LoginResponse:
+      type: object
+      required: [accessToken, user]
+      properties:
+        accessToken:
+          type: string
+          description: 이후 요청의 인증에 사용한다
+        user:
+          $ref: '#/components/schemas/UserProfile'
+
+    Document:
+      type: object
+      required: [documentId, docType, versionNo, fileName, fileSize, ocrStatus, ocrRetryCount, uploadedAt]
+      properties:
+        documentId:
+          type: integer
+          format: int64
+          example: 5031
+        docType:
+          $ref: '#/components/schemas/DocType'
+        versionNo:
+          type: integer
+          description: 문서 유형별 버전. 재업로드마다 1씩 증가한다
+          example: 2
+        fileName:
+          type: string
+          example: tax_cert.jpg
+        fileSize:
+          type: integer
+          description: 바이트
+          example: 1842301
+        ocrStatus:
+          $ref: '#/components/schemas/OcrStatus'
+        ocrRetryCount:
+          type: integer
+          description: 분석 재시도 횟수. 최대 3회
+          example: 0
+        uploadedAt:
+          type: string
+          format: date-time
+
+    ApplicationSummary:
+      type: object
+      required: [applicationId, applicationNo, companyName, productName, requiredFiscalYear, status]
+      properties:
+        applicationId:
+          type: integer
+          format: int64
+          example: 172
+        applicationNo:
+          type: string
+          example: DF-2026-000172
+        companyName:
+          type: string
+          example: (주)한빛정밀
+        productName:
+          type: string
+          example: 중소기업 운전자금대출
+        requiredFiscalYear:
+          type: integer
+          example: 2025
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        submittedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: 최초 제출 또는 최근 재제출 시각
+
+    RevisionInfo:
+      type: object
+      description: 가장 최근 보완 요청. SCR-COMP-001 ④ 배너에 표시한다
+      required: [targetDocType, reason, requestedAt]
+      properties:
+        targetDocType:
+          $ref: '#/components/schemas/DocType'
+        reason:
+          type: string
+          example: 제출하신 납세증명서의 유효기간이 지났습니다. 최근 발급본으로 다시 올려 주세요.
+        reviewerName:
+          type: string
+          example: 김검토
+        requestedAt:
+          type: string
+          format: date-time
+
+    ApplicationDetail:
+      type: object
+      required: [application, documents]
+      properties:
+        application:
+          $ref: '#/components/schemas/ApplicationSummary'
+        documents:
+          type: array
+          description: 문서 유형별 최신본. 미제출 유형은 배열에 포함하지 않는다
+          items:
+            $ref: '#/components/schemas/Document'
+        latestRevision:
+          allOf:
+            - $ref: '#/components/schemas/RevisionInfo'
+          nullable: true
+          description: REVISION_REQUESTED 상태일 때만 값이 있다
+
+    ValidationIssue:
+      type: object
+      required: [issueId, issueType, targetDocType, message]
+      properties:
+        issueId:
+          type: integer
+          format: int64
+          example: 908
+        issueType:
+          $ref: '#/components/schemas/IssueType'
+        targetDocType:
+          $ref: '#/components/schemas/DocType'
+        documentId:
+          type: integer
+          format: int64
+          nullable: true
+          description: MISSING_DOCUMENT 는 대상 문서가 없으므로 null
+        message:
+          type: string
+          example: 사업자등록번호가 문서 간 일치하지 않습니다.
+        resolveAction:
+          type: string
+          description: 화면 ⑤ 의 해결 행동 문구
+          example: 대상 문서 다시 올리기
+
+    ExtractedValue:
+      type: object
+      description: 문서별 OCR 원본값. 읽기 전용이며 수정 API를 제공하지 않는다
+      required: [docType, fieldKey]
+      properties:
+        docType:
+          $ref: '#/components/schemas/DocType'
+        fieldKey:
+          type: string
+          description: extracted_fields.field_key
+          enum:
+            - COMPANY_NAME
+            - BUSINESS_NO
+            - REPRESENTATIVE
+            - OPEN_DATE
+            - ISSUED_AT
+            - VALID_UNTIL
+            - FISCAL_YEAR
+            - REVENUE
+            - TOTAL_ASSETS
+          example: BUSINESS_NO
+        fieldValue:
+          type: string
+          nullable: true
+          description: 추출 실패 시 null
+          example: "1278100009"
+
+    ValidationDocumentStatus:
+      type: object
+      description: 사전검증 화면에 표시하는 고정 문서 유형별 최신 제출 상태
+      required: [docType, submitted]
+      properties:
+        docType:
+          $ref: '#/components/schemas/DocType'
+        submitted:
+          type: boolean
+          description: 해당 문서 유형의 최신 제출본 존재 여부
+          example: true
+        documentId:
+          type: integer
+          format: int64
+          nullable: true
+          description: 미제출이면 null
+          example: 5031
+        versionNo:
+          type: integer
+          nullable: true
+          description: 미제출이면 null
+          example: 2
+        fileName:
+          type: string
+          nullable: true
+          description: 미제출이면 null
+          example: tax_cert.jpg
+        ocrStatus:
+          allOf:
+            - $ref: '#/components/schemas/OcrStatus'
+          nullable: true
+          description: 미제출이면 null
+
+    ValidationCheck:
+      type: object
+      description: 검증 규칙별 화면 표시 결과
+      required: [checkType, label, status]
+      properties:
+        checkType:
+          type: string
+          enum:
+            - REQUIRED_DOCUMENTS
+            - TAX_CERTIFICATE_VALIDITY
+            - COMPANY_NAME_MATCH
+            - BUSINESS_NO_MATCH
+            - FISCAL_YEAR_MATCH
+        label:
+          type: string
+          example: 사업자등록번호 일치
+        status:
+          type: string
+          enum: [PASS, FAIL, NOT_CHECKED]
+          example: FAIL
+        targetDocType:
+          allOf:
+            - $ref: '#/components/schemas/DocType'
+          nullable: true
+          description: 특정 문서의 조치가 필요할 때만 값이 있다
+        message:
+          type: string
+          nullable: true
+          description: 오류 또는 확인 불가 사유
+          example: 사업자등록번호가 문서 간 일치하지 않습니다.
+
+    ValidationResult:
+      type: object
+      required: [application, submittable, documents, checks, issues, extractedValues]
+      properties:
+        application:
+          $ref: '#/components/schemas/ApplicationSummary'
+        submittable:
+          type: boolean
+          description: 차단 오류가 없고 분석 중인 문서가 없으면 true
+          example: false
+        documents:
+          type: array
+          description: SCR-COMP-002 ③에 표시할 고정 문서 3종의 제출·OCR 상태와 최신 버전
+          minItems: 3
+          maxItems: 3
+          items:
+            $ref: '#/components/schemas/ValidationDocumentStatus'
+        checks:
+          type: array
+          description: SCR-COMP-002 ④에 표시할 규칙별 통과·오류·확인 불가 결과
+          items:
+            $ref: '#/components/schemas/ValidationCheck'
+        issues:
+          type: array
+          description: 미해결 차단 오류 목록. 비어 있으면 제출 가능
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        extractedValues:
+          type: array
+          description: SCR-COMP-002 ⑥ 추출값 비교표의 원본 데이터
+          items:
+            $ref: '#/components/schemas/ExtractedValue'
+
+    SubmitResponse:
+      type: object
+      required: [applicationId, status, submittedAt]
+      properties:
+        applicationId:
+          type: integer
+          format: int64
+          example: 172
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        submittedAt:
+          type: string
+          format: date-time
+
+    ReviewListItem:
+      type: object
+      required: [applicationId, applicationNo, companyName, submittedAt, status, revisionCount]
+      properties:
+        applicationId:
+          type: integer
+          format: int64
+          example: 172
+        applicationNo:
+          type: string
+          example: DF-2026-000172
+        companyName:
+          type: string
+          example: (주)한빛정밀
+        submittedAt:
+          type: string
+          format: date-time
+          description: 최근 제출 시각. 최신 건 우선 정렬
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        revisionCount:
+          type: integer
+          description: 보완 요청 횟수. reviews 중 REVISION_REQUESTED 건수
+          example: 1
+
+    ReviewHistoryItem:
+      type: object
+      required: [occurredAt, description]
+      description: submitted_documents.uploaded_at 과 reviews.decided_at 으로 구성한 문서 업로드·검토 이력
+      properties:
+        occurredAt:
+          type: string
+          format: date-time
+        description:
+          type: string
+          example: 보완 요청 — 납세증명서 유효기간 만료
+        actorName:
+          type: string
+          example: 김검토
+
+    ReviewDocument:
+      allOf:
+        - $ref: '#/components/schemas/Document'
+        - type: object
+          properties:
+            previewUrl:
+              type: string
+              format: uri
+              description: 만료 시간이 있는 원본 조회용 URL. 저장 경로는 반환하지 않는다 (REQ-NFN-002)
+            extractedValues:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExtractedValue'
+
+    ReviewDetail:
+      type: object
+      required: [application, documents, checks, issues, history]
+      properties:
+        application:
+          $ref: '#/components/schemas/ApplicationSummary'
+        documents:
+          type: array
+          description: 문서 3종의 최신본과 추출값
+          items:
+            $ref: '#/components/schemas/ReviewDocument'
+        checks:
+          type: array
+          description: SCR-REV-002 ⑥에 표시할 규칙별 검증 결과
+          items:
+            $ref: '#/components/schemas/ValidationCheck'
+        issues:
+          type: array
+          description: 검증 결과. 제출된 건이므로 통상 비어 있다
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        history:
+          type: array
+          description: 문서 버전 업로드와 은행 담당자의 보완 요청·확인 완료 이력
+          items:
+            $ref: '#/components/schemas/ReviewHistoryItem'
+
+    DecisionRequest:
+      type: object
+      required: [decision]
+      description: |
+        decision 이 REVISION_REQUESTED 이면 targetDocType 과 reason 이 필수다.
+        DOCUMENTS_APPROVED 이면 두 값을 보내지 않는다.
+      properties:
+        decision:
+          type: string
+          enum: [DOCUMENTS_APPROVED, REVISION_REQUESTED]
+          example: REVISION_REQUESTED
+        targetDocType:
+          $ref: '#/components/schemas/DocType'
+        reason:
+          type: string
+          maxLength: 500
+          description: 기업 고객이 이해할 수 있는 구체적인 사유. 내부 용어를 쓰지 않는다
+          example: 제출하신 납세증명서의 유효기간이 지났습니다. 최근 발급본으로 다시 올려 주세요.
+
+    DecisionResponse:
+      type: object
+      required: [applicationId, status, decidedAt]
+      properties:
+        applicationId:
+          type: integer
+          format: int64
+          example: 172
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        decision:
+          type: string
+          enum: [DOCUMENTS_APPROVED, REVISION_REQUESTED]
+        reviewerName:
+          type: string
+          example: 김검토
+        decidedAt:
+          type: string
+          format: date-time

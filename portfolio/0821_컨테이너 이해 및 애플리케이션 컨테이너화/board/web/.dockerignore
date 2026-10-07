@@ -1,0 +1,14 @@
+# 작성자: 홍은비
+# 작성일자: 2026-08-21
+# 변경사항: Web 이미지 빌드에 불필요한 저장소·편집기·임시 파일 제외
+
+# Repository and editor files
+.git/
+.gitignore
+.DS_Store
+.idea/
+.vscode/
+
+# Temporary and log files
+*.log
+*.tmp

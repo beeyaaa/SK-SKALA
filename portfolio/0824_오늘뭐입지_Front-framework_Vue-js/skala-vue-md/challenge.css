@@ -1,0 +1,14 @@
+/* VueStyle.vue에서 불러오는 외부 스타일시트이다. */
+.btn-external {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #42b883;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-external:hover {
+  background-color: #36966d;
+}

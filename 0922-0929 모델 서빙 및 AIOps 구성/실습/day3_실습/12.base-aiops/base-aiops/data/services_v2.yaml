@@ -1,0 +1,10 @@
+# 자동 발견 대상 서비스 매니페스트 (실제 클러스터 API 응답을 흉내낸 합성 데이터)
+- name: checkout-api
+  port: 8172
+  otel_instrumented: true
+- name: payment-gateway
+  port: 8950
+  otel_instrumented: true
+- name: recommendation-engine
+  port: 8883
+  otel_instrumented: true

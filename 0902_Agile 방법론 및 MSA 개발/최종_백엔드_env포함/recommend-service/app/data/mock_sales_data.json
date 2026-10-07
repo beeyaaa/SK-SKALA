@@ -1,0 +1,6219 @@
+{
+  "metadata": {
+    "description": "사용자별 강의 패키지 추천을 위한 예시 판매 데이터",
+    "isMockData": true,
+    "period": "최근 6개월"
+  },
+  "courseSales": [
+    {
+      "courseId": 1,
+      "courseName": "Spring Boot 기초",
+      "salesCount": 317
+    },
+    {
+      "courseId": 2,
+      "courseName": "Spring Boot MSA",
+      "salesCount": 419
+    },
+    {
+      "courseId": 3,
+      "courseName": "Vue.js 기초",
+      "salesCount": 562
+    },
+    {
+      "courseId": 4,
+      "courseName": "Java 객체지향 실전",
+      "salesCount": 623
+    },
+    {
+      "courseId": 5,
+      "courseName": "Spring Security와 JWT",
+      "salesCount": 585
+    },
+    {
+      "courseId": 6,
+      "courseName": "REST API 설계와 테스트",
+      "salesCount": 687
+    },
+    {
+      "courseId": 7,
+      "courseName": "JPA와 Hibernate 성능 최적화",
+      "salesCount": 789
+    },
+    {
+      "courseId": 8,
+      "courseName": "Kotlin 서버 개발",
+      "salesCount": 891
+    },
+    {
+      "courseId": 9,
+      "courseName": "Spring WebFlux 리액티브 프로그래밍",
+      "salesCount": 993
+    },
+    {
+      "courseId": 10,
+      "courseName": "클린 아키텍처 실전",
+      "salesCount": 235
+    },
+    {
+      "courseId": 11,
+      "courseName": "도메인 주도 설계 입문",
+      "salesCount": 337
+    },
+    {
+      "courseId": 12,
+      "courseName": "백엔드 TDD 실전",
+      "salesCount": 439
+    },
+    {
+      "courseId": 13,
+      "courseName": "Gradle 빌드 자동화",
+      "salesCount": 541
+    },
+    {
+      "courseId": 14,
+      "courseName": "Spring과 Redis 활용",
+      "salesCount": 643
+    },
+    {
+      "courseId": 15,
+      "courseName": "Kafka 이벤트 기반 아키텍처",
+      "salesCount": 605
+    },
+    {
+      "courseId": 16,
+      "courseName": "gRPC 서비스 개발",
+      "salesCount": 707
+    },
+    {
+      "courseId": 17,
+      "courseName": "GraphQL API 구축",
+      "salesCount": 809
+    },
+    {
+      "courseId": 18,
+      "courseName": "Spring Batch 대용량 처리",
+      "salesCount": 911
+    },
+    {
+      "courseId": 19,
+      "courseName": "Java 동시성 프로그래밍",
+      "salesCount": 1013
+    },
+    {
+      "courseId": 20,
+      "courseName": "JVM 성능 튜닝",
+      "salesCount": 255
+    },
+    {
+      "courseId": 21,
+      "courseName": "백엔드 로깅과 모니터링",
+      "salesCount": 357
+    },
+    {
+      "courseId": 22,
+      "courseName": "API Gateway 패턴",
+      "salesCount": 459
+    },
+    {
+      "courseId": 23,
+      "courseName": "분산 트랜잭션 이해",
+      "salesCount": 561
+    },
+    {
+      "courseId": 24,
+      "courseName": "Saga 패턴 실전",
+      "salesCount": 663
+    },
+    {
+      "courseId": 25,
+      "courseName": "CQRS와 이벤트 소싱",
+      "salesCount": 625
+    },
+    {
+      "courseId": 26,
+      "courseName": "헥사고날 아키텍처",
+      "salesCount": 727
+    },
+    {
+      "courseId": 27,
+      "courseName": "레거시 시스템 리팩터링",
+      "salesCount": 829
+    },
+    {
+      "courseId": 28,
+      "courseName": "Spring 통합 테스트",
+      "salesCount": 931
+    },
+    {
+      "courseId": 29,
+      "courseName": "Spring Cloud 실전",
+      "salesCount": 893
+    },
+    {
+      "courseId": 30,
+      "courseName": "Java 21 신기능",
+      "salesCount": 275
+    },
+    {
+      "courseId": 31,
+      "courseName": "대규모 트래픽 백엔드 설계",
+      "salesCount": 377
+    },
+    {
+      "courseId": 32,
+      "courseName": "React 웹 개발 입문",
+      "salesCount": 520
+    },
+    {
+      "courseId": 33,
+      "courseName": "HTML과 CSS 실전",
+      "salesCount": 622
+    },
+    {
+      "courseId": 34,
+      "courseName": "TypeScript 실전",
+      "salesCount": 584
+    },
+    {
+      "courseId": 35,
+      "courseName": "Next.js 웹 애플리케이션",
+      "salesCount": 686
+    },
+    {
+      "courseId": 36,
+      "courseName": "프론트엔드 테스트 자동화",
+      "salesCount": 788
+    },
+    {
+      "courseId": 37,
+      "courseName": "Vue 3 Composition API",
+      "salesCount": 890
+    },
+    {
+      "courseId": 38,
+      "courseName": "React 상태 관리",
+      "salesCount": 992
+    },
+    {
+      "courseId": 39,
+      "courseName": "웹 접근성 실무",
+      "salesCount": 234
+    },
+    {
+      "courseId": 40,
+      "courseName": "반응형 웹 디자인",
+      "salesCount": 336
+    },
+    {
+      "courseId": 41,
+      "courseName": "JavaScript 핵심 원리",
+      "salesCount": 438
+    },
+    {
+      "courseId": 42,
+      "courseName": "모던 CSS 레이아웃",
+      "salesCount": 540
+    },
+    {
+      "courseId": 43,
+      "courseName": "Vite 빌드 최적화",
+      "salesCount": 642
+    },
+    {
+      "courseId": 44,
+      "courseName": "프론트엔드 성능 개선",
+      "salesCount": 604
+    },
+    {
+      "courseId": 45,
+      "courseName": "Storybook 디자인 시스템",
+      "salesCount": 706
+    },
+    {
+      "courseId": 46,
+      "courseName": "React Query 데이터 패칭",
+      "salesCount": 808
+    },
+    {
+      "courseId": 47,
+      "courseName": "Nuxt 풀스택 프론트엔드",
+      "salesCount": 910
+    },
+    {
+      "courseId": 48,
+      "courseName": "Svelte 입문",
+      "salesCount": 1012
+    },
+    {
+      "courseId": 49,
+      "courseName": "웹 컴포넌트 설계",
+      "salesCount": 254
+    },
+    {
+      "courseId": 50,
+      "courseName": "Micro Frontend 아키텍처",
+      "salesCount": 356
+    },
+    {
+      "courseId": 51,
+      "courseName": "브라우저 렌더링 원리",
+      "salesCount": 458
+    },
+    {
+      "courseId": 52,
+      "courseName": "프론트엔드 보안 기초",
+      "salesCount": 560
+    },
+    {
+      "courseId": 53,
+      "courseName": "Playwright E2E 테스트",
+      "salesCount": 662
+    },
+    {
+      "courseId": 54,
+      "courseName": "프론트엔드 CI/CD",
+      "salesCount": 624
+    },
+    {
+      "courseId": 55,
+      "courseName": "Canvas 데이터 시각화",
+      "salesCount": 726
+    },
+    {
+      "courseId": 56,
+      "courseName": "PWA 서비스 개발",
+      "salesCount": 828
+    },
+    {
+      "courseId": 57,
+      "courseName": "프론트엔드 코드 리뷰",
+      "salesCount": 930
+    },
+    {
+      "courseId": 58,
+      "courseName": "Redux Toolkit 실전",
+      "salesCount": 892
+    },
+    {
+      "courseId": 59,
+      "courseName": "Vue Pinia 상태 관리",
+      "salesCount": 274
+    },
+    {
+      "courseId": 60,
+      "courseName": "대규모 프론트엔드 설계",
+      "salesCount": 376
+    },
+    {
+      "courseId": 61,
+      "courseName": "머신러닝 입문",
+      "salesCount": 519
+    },
+    {
+      "courseId": 62,
+      "courseName": "생성형 AI와 프롬프트 엔지니어링",
+      "salesCount": 621
+    },
+    {
+      "courseId": 63,
+      "courseName": "딥러닝과 PyTorch",
+      "salesCount": 583
+    },
+    {
+      "courseId": 64,
+      "courseName": "RAG 기반 AI 서비스 구축",
+      "salesCount": 685
+    },
+    {
+      "courseId": 65,
+      "courseName": "LLM 애플리케이션 평가와 운영",
+      "salesCount": 787
+    },
+    {
+      "courseId": 66,
+      "courseName": "자연어 처리 기초",
+      "salesCount": 889
+    },
+    {
+      "courseId": 67,
+      "courseName": "컴퓨터 비전 입문",
+      "salesCount": 991
+    },
+    {
+      "courseId": 68,
+      "courseName": "Transformer 핵심 원리",
+      "salesCount": 233
+    },
+    {
+      "courseId": 69,
+      "courseName": "OpenAI API 서비스 개발",
+      "salesCount": 335
+    },
+    {
+      "courseId": 70,
+      "courseName": "LangChain 애플리케이션",
+      "salesCount": 437
+    },
+    {
+      "courseId": 71,
+      "courseName": "벡터 데이터베이스 활용",
+      "salesCount": 539
+    },
+    {
+      "courseId": 72,
+      "courseName": "AI Agent 설계",
+      "salesCount": 641
+    },
+    {
+      "courseId": 73,
+      "courseName": "멀티모달 AI 서비스",
+      "salesCount": 603
+    },
+    {
+      "courseId": 74,
+      "courseName": "파인튜닝과 모델 최적화",
+      "salesCount": 705
+    },
+    {
+      "courseId": 75,
+      "courseName": "추천 시스템 입문",
+      "salesCount": 807
+    },
+    {
+      "courseId": 76,
+      "courseName": "시계열 예측 모델",
+      "salesCount": 909
+    },
+    {
+      "courseId": 77,
+      "courseName": "MLOps 파이프라인",
+      "salesCount": 1011
+    },
+    {
+      "courseId": 78,
+      "courseName": "AI 모델 설명 가능성",
+      "salesCount": 253
+    },
+    {
+      "courseId": 79,
+      "courseName": "Responsible AI 기초",
+      "salesCount": 355
+    },
+    {
+      "courseId": 80,
+      "courseName": "음성 인식 서비스 개발",
+      "salesCount": 457
+    },
+    {
+      "courseId": 81,
+      "courseName": "이미지 생성 AI 활용",
+      "salesCount": 559
+    },
+    {
+      "courseId": 82,
+      "courseName": "문서 분류 자동화",
+      "salesCount": 661
+    },
+    {
+      "courseId": 83,
+      "courseName": "LLM 프롬프트 평가",
+      "salesCount": 623
+    },
+    {
+      "courseId": 84,
+      "courseName": "검색 증강 생성 심화",
+      "salesCount": 725
+    },
+    {
+      "courseId": 85,
+      "courseName": "지식 그래프와 AI",
+      "salesCount": 827
+    },
+    {
+      "courseId": 86,
+      "courseName": "경량 모델 배포",
+      "salesCount": 929
+    },
+    {
+      "courseId": 87,
+      "courseName": "AI 서비스 비용 최적화",
+      "salesCount": 891
+    },
+    {
+      "courseId": 88,
+      "courseName": "Synthetic Data 생성",
+      "salesCount": 273
+    },
+    {
+      "courseId": 89,
+      "courseName": "LLM 보안과 가드레일",
+      "salesCount": 375
+    },
+    {
+      "courseId": 90,
+      "courseName": "기업용 AI 아키텍처",
+      "salesCount": 477
+    },
+    {
+      "courseId": 91,
+      "courseName": "Docker 컨테이너 실전",
+      "salesCount": 620
+    },
+    {
+      "courseId": 92,
+      "courseName": "Kubernetes 운영 기초",
+      "salesCount": 582
+    },
+    {
+      "courseId": 93,
+      "courseName": "GitHub Actions CI/CD",
+      "salesCount": 684
+    },
+    {
+      "courseId": 94,
+      "courseName": "AWS 클라우드 아키텍처",
+      "salesCount": 786
+    },
+    {
+      "courseId": 95,
+      "courseName": "Terraform 인프라 자동화",
+      "salesCount": 888
+    },
+    {
+      "courseId": 96,
+      "courseName": "Linux 서버 운영",
+      "salesCount": 990
+    },
+    {
+      "courseId": 97,
+      "courseName": "Nginx 웹 서버 구성",
+      "salesCount": 232
+    },
+    {
+      "courseId": 98,
+      "courseName": "Helm 차트 실전",
+      "salesCount": 334
+    },
+    {
+      "courseId": 99,
+      "courseName": "Argo CD GitOps",
+      "salesCount": 436
+    },
+    {
+      "courseId": 100,
+      "courseName": "Jenkins 파이프라인",
+      "salesCount": 538
+    },
+    {
+      "courseId": 101,
+      "courseName": "Prometheus 모니터링",
+      "salesCount": 640
+    },
+    {
+      "courseId": 102,
+      "courseName": "Grafana 대시보드",
+      "salesCount": 602
+    },
+    {
+      "courseId": 103,
+      "courseName": "ELK 로그 분석",
+      "salesCount": 704
+    },
+    {
+      "courseId": 104,
+      "courseName": "OpenTelemetry 분산 추적",
+      "salesCount": 806
+    },
+    {
+      "courseId": 105,
+      "courseName": "SRE 기초",
+      "salesCount": 908
+    },
+    {
+      "courseId": 106,
+      "courseName": "클라우드 비용 최적화",
+      "salesCount": 1010
+    },
+    {
+      "courseId": 107,
+      "courseName": "AWS EKS 운영",
+      "salesCount": 252
+    },
+    {
+      "courseId": 108,
+      "courseName": "Azure DevOps 입문",
+      "salesCount": 354
+    },
+    {
+      "courseId": 109,
+      "courseName": "GCP 인프라 설계",
+      "salesCount": 456
+    },
+    {
+      "courseId": 110,
+      "courseName": "Ansible 구성 관리",
+      "salesCount": 558
+    },
+    {
+      "courseId": 111,
+      "courseName": "네트워크와 DNS 기초",
+      "salesCount": 660
+    },
+    {
+      "courseId": 112,
+      "courseName": "서비스 메시 Istio",
+      "salesCount": 622
+    },
+    {
+      "courseId": 113,
+      "courseName": "Kubernetes 보안",
+      "salesCount": 724
+    },
+    {
+      "courseId": 114,
+      "courseName": "컨테이너 이미지 최적화",
+      "salesCount": 826
+    },
+    {
+      "courseId": 115,
+      "courseName": "무중단 배포 전략",
+      "salesCount": 928
+    },
+    {
+      "courseId": 116,
+      "courseName": "재해 복구 설계",
+      "salesCount": 890
+    },
+    {
+      "courseId": 117,
+      "courseName": "DevSecOps 파이프라인",
+      "salesCount": 272
+    },
+    {
+      "courseId": 118,
+      "courseName": "플랫폼 엔지니어링",
+      "salesCount": 374
+    },
+    {
+      "courseId": 119,
+      "courseName": "MSA 관측성과 장애 대응",
+      "salesCount": 476
+    },
+    {
+      "courseId": 120,
+      "courseName": "대규모 클라우드 운영",
+      "salesCount": 578
+    },
+    {
+      "courseId": 121,
+      "courseName": "Python 데이터 분석",
+      "salesCount": 581
+    },
+    {
+      "courseId": 122,
+      "courseName": "Pandas와 SQL 데이터 처리",
+      "salesCount": 683
+    },
+    {
+      "courseId": 123,
+      "courseName": "데이터 시각화와 대시보드",
+      "salesCount": 785
+    },
+    {
+      "courseId": 124,
+      "courseName": "통계 분석 기초",
+      "salesCount": 887
+    },
+    {
+      "courseId": 125,
+      "courseName": "A/B 테스트 실무",
+      "salesCount": 989
+    },
+    {
+      "courseId": 126,
+      "courseName": "Tableau 대시보드",
+      "salesCount": 231
+    },
+    {
+      "courseId": 127,
+      "courseName": "Power BI 데이터 분석",
+      "salesCount": 333
+    },
+    {
+      "courseId": 128,
+      "courseName": "데이터 전처리 실전",
+      "salesCount": 435
+    },
+    {
+      "courseId": 129,
+      "courseName": "탐색적 데이터 분석",
+      "salesCount": 537
+    },
+    {
+      "courseId": 130,
+      "courseName": "비즈니스 지표 설계",
+      "salesCount": 639
+    },
+    {
+      "courseId": 131,
+      "courseName": "고객 세그먼트 분석",
+      "salesCount": 601
+    },
+    {
+      "courseId": 132,
+      "courseName": "마케팅 데이터 분석",
+      "salesCount": 703
+    },
+    {
+      "courseId": 133,
+      "courseName": "제품 분석과 퍼널",
+      "salesCount": 805
+    },
+    {
+      "courseId": 134,
+      "courseName": "시계열 데이터 분석",
+      "salesCount": 907
+    },
+    {
+      "courseId": 135,
+      "courseName": "공간 데이터 분석",
+      "salesCount": 1009
+    },
+    {
+      "courseId": 136,
+      "courseName": "데이터 품질 관리",
+      "salesCount": 251
+    },
+    {
+      "courseId": 137,
+      "courseName": "Apache Spark 입문",
+      "salesCount": 353
+    },
+    {
+      "courseId": 138,
+      "courseName": "PySpark 대용량 분석",
+      "salesCount": 455
+    },
+    {
+      "courseId": 139,
+      "courseName": "데이터 파이프라인 기초",
+      "salesCount": 557
+    },
+    {
+      "courseId": 140,
+      "courseName": "Airflow 워크플로",
+      "salesCount": 519
+    },
+    {
+      "courseId": 141,
+      "courseName": "dbt 분석 엔지니어링",
+      "salesCount": 621
+    },
+    {
+      "courseId": 142,
+      "courseName": "데이터 웨어하우스 설계",
+      "salesCount": 723
+    },
+    {
+      "courseId": 143,
+      "courseName": "BigQuery 데이터 분석",
+      "salesCount": 825
+    },
+    {
+      "courseId": 144,
+      "courseName": "Snowflake 활용",
+      "salesCount": 927
+    },
+    {
+      "courseId": 145,
+      "courseName": "실험 설계와 인과 추론",
+      "salesCount": 889
+    },
+    {
+      "courseId": 146,
+      "courseName": "예측 분석 실무",
+      "salesCount": 271
+    },
+    {
+      "courseId": 147,
+      "courseName": "텍스트 데이터 분석",
+      "salesCount": 373
+    },
+    {
+      "courseId": 148,
+      "courseName": "로그 데이터 분석",
+      "salesCount": 475
+    },
+    {
+      "courseId": 149,
+      "courseName": "데이터 스토리텔링",
+      "salesCount": 577
+    },
+    {
+      "courseId": 150,
+      "courseName": "데이터 기반 의사결정",
+      "salesCount": 539
+    },
+    {
+      "courseId": 151,
+      "courseName": "MySQL 성능 튜닝",
+      "salesCount": 682
+    },
+    {
+      "courseId": 152,
+      "courseName": "Redis 캐시 설계",
+      "salesCount": 784
+    },
+    {
+      "courseId": 153,
+      "courseName": "데이터 모델링 실전",
+      "salesCount": 886
+    },
+    {
+      "courseId": 154,
+      "courseName": "SQL 기초",
+      "salesCount": 988
+    },
+    {
+      "courseId": 155,
+      "courseName": "SQL 고급 쿼리",
+      "salesCount": 230
+    },
+    {
+      "courseId": 156,
+      "courseName": "PostgreSQL 운영",
+      "salesCount": 332
+    },
+    {
+      "courseId": 157,
+      "courseName": "Oracle 데이터베이스 기초",
+      "salesCount": 434
+    },
+    {
+      "courseId": 158,
+      "courseName": "MongoDB 문서 모델링",
+      "salesCount": 536
+    },
+    {
+      "courseId": 159,
+      "courseName": "Elasticsearch 검색 설계",
+      "salesCount": 638
+    },
+    {
+      "courseId": 160,
+      "courseName": "인덱스 설계 원칙",
+      "salesCount": 600
+    },
+    {
+      "courseId": 161,
+      "courseName": "실행 계획 분석",
+      "salesCount": 702
+    },
+    {
+      "courseId": 162,
+      "courseName": "데이터베이스 트랜잭션",
+      "salesCount": 804
+    },
+    {
+      "courseId": 163,
+      "courseName": "동시성과 잠금 관리",
+      "salesCount": 906
+    },
+    {
+      "courseId": 164,
+      "courseName": "DB 장애 복구",
+      "salesCount": 1008
+    },
+    {
+      "courseId": 165,
+      "courseName": "백업과 복원 실전",
+      "salesCount": 250
+    },
+    {
+      "courseId": 166,
+      "courseName": "데이터베이스 보안",
+      "salesCount": 352
+    },
+    {
+      "courseId": 167,
+      "courseName": "샤딩과 파티셔닝",
+      "salesCount": 454
+    },
+    {
+      "courseId": 168,
+      "courseName": "복제와 고가용성",
+      "salesCount": 556
+    },
+    {
+      "courseId": 169,
+      "courseName": "NoSQL 데이터 설계",
+      "salesCount": 518
+    },
+    {
+      "courseId": 170,
+      "courseName": "그래프 데이터베이스",
+      "salesCount": 620
+    },
+    {
+      "courseId": 171,
+      "courseName": "시계열 데이터베이스",
+      "salesCount": 722
+    },
+    {
+      "courseId": 172,
+      "courseName": "클라우드 데이터베이스",
+      "salesCount": 824
+    },
+    {
+      "courseId": 173,
+      "courseName": "RDS 운영 실전",
+      "salesCount": 926
+    },
+    {
+      "courseId": 174,
+      "courseName": "데이터 마이그레이션",
+      "salesCount": 888
+    },
+    {
+      "courseId": 175,
+      "courseName": "CDC 데이터 동기화",
+      "salesCount": 270
+    },
+    {
+      "courseId": 176,
+      "courseName": "대용량 배치 쿼리",
+      "salesCount": 372
+    },
+    {
+      "courseId": 177,
+      "courseName": "ORM과 데이터베이스",
+      "salesCount": 474
+    },
+    {
+      "courseId": 178,
+      "courseName": "쿼리 성능 모니터링",
+      "salesCount": 576
+    },
+    {
+      "courseId": 179,
+      "courseName": "분산 데이터베이스",
+      "salesCount": 538
+    },
+    {
+      "courseId": 180,
+      "courseName": "데이터 아키텍처 설계",
+      "salesCount": 640
+    },
+    {
+      "courseId": 181,
+      "courseName": "웹 애플리케이션 보안",
+      "salesCount": 783
+    },
+    {
+      "courseId": 182,
+      "courseName": "OAuth2와 OpenID Connect",
+      "salesCount": 885
+    },
+    {
+      "courseId": 183,
+      "courseName": "OWASP Top 10 실전",
+      "salesCount": 987
+    },
+    {
+      "courseId": 184,
+      "courseName": "네트워크 보안 기초",
+      "salesCount": 949
+    },
+    {
+      "courseId": 185,
+      "courseName": "클라우드 보안 아키텍처",
+      "salesCount": 331
+    },
+    {
+      "courseId": 186,
+      "courseName": "API 보안 설계",
+      "salesCount": 433
+    },
+    {
+      "courseId": 187,
+      "courseName": "JWT 보안 실무",
+      "salesCount": 535
+    },
+    {
+      "courseId": 188,
+      "courseName": "침투 테스트 입문",
+      "salesCount": 637
+    },
+    {
+      "courseId": 189,
+      "courseName": "취약점 진단 자동화",
+      "salesCount": 599
+    },
+    {
+      "courseId": 190,
+      "courseName": "보안 로그 분석",
+      "salesCount": 701
+    },
+    {
+      "courseId": 191,
+      "courseName": "SIEM 운영 기초",
+      "salesCount": 803
+    },
+    {
+      "courseId": 192,
+      "courseName": "제로 트러스트 아키텍처",
+      "salesCount": 905
+    },
+    {
+      "courseId": 193,
+      "courseName": "IAM 권한 관리",
+      "salesCount": 1007
+    },
+    {
+      "courseId": 194,
+      "courseName": "Kubernetes 보안 실전",
+      "salesCount": 249
+    },
+    {
+      "courseId": 195,
+      "courseName": "컨테이너 보안",
+      "salesCount": 351
+    },
+    {
+      "courseId": 196,
+      "courseName": "DevSecOps 구축",
+      "salesCount": 453
+    },
+    {
+      "courseId": 197,
+      "courseName": "암호학 기초",
+      "salesCount": 555
+    },
+    {
+      "courseId": 198,
+      "courseName": "개인정보 보호 설계",
+      "salesCount": 517
+    },
+    {
+      "courseId": 199,
+      "courseName": "시큐어 코딩 Java",
+      "salesCount": 619
+    },
+    {
+      "courseId": 200,
+      "courseName": "시큐어 코딩 JavaScript",
+      "salesCount": 721
+    },
+    {
+      "courseId": 201,
+      "courseName": "모바일 앱 보안",
+      "salesCount": 823
+    },
+    {
+      "courseId": 202,
+      "courseName": "데이터베이스 보안",
+      "salesCount": 925
+    },
+    {
+      "courseId": 203,
+      "courseName": "랜섬웨어 대응",
+      "salesCount": 887
+    },
+    {
+      "courseId": 204,
+      "courseName": "인시던트 대응 실무",
+      "salesCount": 269
+    },
+    {
+      "courseId": 205,
+      "courseName": "디지털 포렌식 입문",
+      "salesCount": 371
+    },
+    {
+      "courseId": 206,
+      "courseName": "소프트웨어 공급망 보안",
+      "salesCount": 473
+    },
+    {
+      "courseId": 207,
+      "courseName": "SAST와 DAST 활용",
+      "salesCount": 575
+    },
+    {
+      "courseId": 208,
+      "courseName": "보안 위협 모델링",
+      "salesCount": 537
+    },
+    {
+      "courseId": 209,
+      "courseName": "AI 서비스 보안",
+      "salesCount": 639
+    },
+    {
+      "courseId": 210,
+      "courseName": "기업 보안 거버넌스",
+      "salesCount": 741
+    },
+    {
+      "courseId": 211,
+      "courseName": "Flutter 모바일 앱 개발",
+      "salesCount": 884
+    },
+    {
+      "courseId": 212,
+      "courseName": "Dart 프로그래밍 기초",
+      "salesCount": 986
+    },
+    {
+      "courseId": 213,
+      "courseName": "Android Kotlin 입문",
+      "salesCount": 948
+    },
+    {
+      "courseId": 214,
+      "courseName": "iOS Swift 입문",
+      "salesCount": 330
+    },
+    {
+      "courseId": 215,
+      "courseName": "React Native 앱 개발",
+      "salesCount": 432
+    },
+    {
+      "courseId": 216,
+      "courseName": "Flutter 상태 관리",
+      "salesCount": 534
+    },
+    {
+      "courseId": 217,
+      "courseName": "Android Jetpack Compose",
+      "salesCount": 636
+    },
+    {
+      "courseId": 218,
+      "courseName": "SwiftUI 앱 개발",
+      "salesCount": 598
+    },
+    {
+      "courseId": 219,
+      "courseName": "모바일 UI/UX 구현",
+      "salesCount": 700
+    },
+    {
+      "courseId": 220,
+      "courseName": "모바일 REST API 연동",
+      "salesCount": 802
+    },
+    {
+      "courseId": 221,
+      "courseName": "Firebase 앱 백엔드",
+      "salesCount": 904
+    },
+    {
+      "courseId": 222,
+      "courseName": "모바일 푸시 알림",
+      "salesCount": 1006
+    },
+    {
+      "courseId": 223,
+      "courseName": "앱 결제 시스템",
+      "salesCount": 248
+    },
+    {
+      "courseId": 224,
+      "courseName": "모바일 인증과 보안",
+      "salesCount": 350
+    },
+    {
+      "courseId": 225,
+      "courseName": "모바일 데이터 저장",
+      "salesCount": 452
+    },
+    {
+      "courseId": 226,
+      "courseName": "오프라인 우선 앱 설계",
+      "salesCount": 554
+    },
+    {
+      "courseId": 227,
+      "courseName": "모바일 성능 최적화",
+      "salesCount": 516
+    },
+    {
+      "courseId": 228,
+      "courseName": "앱 크래시 분석",
+      "salesCount": 618
+    },
+    {
+      "courseId": 229,
+      "courseName": "Android 테스트 자동화",
+      "salesCount": 720
+    },
+    {
+      "courseId": 230,
+      "courseName": "iOS 테스트 자동화",
+      "salesCount": 822
+    },
+    {
+      "courseId": 231,
+      "courseName": "모바일 CI/CD",
+      "salesCount": 924
+    },
+    {
+      "courseId": 232,
+      "courseName": "앱스토어 배포 실전",
+      "salesCount": 886
+    },
+    {
+      "courseId": 233,
+      "courseName": "모바일 접근성",
+      "salesCount": 268
+    },
+    {
+      "courseId": 234,
+      "courseName": "위치 기반 서비스",
+      "salesCount": 370
+    },
+    {
+      "courseId": 235,
+      "courseName": "카메라와 미디어 처리",
+      "salesCount": 472
+    },
+    {
+      "courseId": 236,
+      "courseName": "BLE IoT 앱 개발",
+      "salesCount": 574
+    },
+    {
+      "courseId": 237,
+      "courseName": "Flutter 애니메이션",
+      "salesCount": 536
+    },
+    {
+      "courseId": 238,
+      "courseName": "모바일 아키텍처 패턴",
+      "salesCount": 638
+    },
+    {
+      "courseId": 239,
+      "courseName": "크로스플랫폼 앱 전략",
+      "salesCount": 740
+    },
+    {
+      "courseId": 240,
+      "courseName": "대규모 모바일 서비스 설계",
+      "salesCount": 842
+    }
+  ],
+  "coPurchases": [
+    {
+      "courseIds": [
+        1,
+        2
+      ],
+      "courseNames": [
+        "Spring Boot 기초",
+        "Spring Boot MSA"
+      ],
+      "coPurchaseCount": 145
+    },
+    {
+      "courseIds": [
+        2,
+        4
+      ],
+      "courseNames": [
+        "Spring Boot MSA",
+        "Java 객체지향 실전"
+      ],
+      "coPurchaseCount": 87
+    },
+    {
+      "courseIds": [
+        3,
+        32
+      ],
+      "courseNames": [
+        "Vue.js 기초",
+        "React 웹 개발 입문"
+      ],
+      "coPurchaseCount": 93
+    },
+    {
+      "courseIds": [
+        4,
+        5
+      ],
+      "courseNames": [
+        "Java 객체지향 실전",
+        "Spring Security와 JWT"
+      ],
+      "coPurchaseCount": 104
+    },
+    {
+      "courseIds": [
+        5,
+        6
+      ],
+      "courseNames": [
+        "Spring Security와 JWT",
+        "REST API 설계와 테스트"
+      ],
+      "coPurchaseCount": 121
+    },
+    {
+      "courseIds": [
+        6,
+        7
+      ],
+      "courseNames": [
+        "REST API 설계와 테스트",
+        "JPA와 Hibernate 성능 최적화"
+      ],
+      "coPurchaseCount": 138
+    },
+    {
+      "courseIds": [
+        7,
+        8
+      ],
+      "courseNames": [
+        "JPA와 Hibernate 성능 최적화",
+        "Kotlin 서버 개발"
+      ],
+      "coPurchaseCount": 155
+    },
+    {
+      "courseIds": [
+        8,
+        9
+      ],
+      "courseNames": [
+        "Kotlin 서버 개발",
+        "Spring WebFlux 리액티브 프로그래밍"
+      ],
+      "coPurchaseCount": 172
+    },
+    {
+      "courseIds": [
+        9,
+        10
+      ],
+      "courseNames": [
+        "Spring WebFlux 리액티브 프로그래밍",
+        "클린 아키텍처 실전"
+      ],
+      "coPurchaseCount": 189
+    },
+    {
+      "courseIds": [
+        10,
+        11
+      ],
+      "courseNames": [
+        "클린 아키텍처 실전",
+        "도메인 주도 설계 입문"
+      ],
+      "coPurchaseCount": 206
+    },
+    {
+      "courseIds": [
+        11,
+        12
+      ],
+      "courseNames": [
+        "도메인 주도 설계 입문",
+        "백엔드 TDD 실전"
+      ],
+      "coPurchaseCount": 223
+    },
+    {
+      "courseIds": [
+        12,
+        13
+      ],
+      "courseNames": [
+        "백엔드 TDD 실전",
+        "Gradle 빌드 자동화"
+      ],
+      "coPurchaseCount": 240
+    },
+    {
+      "courseIds": [
+        13,
+        14
+      ],
+      "courseNames": [
+        "Gradle 빌드 자동화",
+        "Spring과 Redis 활용"
+      ],
+      "coPurchaseCount": 257
+    },
+    {
+      "courseIds": [
+        14,
+        15
+      ],
+      "courseNames": [
+        "Spring과 Redis 활용",
+        "Kafka 이벤트 기반 아키텍처"
+      ],
+      "coPurchaseCount": 274
+    },
+    {
+      "courseIds": [
+        15,
+        16
+      ],
+      "courseNames": [
+        "Kafka 이벤트 기반 아키텍처",
+        "gRPC 서비스 개발"
+      ],
+      "coPurchaseCount": 81
+    },
+    {
+      "courseIds": [
+        16,
+        17
+      ],
+      "courseNames": [
+        "gRPC 서비스 개발",
+        "GraphQL API 구축"
+      ],
+      "coPurchaseCount": 98
+    },
+    {
+      "courseIds": [
+        17,
+        18
+      ],
+      "courseNames": [
+        "GraphQL API 구축",
+        "Spring Batch 대용량 처리"
+      ],
+      "coPurchaseCount": 115
+    },
+    {
+      "courseIds": [
+        18,
+        19
+      ],
+      "courseNames": [
+        "Spring Batch 대용량 처리",
+        "Java 동시성 프로그래밍"
+      ],
+      "coPurchaseCount": 132
+    },
+    {
+      "courseIds": [
+        19,
+        20
+      ],
+      "courseNames": [
+        "Java 동시성 프로그래밍",
+        "JVM 성능 튜닝"
+      ],
+      "coPurchaseCount": 149
+    },
+    {
+      "courseIds": [
+        20,
+        21
+      ],
+      "courseNames": [
+        "JVM 성능 튜닝",
+        "백엔드 로깅과 모니터링"
+      ],
+      "coPurchaseCount": 166
+    },
+    {
+      "courseIds": [
+        21,
+        22
+      ],
+      "courseNames": [
+        "백엔드 로깅과 모니터링",
+        "API Gateway 패턴"
+      ],
+      "coPurchaseCount": 183
+    },
+    {
+      "courseIds": [
+        22,
+        23
+      ],
+      "courseNames": [
+        "API Gateway 패턴",
+        "분산 트랜잭션 이해"
+      ],
+      "coPurchaseCount": 200
+    },
+    {
+      "courseIds": [
+        23,
+        24
+      ],
+      "courseNames": [
+        "분산 트랜잭션 이해",
+        "Saga 패턴 실전"
+      ],
+      "coPurchaseCount": 217
+    },
+    {
+      "courseIds": [
+        24,
+        25
+      ],
+      "courseNames": [
+        "Saga 패턴 실전",
+        "CQRS와 이벤트 소싱"
+      ],
+      "coPurchaseCount": 234
+    },
+    {
+      "courseIds": [
+        25,
+        26
+      ],
+      "courseNames": [
+        "CQRS와 이벤트 소싱",
+        "헥사고날 아키텍처"
+      ],
+      "coPurchaseCount": 251
+    },
+    {
+      "courseIds": [
+        26,
+        27
+      ],
+      "courseNames": [
+        "헥사고날 아키텍처",
+        "레거시 시스템 리팩터링"
+      ],
+      "coPurchaseCount": 268
+    },
+    {
+      "courseIds": [
+        27,
+        28
+      ],
+      "courseNames": [
+        "레거시 시스템 리팩터링",
+        "Spring 통합 테스트"
+      ],
+      "coPurchaseCount": 75
+    },
+    {
+      "courseIds": [
+        28,
+        29
+      ],
+      "courseNames": [
+        "Spring 통합 테스트",
+        "Spring Cloud 실전"
+      ],
+      "coPurchaseCount": 92
+    },
+    {
+      "courseIds": [
+        29,
+        30
+      ],
+      "courseNames": [
+        "Spring Cloud 실전",
+        "Java 21 신기능"
+      ],
+      "coPurchaseCount": 109
+    },
+    {
+      "courseIds": [
+        30,
+        31
+      ],
+      "courseNames": [
+        "Java 21 신기능",
+        "대규모 트래픽 백엔드 설계"
+      ],
+      "coPurchaseCount": 126
+    },
+    {
+      "courseIds": [
+        32,
+        33
+      ],
+      "courseNames": [
+        "React 웹 개발 입문",
+        "HTML과 CSS 실전"
+      ],
+      "coPurchaseCount": 110
+    },
+    {
+      "courseIds": [
+        33,
+        34
+      ],
+      "courseNames": [
+        "HTML과 CSS 실전",
+        "TypeScript 실전"
+      ],
+      "coPurchaseCount": 127
+    },
+    {
+      "courseIds": [
+        34,
+        35
+      ],
+      "courseNames": [
+        "TypeScript 실전",
+        "Next.js 웹 애플리케이션"
+      ],
+      "coPurchaseCount": 144
+    },
+    {
+      "courseIds": [
+        35,
+        36
+      ],
+      "courseNames": [
+        "Next.js 웹 애플리케이션",
+        "프론트엔드 테스트 자동화"
+      ],
+      "coPurchaseCount": 161
+    },
+    {
+      "courseIds": [
+        36,
+        37
+      ],
+      "courseNames": [
+        "프론트엔드 테스트 자동화",
+        "Vue 3 Composition API"
+      ],
+      "coPurchaseCount": 178
+    },
+    {
+      "courseIds": [
+        37,
+        38
+      ],
+      "courseNames": [
+        "Vue 3 Composition API",
+        "React 상태 관리"
+      ],
+      "coPurchaseCount": 195
+    },
+    {
+      "courseIds": [
+        38,
+        39
+      ],
+      "courseNames": [
+        "React 상태 관리",
+        "웹 접근성 실무"
+      ],
+      "coPurchaseCount": 212
+    },
+    {
+      "courseIds": [
+        39,
+        40
+      ],
+      "courseNames": [
+        "웹 접근성 실무",
+        "반응형 웹 디자인"
+      ],
+      "coPurchaseCount": 229
+    },
+    {
+      "courseIds": [
+        40,
+        41
+      ],
+      "courseNames": [
+        "반응형 웹 디자인",
+        "JavaScript 핵심 원리"
+      ],
+      "coPurchaseCount": 246
+    },
+    {
+      "courseIds": [
+        41,
+        42
+      ],
+      "courseNames": [
+        "JavaScript 핵심 원리",
+        "모던 CSS 레이아웃"
+      ],
+      "coPurchaseCount": 263
+    },
+    {
+      "courseIds": [
+        42,
+        43
+      ],
+      "courseNames": [
+        "모던 CSS 레이아웃",
+        "Vite 빌드 최적화"
+      ],
+      "coPurchaseCount": 70
+    },
+    {
+      "courseIds": [
+        43,
+        44
+      ],
+      "courseNames": [
+        "Vite 빌드 최적화",
+        "프론트엔드 성능 개선"
+      ],
+      "coPurchaseCount": 87
+    },
+    {
+      "courseIds": [
+        44,
+        45
+      ],
+      "courseNames": [
+        "프론트엔드 성능 개선",
+        "Storybook 디자인 시스템"
+      ],
+      "coPurchaseCount": 104
+    },
+    {
+      "courseIds": [
+        45,
+        46
+      ],
+      "courseNames": [
+        "Storybook 디자인 시스템",
+        "React Query 데이터 패칭"
+      ],
+      "coPurchaseCount": 121
+    },
+    {
+      "courseIds": [
+        46,
+        47
+      ],
+      "courseNames": [
+        "React Query 데이터 패칭",
+        "Nuxt 풀스택 프론트엔드"
+      ],
+      "coPurchaseCount": 138
+    },
+    {
+      "courseIds": [
+        47,
+        48
+      ],
+      "courseNames": [
+        "Nuxt 풀스택 프론트엔드",
+        "Svelte 입문"
+      ],
+      "coPurchaseCount": 155
+    },
+    {
+      "courseIds": [
+        48,
+        49
+      ],
+      "courseNames": [
+        "Svelte 입문",
+        "웹 컴포넌트 설계"
+      ],
+      "coPurchaseCount": 172
+    },
+    {
+      "courseIds": [
+        49,
+        50
+      ],
+      "courseNames": [
+        "웹 컴포넌트 설계",
+        "Micro Frontend 아키텍처"
+      ],
+      "coPurchaseCount": 189
+    },
+    {
+      "courseIds": [
+        50,
+        51
+      ],
+      "courseNames": [
+        "Micro Frontend 아키텍처",
+        "브라우저 렌더링 원리"
+      ],
+      "coPurchaseCount": 206
+    },
+    {
+      "courseIds": [
+        51,
+        52
+      ],
+      "courseNames": [
+        "브라우저 렌더링 원리",
+        "프론트엔드 보안 기초"
+      ],
+      "coPurchaseCount": 223
+    },
+    {
+      "courseIds": [
+        52,
+        53
+      ],
+      "courseNames": [
+        "프론트엔드 보안 기초",
+        "Playwright E2E 테스트"
+      ],
+      "coPurchaseCount": 240
+    },
+    {
+      "courseIds": [
+        53,
+        54
+      ],
+      "courseNames": [
+        "Playwright E2E 테스트",
+        "프론트엔드 CI/CD"
+      ],
+      "coPurchaseCount": 257
+    },
+    {
+      "courseIds": [
+        54,
+        55
+      ],
+      "courseNames": [
+        "프론트엔드 CI/CD",
+        "Canvas 데이터 시각화"
+      ],
+      "coPurchaseCount": 274
+    },
+    {
+      "courseIds": [
+        55,
+        56
+      ],
+      "courseNames": [
+        "Canvas 데이터 시각화",
+        "PWA 서비스 개발"
+      ],
+      "coPurchaseCount": 81
+    },
+    {
+      "courseIds": [
+        56,
+        57
+      ],
+      "courseNames": [
+        "PWA 서비스 개발",
+        "프론트엔드 코드 리뷰"
+      ],
+      "coPurchaseCount": 98
+    },
+    {
+      "courseIds": [
+        57,
+        58
+      ],
+      "courseNames": [
+        "프론트엔드 코드 리뷰",
+        "Redux Toolkit 실전"
+      ],
+      "coPurchaseCount": 115
+    },
+    {
+      "courseIds": [
+        58,
+        59
+      ],
+      "courseNames": [
+        "Redux Toolkit 실전",
+        "Vue Pinia 상태 관리"
+      ],
+      "coPurchaseCount": 132
+    },
+    {
+      "courseIds": [
+        59,
+        60
+      ],
+      "courseNames": [
+        "Vue Pinia 상태 관리",
+        "대규모 프론트엔드 설계"
+      ],
+      "coPurchaseCount": 149
+    },
+    {
+      "courseIds": [
+        61,
+        62
+      ],
+      "courseNames": [
+        "머신러닝 입문",
+        "생성형 AI와 프롬프트 엔지니어링"
+      ],
+      "coPurchaseCount": 116
+    },
+    {
+      "courseIds": [
+        62,
+        63
+      ],
+      "courseNames": [
+        "생성형 AI와 프롬프트 엔지니어링",
+        "딥러닝과 PyTorch"
+      ],
+      "coPurchaseCount": 133
+    },
+    {
+      "courseIds": [
+        63,
+        64
+      ],
+      "courseNames": [
+        "딥러닝과 PyTorch",
+        "RAG 기반 AI 서비스 구축"
+      ],
+      "coPurchaseCount": 150
+    },
+    {
+      "courseIds": [
+        64,
+        65
+      ],
+      "courseNames": [
+        "RAG 기반 AI 서비스 구축",
+        "LLM 애플리케이션 평가와 운영"
+      ],
+      "coPurchaseCount": 167
+    },
+    {
+      "courseIds": [
+        65,
+        66
+      ],
+      "courseNames": [
+        "LLM 애플리케이션 평가와 운영",
+        "자연어 처리 기초"
+      ],
+      "coPurchaseCount": 184
+    },
+    {
+      "courseIds": [
+        66,
+        67
+      ],
+      "courseNames": [
+        "자연어 처리 기초",
+        "컴퓨터 비전 입문"
+      ],
+      "coPurchaseCount": 201
+    },
+    {
+      "courseIds": [
+        67,
+        68
+      ],
+      "courseNames": [
+        "컴퓨터 비전 입문",
+        "Transformer 핵심 원리"
+      ],
+      "coPurchaseCount": 218
+    },
+    {
+      "courseIds": [
+        68,
+        69
+      ],
+      "courseNames": [
+        "Transformer 핵심 원리",
+        "OpenAI API 서비스 개발"
+      ],
+      "coPurchaseCount": 235
+    },
+    {
+      "courseIds": [
+        69,
+        70
+      ],
+      "courseNames": [
+        "OpenAI API 서비스 개발",
+        "LangChain 애플리케이션"
+      ],
+      "coPurchaseCount": 252
+    },
+    {
+      "courseIds": [
+        70,
+        71
+      ],
+      "courseNames": [
+        "LangChain 애플리케이션",
+        "벡터 데이터베이스 활용"
+      ],
+      "coPurchaseCount": 269
+    },
+    {
+      "courseIds": [
+        71,
+        72
+      ],
+      "courseNames": [
+        "벡터 데이터베이스 활용",
+        "AI Agent 설계"
+      ],
+      "coPurchaseCount": 76
+    },
+    {
+      "courseIds": [
+        72,
+        73
+      ],
+      "courseNames": [
+        "AI Agent 설계",
+        "멀티모달 AI 서비스"
+      ],
+      "coPurchaseCount": 93
+    },
+    {
+      "courseIds": [
+        73,
+        74
+      ],
+      "courseNames": [
+        "멀티모달 AI 서비스",
+        "파인튜닝과 모델 최적화"
+      ],
+      "coPurchaseCount": 110
+    },
+    {
+      "courseIds": [
+        74,
+        75
+      ],
+      "courseNames": [
+        "파인튜닝과 모델 최적화",
+        "추천 시스템 입문"
+      ],
+      "coPurchaseCount": 127
+    },
+    {
+      "courseIds": [
+        75,
+        76
+      ],
+      "courseNames": [
+        "추천 시스템 입문",
+        "시계열 예측 모델"
+      ],
+      "coPurchaseCount": 144
+    },
+    {
+      "courseIds": [
+        76,
+        77
+      ],
+      "courseNames": [
+        "시계열 예측 모델",
+        "MLOps 파이프라인"
+      ],
+      "coPurchaseCount": 161
+    },
+    {
+      "courseIds": [
+        77,
+        78
+      ],
+      "courseNames": [
+        "MLOps 파이프라인",
+        "AI 모델 설명 가능성"
+      ],
+      "coPurchaseCount": 178
+    },
+    {
+      "courseIds": [
+        78,
+        79
+      ],
+      "courseNames": [
+        "AI 모델 설명 가능성",
+        "Responsible AI 기초"
+      ],
+      "coPurchaseCount": 195
+    },
+    {
+      "courseIds": [
+        79,
+        80
+      ],
+      "courseNames": [
+        "Responsible AI 기초",
+        "음성 인식 서비스 개발"
+      ],
+      "coPurchaseCount": 212
+    },
+    {
+      "courseIds": [
+        80,
+        81
+      ],
+      "courseNames": [
+        "음성 인식 서비스 개발",
+        "이미지 생성 AI 활용"
+      ],
+      "coPurchaseCount": 229
+    },
+    {
+      "courseIds": [
+        81,
+        82
+      ],
+      "courseNames": [
+        "이미지 생성 AI 활용",
+        "문서 분류 자동화"
+      ],
+      "coPurchaseCount": 246
+    },
+    {
+      "courseIds": [
+        82,
+        83
+      ],
+      "courseNames": [
+        "문서 분류 자동화",
+        "LLM 프롬프트 평가"
+      ],
+      "coPurchaseCount": 263
+    },
+    {
+      "courseIds": [
+        83,
+        84
+      ],
+      "courseNames": [
+        "LLM 프롬프트 평가",
+        "검색 증강 생성 심화"
+      ],
+      "coPurchaseCount": 70
+    },
+    {
+      "courseIds": [
+        84,
+        85
+      ],
+      "courseNames": [
+        "검색 증강 생성 심화",
+        "지식 그래프와 AI"
+      ],
+      "coPurchaseCount": 87
+    },
+    {
+      "courseIds": [
+        85,
+        86
+      ],
+      "courseNames": [
+        "지식 그래프와 AI",
+        "경량 모델 배포"
+      ],
+      "coPurchaseCount": 104
+    },
+    {
+      "courseIds": [
+        86,
+        87
+      ],
+      "courseNames": [
+        "경량 모델 배포",
+        "AI 서비스 비용 최적화"
+      ],
+      "coPurchaseCount": 121
+    },
+    {
+      "courseIds": [
+        87,
+        88
+      ],
+      "courseNames": [
+        "AI 서비스 비용 최적화",
+        "Synthetic Data 생성"
+      ],
+      "coPurchaseCount": 138
+    },
+    {
+      "courseIds": [
+        88,
+        89
+      ],
+      "courseNames": [
+        "Synthetic Data 생성",
+        "LLM 보안과 가드레일"
+      ],
+      "coPurchaseCount": 155
+    },
+    {
+      "courseIds": [
+        89,
+        90
+      ],
+      "courseNames": [
+        "LLM 보안과 가드레일",
+        "기업용 AI 아키텍처"
+      ],
+      "coPurchaseCount": 172
+    },
+    {
+      "courseIds": [
+        91,
+        92
+      ],
+      "courseNames": [
+        "Docker 컨테이너 실전",
+        "Kubernetes 운영 기초"
+      ],
+      "coPurchaseCount": 139
+    },
+    {
+      "courseIds": [
+        92,
+        93
+      ],
+      "courseNames": [
+        "Kubernetes 운영 기초",
+        "GitHub Actions CI/CD"
+      ],
+      "coPurchaseCount": 156
+    },
+    {
+      "courseIds": [
+        93,
+        94
+      ],
+      "courseNames": [
+        "GitHub Actions CI/CD",
+        "AWS 클라우드 아키텍처"
+      ],
+      "coPurchaseCount": 173
+    },
+    {
+      "courseIds": [
+        94,
+        95
+      ],
+      "courseNames": [
+        "AWS 클라우드 아키텍처",
+        "Terraform 인프라 자동화"
+      ],
+      "coPurchaseCount": 190
+    },
+    {
+      "courseIds": [
+        95,
+        96
+      ],
+      "courseNames": [
+        "Terraform 인프라 자동화",
+        "Linux 서버 운영"
+      ],
+      "coPurchaseCount": 207
+    },
+    {
+      "courseIds": [
+        96,
+        97
+      ],
+      "courseNames": [
+        "Linux 서버 운영",
+        "Nginx 웹 서버 구성"
+      ],
+      "coPurchaseCount": 224
+    },
+    {
+      "courseIds": [
+        97,
+        98
+      ],
+      "courseNames": [
+        "Nginx 웹 서버 구성",
+        "Helm 차트 실전"
+      ],
+      "coPurchaseCount": 241
+    },
+    {
+      "courseIds": [
+        98,
+        99
+      ],
+      "courseNames": [
+        "Helm 차트 실전",
+        "Argo CD GitOps"
+      ],
+      "coPurchaseCount": 258
+    },
+    {
+      "courseIds": [
+        99,
+        100
+      ],
+      "courseNames": [
+        "Argo CD GitOps",
+        "Jenkins 파이프라인"
+      ],
+      "coPurchaseCount": 275
+    },
+    {
+      "courseIds": [
+        100,
+        101
+      ],
+      "courseNames": [
+        "Jenkins 파이프라인",
+        "Prometheus 모니터링"
+      ],
+      "coPurchaseCount": 82
+    },
+    {
+      "courseIds": [
+        101,
+        102
+      ],
+      "courseNames": [
+        "Prometheus 모니터링",
+        "Grafana 대시보드"
+      ],
+      "coPurchaseCount": 99
+    },
+    {
+      "courseIds": [
+        102,
+        103
+      ],
+      "courseNames": [
+        "Grafana 대시보드",
+        "ELK 로그 분석"
+      ],
+      "coPurchaseCount": 116
+    },
+    {
+      "courseIds": [
+        103,
+        104
+      ],
+      "courseNames": [
+        "ELK 로그 분석",
+        "OpenTelemetry 분산 추적"
+      ],
+      "coPurchaseCount": 133
+    },
+    {
+      "courseIds": [
+        104,
+        105
+      ],
+      "courseNames": [
+        "OpenTelemetry 분산 추적",
+        "SRE 기초"
+      ],
+      "coPurchaseCount": 150
+    },
+    {
+      "courseIds": [
+        105,
+        106
+      ],
+      "courseNames": [
+        "SRE 기초",
+        "클라우드 비용 최적화"
+      ],
+      "coPurchaseCount": 167
+    },
+    {
+      "courseIds": [
+        106,
+        107
+      ],
+      "courseNames": [
+        "클라우드 비용 최적화",
+        "AWS EKS 운영"
+      ],
+      "coPurchaseCount": 184
+    },
+    {
+      "courseIds": [
+        107,
+        108
+      ],
+      "courseNames": [
+        "AWS EKS 운영",
+        "Azure DevOps 입문"
+      ],
+      "coPurchaseCount": 201
+    },
+    {
+      "courseIds": [
+        108,
+        109
+      ],
+      "courseNames": [
+        "Azure DevOps 입문",
+        "GCP 인프라 설계"
+      ],
+      "coPurchaseCount": 218
+    },
+    {
+      "courseIds": [
+        109,
+        110
+      ],
+      "courseNames": [
+        "GCP 인프라 설계",
+        "Ansible 구성 관리"
+      ],
+      "coPurchaseCount": 235
+    },
+    {
+      "courseIds": [
+        110,
+        111
+      ],
+      "courseNames": [
+        "Ansible 구성 관리",
+        "네트워크와 DNS 기초"
+      ],
+      "coPurchaseCount": 252
+    },
+    {
+      "courseIds": [
+        111,
+        112
+      ],
+      "courseNames": [
+        "네트워크와 DNS 기초",
+        "서비스 메시 Istio"
+      ],
+      "coPurchaseCount": 269
+    },
+    {
+      "courseIds": [
+        112,
+        113
+      ],
+      "courseNames": [
+        "서비스 메시 Istio",
+        "Kubernetes 보안"
+      ],
+      "coPurchaseCount": 76
+    },
+    {
+      "courseIds": [
+        113,
+        114
+      ],
+      "courseNames": [
+        "Kubernetes 보안",
+        "컨테이너 이미지 최적화"
+      ],
+      "coPurchaseCount": 93
+    },
+    {
+      "courseIds": [
+        114,
+        115
+      ],
+      "courseNames": [
+        "컨테이너 이미지 최적화",
+        "무중단 배포 전략"
+      ],
+      "coPurchaseCount": 110
+    },
+    {
+      "courseIds": [
+        115,
+        116
+      ],
+      "courseNames": [
+        "무중단 배포 전략",
+        "재해 복구 설계"
+      ],
+      "coPurchaseCount": 127
+    },
+    {
+      "courseIds": [
+        116,
+        117
+      ],
+      "courseNames": [
+        "재해 복구 설계",
+        "DevSecOps 파이프라인"
+      ],
+      "coPurchaseCount": 144
+    },
+    {
+      "courseIds": [
+        117,
+        118
+      ],
+      "courseNames": [
+        "DevSecOps 파이프라인",
+        "플랫폼 엔지니어링"
+      ],
+      "coPurchaseCount": 161
+    },
+    {
+      "courseIds": [
+        118,
+        119
+      ],
+      "courseNames": [
+        "플랫폼 엔지니어링",
+        "MSA 관측성과 장애 대응"
+      ],
+      "coPurchaseCount": 178
+    },
+    {
+      "courseIds": [
+        119,
+        120
+      ],
+      "courseNames": [
+        "MSA 관측성과 장애 대응",
+        "대규모 클라우드 운영"
+      ],
+      "coPurchaseCount": 195
+    },
+    {
+      "courseIds": [
+        121,
+        122
+      ],
+      "courseNames": [
+        "Python 데이터 분석",
+        "Pandas와 SQL 데이터 처리"
+      ],
+      "coPurchaseCount": 162
+    },
+    {
+      "courseIds": [
+        122,
+        123
+      ],
+      "courseNames": [
+        "Pandas와 SQL 데이터 처리",
+        "데이터 시각화와 대시보드"
+      ],
+      "coPurchaseCount": 179
+    },
+    {
+      "courseIds": [
+        123,
+        124
+      ],
+      "courseNames": [
+        "데이터 시각화와 대시보드",
+        "통계 분석 기초"
+      ],
+      "coPurchaseCount": 196
+    },
+    {
+      "courseIds": [
+        124,
+        125
+      ],
+      "courseNames": [
+        "통계 분석 기초",
+        "A/B 테스트 실무"
+      ],
+      "coPurchaseCount": 213
+    },
+    {
+      "courseIds": [
+        125,
+        126
+      ],
+      "courseNames": [
+        "A/B 테스트 실무",
+        "Tableau 대시보드"
+      ],
+      "coPurchaseCount": 230
+    },
+    {
+      "courseIds": [
+        126,
+        127
+      ],
+      "courseNames": [
+        "Tableau 대시보드",
+        "Power BI 데이터 분석"
+      ],
+      "coPurchaseCount": 247
+    },
+    {
+      "courseIds": [
+        127,
+        128
+      ],
+      "courseNames": [
+        "Power BI 데이터 분석",
+        "데이터 전처리 실전"
+      ],
+      "coPurchaseCount": 264
+    },
+    {
+      "courseIds": [
+        128,
+        129
+      ],
+      "courseNames": [
+        "데이터 전처리 실전",
+        "탐색적 데이터 분석"
+      ],
+      "coPurchaseCount": 71
+    },
+    {
+      "courseIds": [
+        129,
+        130
+      ],
+      "courseNames": [
+        "탐색적 데이터 분석",
+        "비즈니스 지표 설계"
+      ],
+      "coPurchaseCount": 88
+    },
+    {
+      "courseIds": [
+        130,
+        131
+      ],
+      "courseNames": [
+        "비즈니스 지표 설계",
+        "고객 세그먼트 분석"
+      ],
+      "coPurchaseCount": 105
+    },
+    {
+      "courseIds": [
+        131,
+        132
+      ],
+      "courseNames": [
+        "고객 세그먼트 분석",
+        "마케팅 데이터 분석"
+      ],
+      "coPurchaseCount": 122
+    },
+    {
+      "courseIds": [
+        132,
+        133
+      ],
+      "courseNames": [
+        "마케팅 데이터 분석",
+        "제품 분석과 퍼널"
+      ],
+      "coPurchaseCount": 139
+    },
+    {
+      "courseIds": [
+        133,
+        134
+      ],
+      "courseNames": [
+        "제품 분석과 퍼널",
+        "시계열 데이터 분석"
+      ],
+      "coPurchaseCount": 156
+    },
+    {
+      "courseIds": [
+        134,
+        135
+      ],
+      "courseNames": [
+        "시계열 데이터 분석",
+        "공간 데이터 분석"
+      ],
+      "coPurchaseCount": 173
+    },
+    {
+      "courseIds": [
+        135,
+        136
+      ],
+      "courseNames": [
+        "공간 데이터 분석",
+        "데이터 품질 관리"
+      ],
+      "coPurchaseCount": 190
+    },
+    {
+      "courseIds": [
+        136,
+        137
+      ],
+      "courseNames": [
+        "데이터 품질 관리",
+        "Apache Spark 입문"
+      ],
+      "coPurchaseCount": 207
+    },
+    {
+      "courseIds": [
+        137,
+        138
+      ],
+      "courseNames": [
+        "Apache Spark 입문",
+        "PySpark 대용량 분석"
+      ],
+      "coPurchaseCount": 224
+    },
+    {
+      "courseIds": [
+        138,
+        139
+      ],
+      "courseNames": [
+        "PySpark 대용량 분석",
+        "데이터 파이프라인 기초"
+      ],
+      "coPurchaseCount": 241
+    },
+    {
+      "courseIds": [
+        139,
+        140
+      ],
+      "courseNames": [
+        "데이터 파이프라인 기초",
+        "Airflow 워크플로"
+      ],
+      "coPurchaseCount": 258
+    },
+    {
+      "courseIds": [
+        140,
+        141
+      ],
+      "courseNames": [
+        "Airflow 워크플로",
+        "dbt 분석 엔지니어링"
+      ],
+      "coPurchaseCount": 275
+    },
+    {
+      "courseIds": [
+        141,
+        142
+      ],
+      "courseNames": [
+        "dbt 분석 엔지니어링",
+        "데이터 웨어하우스 설계"
+      ],
+      "coPurchaseCount": 82
+    },
+    {
+      "courseIds": [
+        142,
+        143
+      ],
+      "courseNames": [
+        "데이터 웨어하우스 설계",
+        "BigQuery 데이터 분석"
+      ],
+      "coPurchaseCount": 99
+    },
+    {
+      "courseIds": [
+        143,
+        144
+      ],
+      "courseNames": [
+        "BigQuery 데이터 분석",
+        "Snowflake 활용"
+      ],
+      "coPurchaseCount": 116
+    },
+    {
+      "courseIds": [
+        144,
+        145
+      ],
+      "courseNames": [
+        "Snowflake 활용",
+        "실험 설계와 인과 추론"
+      ],
+      "coPurchaseCount": 133
+    },
+    {
+      "courseIds": [
+        145,
+        146
+      ],
+      "courseNames": [
+        "실험 설계와 인과 추론",
+        "예측 분석 실무"
+      ],
+      "coPurchaseCount": 150
+    },
+    {
+      "courseIds": [
+        146,
+        147
+      ],
+      "courseNames": [
+        "예측 분석 실무",
+        "텍스트 데이터 분석"
+      ],
+      "coPurchaseCount": 167
+    },
+    {
+      "courseIds": [
+        147,
+        148
+      ],
+      "courseNames": [
+        "텍스트 데이터 분석",
+        "로그 데이터 분석"
+      ],
+      "coPurchaseCount": 184
+    },
+    {
+      "courseIds": [
+        148,
+        149
+      ],
+      "courseNames": [
+        "로그 데이터 분석",
+        "데이터 스토리텔링"
+      ],
+      "coPurchaseCount": 201
+    },
+    {
+      "courseIds": [
+        149,
+        150
+      ],
+      "courseNames": [
+        "데이터 스토리텔링",
+        "데이터 기반 의사결정"
+      ],
+      "coPurchaseCount": 218
+    },
+    {
+      "courseIds": [
+        151,
+        152
+      ],
+      "courseNames": [
+        "MySQL 성능 튜닝",
+        "Redis 캐시 설계"
+      ],
+      "coPurchaseCount": 185
+    },
+    {
+      "courseIds": [
+        152,
+        153
+      ],
+      "courseNames": [
+        "Redis 캐시 설계",
+        "데이터 모델링 실전"
+      ],
+      "coPurchaseCount": 202
+    },
+    {
+      "courseIds": [
+        153,
+        154
+      ],
+      "courseNames": [
+        "데이터 모델링 실전",
+        "SQL 기초"
+      ],
+      "coPurchaseCount": 219
+    },
+    {
+      "courseIds": [
+        154,
+        155
+      ],
+      "courseNames": [
+        "SQL 기초",
+        "SQL 고급 쿼리"
+      ],
+      "coPurchaseCount": 236
+    },
+    {
+      "courseIds": [
+        155,
+        156
+      ],
+      "courseNames": [
+        "SQL 고급 쿼리",
+        "PostgreSQL 운영"
+      ],
+      "coPurchaseCount": 253
+    },
+    {
+      "courseIds": [
+        156,
+        157
+      ],
+      "courseNames": [
+        "PostgreSQL 운영",
+        "Oracle 데이터베이스 기초"
+      ],
+      "coPurchaseCount": 270
+    },
+    {
+      "courseIds": [
+        157,
+        158
+      ],
+      "courseNames": [
+        "Oracle 데이터베이스 기초",
+        "MongoDB 문서 모델링"
+      ],
+      "coPurchaseCount": 77
+    },
+    {
+      "courseIds": [
+        158,
+        159
+      ],
+      "courseNames": [
+        "MongoDB 문서 모델링",
+        "Elasticsearch 검색 설계"
+      ],
+      "coPurchaseCount": 94
+    },
+    {
+      "courseIds": [
+        159,
+        160
+      ],
+      "courseNames": [
+        "Elasticsearch 검색 설계",
+        "인덱스 설계 원칙"
+      ],
+      "coPurchaseCount": 111
+    },
+    {
+      "courseIds": [
+        160,
+        161
+      ],
+      "courseNames": [
+        "인덱스 설계 원칙",
+        "실행 계획 분석"
+      ],
+      "coPurchaseCount": 128
+    },
+    {
+      "courseIds": [
+        161,
+        162
+      ],
+      "courseNames": [
+        "실행 계획 분석",
+        "데이터베이스 트랜잭션"
+      ],
+      "coPurchaseCount": 145
+    },
+    {
+      "courseIds": [
+        162,
+        163
+      ],
+      "courseNames": [
+        "데이터베이스 트랜잭션",
+        "동시성과 잠금 관리"
+      ],
+      "coPurchaseCount": 162
+    },
+    {
+      "courseIds": [
+        163,
+        164
+      ],
+      "courseNames": [
+        "동시성과 잠금 관리",
+        "DB 장애 복구"
+      ],
+      "coPurchaseCount": 179
+    },
+    {
+      "courseIds": [
+        164,
+        165
+      ],
+      "courseNames": [
+        "DB 장애 복구",
+        "백업과 복원 실전"
+      ],
+      "coPurchaseCount": 196
+    },
+    {
+      "courseIds": [
+        165,
+        166
+      ],
+      "courseNames": [
+        "백업과 복원 실전",
+        "데이터베이스 보안"
+      ],
+      "coPurchaseCount": 213
+    },
+    {
+      "courseIds": [
+        166,
+        167
+      ],
+      "courseNames": [
+        "데이터베이스 보안",
+        "샤딩과 파티셔닝"
+      ],
+      "coPurchaseCount": 230
+    },
+    {
+      "courseIds": [
+        167,
+        168
+      ],
+      "courseNames": [
+        "샤딩과 파티셔닝",
+        "복제와 고가용성"
+      ],
+      "coPurchaseCount": 247
+    },
+    {
+      "courseIds": [
+        168,
+        169
+      ],
+      "courseNames": [
+        "복제와 고가용성",
+        "NoSQL 데이터 설계"
+      ],
+      "coPurchaseCount": 264
+    },
+    {
+      "courseIds": [
+        169,
+        170
+      ],
+      "courseNames": [
+        "NoSQL 데이터 설계",
+        "그래프 데이터베이스"
+      ],
+      "coPurchaseCount": 71
+    },
+    {
+      "courseIds": [
+        170,
+        171
+      ],
+      "courseNames": [
+        "그래프 데이터베이스",
+        "시계열 데이터베이스"
+      ],
+      "coPurchaseCount": 88
+    },
+    {
+      "courseIds": [
+        171,
+        172
+      ],
+      "courseNames": [
+        "시계열 데이터베이스",
+        "클라우드 데이터베이스"
+      ],
+      "coPurchaseCount": 105
+    },
+    {
+      "courseIds": [
+        172,
+        173
+      ],
+      "courseNames": [
+        "클라우드 데이터베이스",
+        "RDS 운영 실전"
+      ],
+      "coPurchaseCount": 122
+    },
+    {
+      "courseIds": [
+        173,
+        174
+      ],
+      "courseNames": [
+        "RDS 운영 실전",
+        "데이터 마이그레이션"
+      ],
+      "coPurchaseCount": 139
+    },
+    {
+      "courseIds": [
+        174,
+        175
+      ],
+      "courseNames": [
+        "데이터 마이그레이션",
+        "CDC 데이터 동기화"
+      ],
+      "coPurchaseCount": 156
+    },
+    {
+      "courseIds": [
+        175,
+        176
+      ],
+      "courseNames": [
+        "CDC 데이터 동기화",
+        "대용량 배치 쿼리"
+      ],
+      "coPurchaseCount": 173
+    },
+    {
+      "courseIds": [
+        176,
+        177
+      ],
+      "courseNames": [
+        "대용량 배치 쿼리",
+        "ORM과 데이터베이스"
+      ],
+      "coPurchaseCount": 190
+    },
+    {
+      "courseIds": [
+        177,
+        178
+      ],
+      "courseNames": [
+        "ORM과 데이터베이스",
+        "쿼리 성능 모니터링"
+      ],
+      "coPurchaseCount": 207
+    },
+    {
+      "courseIds": [
+        178,
+        179
+      ],
+      "courseNames": [
+        "쿼리 성능 모니터링",
+        "분산 데이터베이스"
+      ],
+      "coPurchaseCount": 224
+    },
+    {
+      "courseIds": [
+        179,
+        180
+      ],
+      "courseNames": [
+        "분산 데이터베이스",
+        "데이터 아키텍처 설계"
+      ],
+      "coPurchaseCount": 241
+    },
+    {
+      "courseIds": [
+        181,
+        182
+      ],
+      "courseNames": [
+        "웹 애플리케이션 보안",
+        "OAuth2와 OpenID Connect"
+      ],
+      "coPurchaseCount": 208
+    },
+    {
+      "courseIds": [
+        182,
+        183
+      ],
+      "courseNames": [
+        "OAuth2와 OpenID Connect",
+        "OWASP Top 10 실전"
+      ],
+      "coPurchaseCount": 225
+    },
+    {
+      "courseIds": [
+        183,
+        184
+      ],
+      "courseNames": [
+        "OWASP Top 10 실전",
+        "네트워크 보안 기초"
+      ],
+      "coPurchaseCount": 242
+    },
+    {
+      "courseIds": [
+        184,
+        185
+      ],
+      "courseNames": [
+        "네트워크 보안 기초",
+        "클라우드 보안 아키텍처"
+      ],
+      "coPurchaseCount": 259
+    },
+    {
+      "courseIds": [
+        185,
+        186
+      ],
+      "courseNames": [
+        "클라우드 보안 아키텍처",
+        "API 보안 설계"
+      ],
+      "coPurchaseCount": 276
+    },
+    {
+      "courseIds": [
+        186,
+        187
+      ],
+      "courseNames": [
+        "API 보안 설계",
+        "JWT 보안 실무"
+      ],
+      "coPurchaseCount": 83
+    },
+    {
+      "courseIds": [
+        187,
+        188
+      ],
+      "courseNames": [
+        "JWT 보안 실무",
+        "침투 테스트 입문"
+      ],
+      "coPurchaseCount": 100
+    },
+    {
+      "courseIds": [
+        188,
+        189
+      ],
+      "courseNames": [
+        "침투 테스트 입문",
+        "취약점 진단 자동화"
+      ],
+      "coPurchaseCount": 117
+    },
+    {
+      "courseIds": [
+        189,
+        190
+      ],
+      "courseNames": [
+        "취약점 진단 자동화",
+        "보안 로그 분석"
+      ],
+      "coPurchaseCount": 134
+    },
+    {
+      "courseIds": [
+        190,
+        191
+      ],
+      "courseNames": [
+        "보안 로그 분석",
+        "SIEM 운영 기초"
+      ],
+      "coPurchaseCount": 151
+    },
+    {
+      "courseIds": [
+        191,
+        192
+      ],
+      "courseNames": [
+        "SIEM 운영 기초",
+        "제로 트러스트 아키텍처"
+      ],
+      "coPurchaseCount": 168
+    },
+    {
+      "courseIds": [
+        192,
+        193
+      ],
+      "courseNames": [
+        "제로 트러스트 아키텍처",
+        "IAM 권한 관리"
+      ],
+      "coPurchaseCount": 185
+    },
+    {
+      "courseIds": [
+        193,
+        194
+      ],
+      "courseNames": [
+        "IAM 권한 관리",
+        "Kubernetes 보안 실전"
+      ],
+      "coPurchaseCount": 202
+    },
+    {
+      "courseIds": [
+        194,
+        195
+      ],
+      "courseNames": [
+        "Kubernetes 보안 실전",
+        "컨테이너 보안"
+      ],
+      "coPurchaseCount": 219
+    },
+    {
+      "courseIds": [
+        195,
+        196
+      ],
+      "courseNames": [
+        "컨테이너 보안",
+        "DevSecOps 구축"
+      ],
+      "coPurchaseCount": 236
+    },
+    {
+      "courseIds": [
+        196,
+        197
+      ],
+      "courseNames": [
+        "DevSecOps 구축",
+        "암호학 기초"
+      ],
+      "coPurchaseCount": 253
+    },
+    {
+      "courseIds": [
+        197,
+        198
+      ],
+      "courseNames": [
+        "암호학 기초",
+        "개인정보 보호 설계"
+      ],
+      "coPurchaseCount": 270
+    },
+    {
+      "courseIds": [
+        198,
+        199
+      ],
+      "courseNames": [
+        "개인정보 보호 설계",
+        "시큐어 코딩 Java"
+      ],
+      "coPurchaseCount": 77
+    },
+    {
+      "courseIds": [
+        199,
+        200
+      ],
+      "courseNames": [
+        "시큐어 코딩 Java",
+        "시큐어 코딩 JavaScript"
+      ],
+      "coPurchaseCount": 94
+    },
+    {
+      "courseIds": [
+        200,
+        201
+      ],
+      "courseNames": [
+        "시큐어 코딩 JavaScript",
+        "모바일 앱 보안"
+      ],
+      "coPurchaseCount": 111
+    },
+    {
+      "courseIds": [
+        201,
+        202
+      ],
+      "courseNames": [
+        "모바일 앱 보안",
+        "데이터베이스 보안"
+      ],
+      "coPurchaseCount": 128
+    },
+    {
+      "courseIds": [
+        202,
+        203
+      ],
+      "courseNames": [
+        "데이터베이스 보안",
+        "랜섬웨어 대응"
+      ],
+      "coPurchaseCount": 145
+    },
+    {
+      "courseIds": [
+        203,
+        204
+      ],
+      "courseNames": [
+        "랜섬웨어 대응",
+        "인시던트 대응 실무"
+      ],
+      "coPurchaseCount": 162
+    },
+    {
+      "courseIds": [
+        204,
+        205
+      ],
+      "courseNames": [
+        "인시던트 대응 실무",
+        "디지털 포렌식 입문"
+      ],
+      "coPurchaseCount": 179
+    },
+    {
+      "courseIds": [
+        205,
+        206
+      ],
+      "courseNames": [
+        "디지털 포렌식 입문",
+        "소프트웨어 공급망 보안"
+      ],
+      "coPurchaseCount": 196
+    },
+    {
+      "courseIds": [
+        206,
+        207
+      ],
+      "courseNames": [
+        "소프트웨어 공급망 보안",
+        "SAST와 DAST 활용"
+      ],
+      "coPurchaseCount": 213
+    },
+    {
+      "courseIds": [
+        207,
+        208
+      ],
+      "courseNames": [
+        "SAST와 DAST 활용",
+        "보안 위협 모델링"
+      ],
+      "coPurchaseCount": 230
+    },
+    {
+      "courseIds": [
+        208,
+        209
+      ],
+      "courseNames": [
+        "보안 위협 모델링",
+        "AI 서비스 보안"
+      ],
+      "coPurchaseCount": 247
+    },
+    {
+      "courseIds": [
+        209,
+        210
+      ],
+      "courseNames": [
+        "AI 서비스 보안",
+        "기업 보안 거버넌스"
+      ],
+      "coPurchaseCount": 264
+    },
+    {
+      "courseIds": [
+        211,
+        212
+      ],
+      "courseNames": [
+        "Flutter 모바일 앱 개발",
+        "Dart 프로그래밍 기초"
+      ],
+      "coPurchaseCount": 231
+    },
+    {
+      "courseIds": [
+        212,
+        213
+      ],
+      "courseNames": [
+        "Dart 프로그래밍 기초",
+        "Android Kotlin 입문"
+      ],
+      "coPurchaseCount": 248
+    },
+    {
+      "courseIds": [
+        213,
+        214
+      ],
+      "courseNames": [
+        "Android Kotlin 입문",
+        "iOS Swift 입문"
+      ],
+      "coPurchaseCount": 265
+    },
+    {
+      "courseIds": [
+        214,
+        215
+      ],
+      "courseNames": [
+        "iOS Swift 입문",
+        "React Native 앱 개발"
+      ],
+      "coPurchaseCount": 72
+    },
+    {
+      "courseIds": [
+        215,
+        216
+      ],
+      "courseNames": [
+        "React Native 앱 개발",
+        "Flutter 상태 관리"
+      ],
+      "coPurchaseCount": 89
+    },
+    {
+      "courseIds": [
+        216,
+        217
+      ],
+      "courseNames": [
+        "Flutter 상태 관리",
+        "Android Jetpack Compose"
+      ],
+      "coPurchaseCount": 106
+    },
+    {
+      "courseIds": [
+        217,
+        218
+      ],
+      "courseNames": [
+        "Android Jetpack Compose",
+        "SwiftUI 앱 개발"
+      ],
+      "coPurchaseCount": 123
+    },
+    {
+      "courseIds": [
+        218,
+        219
+      ],
+      "courseNames": [
+        "SwiftUI 앱 개발",
+        "모바일 UI/UX 구현"
+      ],
+      "coPurchaseCount": 140
+    },
+    {
+      "courseIds": [
+        219,
+        220
+      ],
+      "courseNames": [
+        "모바일 UI/UX 구현",
+        "모바일 REST API 연동"
+      ],
+      "coPurchaseCount": 157
+    },
+    {
+      "courseIds": [
+        220,
+        221
+      ],
+      "courseNames": [
+        "모바일 REST API 연동",
+        "Firebase 앱 백엔드"
+      ],
+      "coPurchaseCount": 174
+    },
+    {
+      "courseIds": [
+        221,
+        222
+      ],
+      "courseNames": [
+        "Firebase 앱 백엔드",
+        "모바일 푸시 알림"
+      ],
+      "coPurchaseCount": 191
+    },
+    {
+      "courseIds": [
+        222,
+        223
+      ],
+      "courseNames": [
+        "모바일 푸시 알림",
+        "앱 결제 시스템"
+      ],
+      "coPurchaseCount": 208
+    },
+    {
+      "courseIds": [
+        223,
+        224
+      ],
+      "courseNames": [
+        "앱 결제 시스템",
+        "모바일 인증과 보안"
+      ],
+      "coPurchaseCount": 225
+    },
+    {
+      "courseIds": [
+        224,
+        225
+      ],
+      "courseNames": [
+        "모바일 인증과 보안",
+        "모바일 데이터 저장"
+      ],
+      "coPurchaseCount": 242
+    },
+    {
+      "courseIds": [
+        225,
+        226
+      ],
+      "courseNames": [
+        "모바일 데이터 저장",
+        "오프라인 우선 앱 설계"
+      ],
+      "coPurchaseCount": 259
+    },
+    {
+      "courseIds": [
+        226,
+        227
+      ],
+      "courseNames": [
+        "오프라인 우선 앱 설계",
+        "모바일 성능 최적화"
+      ],
+      "coPurchaseCount": 276
+    },
+    {
+      "courseIds": [
+        227,
+        228
+      ],
+      "courseNames": [
+        "모바일 성능 최적화",
+        "앱 크래시 분석"
+      ],
+      "coPurchaseCount": 83
+    },
+    {
+      "courseIds": [
+        228,
+        229
+      ],
+      "courseNames": [
+        "앱 크래시 분석",
+        "Android 테스트 자동화"
+      ],
+      "coPurchaseCount": 100
+    },
+    {
+      "courseIds": [
+        229,
+        230
+      ],
+      "courseNames": [
+        "Android 테스트 자동화",
+        "iOS 테스트 자동화"
+      ],
+      "coPurchaseCount": 117
+    },
+    {
+      "courseIds": [
+        230,
+        231
+      ],
+      "courseNames": [
+        "iOS 테스트 자동화",
+        "모바일 CI/CD"
+      ],
+      "coPurchaseCount": 134
+    },
+    {
+      "courseIds": [
+        231,
+        232
+      ],
+      "courseNames": [
+        "모바일 CI/CD",
+        "앱스토어 배포 실전"
+      ],
+      "coPurchaseCount": 151
+    },
+    {
+      "courseIds": [
+        232,
+        233
+      ],
+      "courseNames": [
+        "앱스토어 배포 실전",
+        "모바일 접근성"
+      ],
+      "coPurchaseCount": 168
+    },
+    {
+      "courseIds": [
+        233,
+        234
+      ],
+      "courseNames": [
+        "모바일 접근성",
+        "위치 기반 서비스"
+      ],
+      "coPurchaseCount": 185
+    },
+    {
+      "courseIds": [
+        234,
+        235
+      ],
+      "courseNames": [
+        "위치 기반 서비스",
+        "카메라와 미디어 처리"
+      ],
+      "coPurchaseCount": 202
+    },
+    {
+      "courseIds": [
+        235,
+        236
+      ],
+      "courseNames": [
+        "카메라와 미디어 처리",
+        "BLE IoT 앱 개발"
+      ],
+      "coPurchaseCount": 219
+    },
+    {
+      "courseIds": [
+        236,
+        237
+      ],
+      "courseNames": [
+        "BLE IoT 앱 개발",
+        "Flutter 애니메이션"
+      ],
+      "coPurchaseCount": 236
+    },
+    {
+      "courseIds": [
+        237,
+        238
+      ],
+      "courseNames": [
+        "Flutter 애니메이션",
+        "모바일 아키텍처 패턴"
+      ],
+      "coPurchaseCount": 253
+    },
+    {
+      "courseIds": [
+        238,
+        239
+      ],
+      "courseNames": [
+        "모바일 아키텍처 패턴",
+        "크로스플랫폼 앱 전략"
+      ],
+      "coPurchaseCount": 270
+    },
+    {
+      "courseIds": [
+        239,
+        240
+      ],
+      "courseNames": [
+        "크로스플랫폼 앱 전략",
+        "대규모 모바일 서비스 설계"
+      ],
+      "coPurchaseCount": 77
+    },
+    {
+      "courseIds": [
+        1,
+        2,
+        4
+      ],
+      "courseNames": [
+        "Spring Boot 기초",
+        "Spring Boot MSA",
+        "Java 객체지향 실전"
+      ],
+      "coPurchaseCount": 40
+    },
+    {
+      "courseIds": [
+        1,
+        2,
+        91
+      ],
+      "courseNames": [
+        "Spring Boot 기초",
+        "Spring Boot MSA",
+        "Docker 컨테이너 실전"
+      ],
+      "coPurchaseCount": 164
+    },
+    {
+      "courseIds": [
+        2,
+        91,
+        92
+      ],
+      "courseNames": [
+        "Spring Boot MSA",
+        "Docker 컨테이너 실전",
+        "Kubernetes 운영 기초"
+      ],
+      "coPurchaseCount": 132
+    },
+    {
+      "courseIds": [
+        3,
+        32,
+        33
+      ],
+      "courseNames": [
+        "Vue.js 기초",
+        "React 웹 개발 입문",
+        "HTML과 CSS 실전"
+      ],
+      "coPurchaseCount": 59
+    },
+    {
+      "courseIds": [
+        3,
+        32,
+        34
+      ],
+      "courseNames": [
+        "Vue.js 기초",
+        "React 웹 개발 입문",
+        "TypeScript 실전"
+      ],
+      "coPurchaseCount": 188
+    },
+    {
+      "courseIds": [
+        3,
+        211,
+        212
+      ],
+      "courseNames": [
+        "Vue.js 기초",
+        "Flutter 모바일 앱 개발",
+        "Dart 프로그래밍 기초"
+      ],
+      "coPurchaseCount": 126
+    },
+    {
+      "courseIds": [
+        4,
+        5,
+        6
+      ],
+      "courseNames": [
+        "Java 객체지향 실전",
+        "Spring Security와 JWT",
+        "REST API 설계와 테스트"
+      ],
+      "coPurchaseCount": 66
+    },
+    {
+      "courseIds": [
+        5,
+        181,
+        182
+      ],
+      "courseNames": [
+        "Spring Security와 JWT",
+        "웹 애플리케이션 보안",
+        "OAuth2와 OpenID Connect"
+      ],
+      "coPurchaseCount": 149
+    },
+    {
+      "courseIds": [
+        6,
+        7,
+        8
+      ],
+      "courseNames": [
+        "REST API 설계와 테스트",
+        "JPA와 Hibernate 성능 최적화",
+        "Kotlin 서버 개발"
+      ],
+      "coPurchaseCount": 92
+    },
+    {
+      "courseIds": [
+        8,
+        9,
+        10
+      ],
+      "courseNames": [
+        "Kotlin 서버 개발",
+        "Spring WebFlux 리액티브 프로그래밍",
+        "클린 아키텍처 실전"
+      ],
+      "coPurchaseCount": 118
+    },
+    {
+      "courseIds": [
+        10,
+        11,
+        12
+      ],
+      "courseNames": [
+        "클린 아키텍처 실전",
+        "도메인 주도 설계 입문",
+        "백엔드 TDD 실전"
+      ],
+      "coPurchaseCount": 144
+    },
+    {
+      "courseIds": [
+        12,
+        13,
+        14
+      ],
+      "courseNames": [
+        "백엔드 TDD 실전",
+        "Gradle 빌드 자동화",
+        "Spring과 Redis 활용"
+      ],
+      "coPurchaseCount": 170
+    },
+    {
+      "courseIds": [
+        14,
+        15,
+        16
+      ],
+      "courseNames": [
+        "Spring과 Redis 활용",
+        "Kafka 이벤트 기반 아키텍처",
+        "gRPC 서비스 개발"
+      ],
+      "coPurchaseCount": 56
+    },
+    {
+      "courseIds": [
+        16,
+        17,
+        18
+      ],
+      "courseNames": [
+        "gRPC 서비스 개발",
+        "GraphQL API 구축",
+        "Spring Batch 대용량 처리"
+      ],
+      "coPurchaseCount": 82
+    },
+    {
+      "courseIds": [
+        18,
+        19,
+        20
+      ],
+      "courseNames": [
+        "Spring Batch 대용량 처리",
+        "Java 동시성 프로그래밍",
+        "JVM 성능 튜닝"
+      ],
+      "coPurchaseCount": 108
+    },
+    {
+      "courseIds": [
+        20,
+        21,
+        22
+      ],
+      "courseNames": [
+        "JVM 성능 튜닝",
+        "백엔드 로깅과 모니터링",
+        "API Gateway 패턴"
+      ],
+      "coPurchaseCount": 134
+    },
+    {
+      "courseIds": [
+        22,
+        23,
+        24
+      ],
+      "courseNames": [
+        "API Gateway 패턴",
+        "분산 트랜잭션 이해",
+        "Saga 패턴 실전"
+      ],
+      "coPurchaseCount": 160
+    },
+    {
+      "courseIds": [
+        24,
+        25,
+        26
+      ],
+      "courseNames": [
+        "Saga 패턴 실전",
+        "CQRS와 이벤트 소싱",
+        "헥사고날 아키텍처"
+      ],
+      "coPurchaseCount": 46
+    },
+    {
+      "courseIds": [
+        26,
+        27,
+        28
+      ],
+      "courseNames": [
+        "헥사고날 아키텍처",
+        "레거시 시스템 리팩터링",
+        "Spring 통합 테스트"
+      ],
+      "coPurchaseCount": 72
+    },
+    {
+      "courseIds": [
+        28,
+        29,
+        30
+      ],
+      "courseNames": [
+        "Spring 통합 테스트",
+        "Spring Cloud 실전",
+        "Java 21 신기능"
+      ],
+      "coPurchaseCount": 98
+    },
+    {
+      "courseIds": [
+        32,
+        34,
+        35
+      ],
+      "courseNames": [
+        "React 웹 개발 입문",
+        "TypeScript 실전",
+        "Next.js 웹 애플리케이션"
+      ],
+      "coPurchaseCount": 174
+    },
+    {
+      "courseIds": [
+        33,
+        34,
+        35
+      ],
+      "courseNames": [
+        "HTML과 CSS 실전",
+        "TypeScript 실전",
+        "Next.js 웹 애플리케이션"
+      ],
+      "coPurchaseCount": 85
+    },
+    {
+      "courseIds": [
+        35,
+        36,
+        37
+      ],
+      "courseNames": [
+        "Next.js 웹 애플리케이션",
+        "프론트엔드 테스트 자동화",
+        "Vue 3 Composition API"
+      ],
+      "coPurchaseCount": 111
+    },
+    {
+      "courseIds": [
+        37,
+        38,
+        39
+      ],
+      "courseNames": [
+        "Vue 3 Composition API",
+        "React 상태 관리",
+        "웹 접근성 실무"
+      ],
+      "coPurchaseCount": 137
+    },
+    {
+      "courseIds": [
+        39,
+        40,
+        41
+      ],
+      "courseNames": [
+        "웹 접근성 실무",
+        "반응형 웹 디자인",
+        "JavaScript 핵심 원리"
+      ],
+      "coPurchaseCount": 163
+    },
+    {
+      "courseIds": [
+        41,
+        42,
+        43
+      ],
+      "courseNames": [
+        "JavaScript 핵심 원리",
+        "모던 CSS 레이아웃",
+        "Vite 빌드 최적화"
+      ],
+      "coPurchaseCount": 49
+    },
+    {
+      "courseIds": [
+        43,
+        44,
+        45
+      ],
+      "courseNames": [
+        "Vite 빌드 최적화",
+        "프론트엔드 성능 개선",
+        "Storybook 디자인 시스템"
+      ],
+      "coPurchaseCount": 75
+    },
+    {
+      "courseIds": [
+        45,
+        46,
+        47
+      ],
+      "courseNames": [
+        "Storybook 디자인 시스템",
+        "React Query 데이터 패칭",
+        "Nuxt 풀스택 프론트엔드"
+      ],
+      "coPurchaseCount": 101
+    },
+    {
+      "courseIds": [
+        47,
+        48,
+        49
+      ],
+      "courseNames": [
+        "Nuxt 풀스택 프론트엔드",
+        "Svelte 입문",
+        "웹 컴포넌트 설계"
+      ],
+      "coPurchaseCount": 127
+    },
+    {
+      "courseIds": [
+        49,
+        50,
+        51
+      ],
+      "courseNames": [
+        "웹 컴포넌트 설계",
+        "Micro Frontend 아키텍처",
+        "브라우저 렌더링 원리"
+      ],
+      "coPurchaseCount": 153
+    },
+    {
+      "courseIds": [
+        51,
+        52,
+        53
+      ],
+      "courseNames": [
+        "브라우저 렌더링 원리",
+        "프론트엔드 보안 기초",
+        "Playwright E2E 테스트"
+      ],
+      "coPurchaseCount": 179
+    },
+    {
+      "courseIds": [
+        53,
+        54,
+        55
+      ],
+      "courseNames": [
+        "Playwright E2E 테스트",
+        "프론트엔드 CI/CD",
+        "Canvas 데이터 시각화"
+      ],
+      "coPurchaseCount": 65
+    },
+    {
+      "courseIds": [
+        55,
+        56,
+        57
+      ],
+      "courseNames": [
+        "Canvas 데이터 시각화",
+        "PWA 서비스 개발",
+        "프론트엔드 코드 리뷰"
+      ],
+      "coPurchaseCount": 91
+    },
+    {
+      "courseIds": [
+        57,
+        58,
+        59
+      ],
+      "courseNames": [
+        "프론트엔드 코드 리뷰",
+        "Redux Toolkit 실전",
+        "Vue Pinia 상태 관리"
+      ],
+      "coPurchaseCount": 117
+    },
+    {
+      "courseIds": [
+        61,
+        62,
+        63
+      ],
+      "courseNames": [
+        "머신러닝 입문",
+        "생성형 AI와 프롬프트 엔지니어링",
+        "딥러닝과 PyTorch"
+      ],
+      "coPurchaseCount": 78
+    },
+    {
+      "courseIds": [
+        61,
+        62,
+        64
+      ],
+      "courseNames": [
+        "머신러닝 입문",
+        "생성형 AI와 프롬프트 엔지니어링",
+        "RAG 기반 AI 서비스 구축"
+      ],
+      "coPurchaseCount": 205
+    },
+    {
+      "courseIds": [
+        61,
+        62,
+        121
+      ],
+      "courseNames": [
+        "머신러닝 입문",
+        "생성형 AI와 프롬프트 엔지니어링",
+        "Python 데이터 분석"
+      ],
+      "coPurchaseCount": 183
+    },
+    {
+      "courseIds": [
+        62,
+        64,
+        71
+      ],
+      "courseNames": [
+        "생성형 AI와 프롬프트 엔지니어링",
+        "RAG 기반 AI 서비스 구축",
+        "벡터 데이터베이스 활용"
+      ],
+      "coPurchaseCount": 221
+    },
+    {
+      "courseIds": [
+        63,
+        64,
+        65
+      ],
+      "courseNames": [
+        "딥러닝과 PyTorch",
+        "RAG 기반 AI 서비스 구축",
+        "LLM 애플리케이션 평가와 운영"
+      ],
+      "coPurchaseCount": 104
+    },
+    {
+      "courseIds": [
+        65,
+        66,
+        67
+      ],
+      "courseNames": [
+        "LLM 애플리케이션 평가와 운영",
+        "자연어 처리 기초",
+        "컴퓨터 비전 입문"
+      ],
+      "coPurchaseCount": 130
+    },
+    {
+      "courseIds": [
+        67,
+        68,
+        69
+      ],
+      "courseNames": [
+        "컴퓨터 비전 입문",
+        "Transformer 핵심 원리",
+        "OpenAI API 서비스 개발"
+      ],
+      "coPurchaseCount": 156
+    },
+    {
+      "courseIds": [
+        69,
+        70,
+        71
+      ],
+      "courseNames": [
+        "OpenAI API 서비스 개발",
+        "LangChain 애플리케이션",
+        "벡터 데이터베이스 활용"
+      ],
+      "coPurchaseCount": 42
+    },
+    {
+      "courseIds": [
+        71,
+        72,
+        73
+      ],
+      "courseNames": [
+        "벡터 데이터베이스 활용",
+        "AI Agent 설계",
+        "멀티모달 AI 서비스"
+      ],
+      "coPurchaseCount": 68
+    },
+    {
+      "courseIds": [
+        73,
+        74,
+        75
+      ],
+      "courseNames": [
+        "멀티모달 AI 서비스",
+        "파인튜닝과 모델 최적화",
+        "추천 시스템 입문"
+      ],
+      "coPurchaseCount": 94
+    },
+    {
+      "courseIds": [
+        75,
+        76,
+        77
+      ],
+      "courseNames": [
+        "추천 시스템 입문",
+        "시계열 예측 모델",
+        "MLOps 파이프라인"
+      ],
+      "coPurchaseCount": 120
+    },
+    {
+      "courseIds": [
+        77,
+        78,
+        79
+      ],
+      "courseNames": [
+        "MLOps 파이프라인",
+        "AI 모델 설명 가능성",
+        "Responsible AI 기초"
+      ],
+      "coPurchaseCount": 146
+    },
+    {
+      "courseIds": [
+        79,
+        80,
+        81
+      ],
+      "courseNames": [
+        "Responsible AI 기초",
+        "음성 인식 서비스 개발",
+        "이미지 생성 AI 활용"
+      ],
+      "coPurchaseCount": 172
+    },
+    {
+      "courseIds": [
+        81,
+        82,
+        83
+      ],
+      "courseNames": [
+        "이미지 생성 AI 활용",
+        "문서 분류 자동화",
+        "LLM 프롬프트 평가"
+      ],
+      "coPurchaseCount": 58
+    },
+    {
+      "courseIds": [
+        83,
+        84,
+        85
+      ],
+      "courseNames": [
+        "LLM 프롬프트 평가",
+        "검색 증강 생성 심화",
+        "지식 그래프와 AI"
+      ],
+      "coPurchaseCount": 84
+    },
+    {
+      "courseIds": [
+        85,
+        86,
+        87
+      ],
+      "courseNames": [
+        "지식 그래프와 AI",
+        "경량 모델 배포",
+        "AI 서비스 비용 최적화"
+      ],
+      "coPurchaseCount": 110
+    },
+    {
+      "courseIds": [
+        87,
+        88,
+        89
+      ],
+      "courseNames": [
+        "AI 서비스 비용 최적화",
+        "Synthetic Data 생성",
+        "LLM 보안과 가드레일"
+      ],
+      "coPurchaseCount": 136
+    },
+    {
+      "courseIds": [
+        91,
+        92,
+        93
+      ],
+      "courseNames": [
+        "Docker 컨테이너 실전",
+        "Kubernetes 운영 기초",
+        "GitHub Actions CI/CD"
+      ],
+      "coPurchaseCount": 97
+    },
+    {
+      "courseIds": [
+        93,
+        94,
+        95
+      ],
+      "courseNames": [
+        "GitHub Actions CI/CD",
+        "AWS 클라우드 아키텍처",
+        "Terraform 인프라 자동화"
+      ],
+      "coPurchaseCount": 123
+    },
+    {
+      "courseIds": [
+        95,
+        96,
+        97
+      ],
+      "courseNames": [
+        "Terraform 인프라 자동화",
+        "Linux 서버 운영",
+        "Nginx 웹 서버 구성"
+      ],
+      "coPurchaseCount": 149
+    },
+    {
+      "courseIds": [
+        97,
+        98,
+        99
+      ],
+      "courseNames": [
+        "Nginx 웹 서버 구성",
+        "Helm 차트 실전",
+        "Argo CD GitOps"
+      ],
+      "coPurchaseCount": 175
+    },
+    {
+      "courseIds": [
+        99,
+        100,
+        101
+      ],
+      "courseNames": [
+        "Argo CD GitOps",
+        "Jenkins 파이프라인",
+        "Prometheus 모니터링"
+      ],
+      "coPurchaseCount": 61
+    },
+    {
+      "courseIds": [
+        101,
+        102,
+        103
+      ],
+      "courseNames": [
+        "Prometheus 모니터링",
+        "Grafana 대시보드",
+        "ELK 로그 분석"
+      ],
+      "coPurchaseCount": 87
+    },
+    {
+      "courseIds": [
+        103,
+        104,
+        105
+      ],
+      "courseNames": [
+        "ELK 로그 분석",
+        "OpenTelemetry 분산 추적",
+        "SRE 기초"
+      ],
+      "coPurchaseCount": 113
+    },
+    {
+      "courseIds": [
+        105,
+        106,
+        107
+      ],
+      "courseNames": [
+        "SRE 기초",
+        "클라우드 비용 최적화",
+        "AWS EKS 운영"
+      ],
+      "coPurchaseCount": 139
+    },
+    {
+      "courseIds": [
+        107,
+        108,
+        109
+      ],
+      "courseNames": [
+        "AWS EKS 운영",
+        "Azure DevOps 입문",
+        "GCP 인프라 설계"
+      ],
+      "coPurchaseCount": 165
+    },
+    {
+      "courseIds": [
+        109,
+        110,
+        111
+      ],
+      "courseNames": [
+        "GCP 인프라 설계",
+        "Ansible 구성 관리",
+        "네트워크와 DNS 기초"
+      ],
+      "coPurchaseCount": 51
+    },
+    {
+      "courseIds": [
+        111,
+        112,
+        113
+      ],
+      "courseNames": [
+        "네트워크와 DNS 기초",
+        "서비스 메시 Istio",
+        "Kubernetes 보안"
+      ],
+      "coPurchaseCount": 77
+    },
+    {
+      "courseIds": [
+        113,
+        114,
+        115
+      ],
+      "courseNames": [
+        "Kubernetes 보안",
+        "컨테이너 이미지 최적화",
+        "무중단 배포 전략"
+      ],
+      "coPurchaseCount": 103
+    },
+    {
+      "courseIds": [
+        115,
+        116,
+        117
+      ],
+      "courseNames": [
+        "무중단 배포 전략",
+        "재해 복구 설계",
+        "DevSecOps 파이프라인"
+      ],
+      "coPurchaseCount": 129
+    },
+    {
+      "courseIds": [
+        117,
+        118,
+        119
+      ],
+      "courseNames": [
+        "DevSecOps 파이프라인",
+        "플랫폼 엔지니어링",
+        "MSA 관측성과 장애 대응"
+      ],
+      "coPurchaseCount": 155
+    },
+    {
+      "courseIds": [
+        121,
+        122,
+        123
+      ],
+      "courseNames": [
+        "Python 데이터 분석",
+        "Pandas와 SQL 데이터 처리",
+        "데이터 시각화와 대시보드"
+      ],
+      "coPurchaseCount": 116
+    },
+    {
+      "courseIds": [
+        121,
+        122,
+        151
+      ],
+      "courseNames": [
+        "Python 데이터 분석",
+        "Pandas와 SQL 데이터 처리",
+        "MySQL 성능 튜닝"
+      ],
+      "coPurchaseCount": 156
+    },
+    {
+      "courseIds": [
+        123,
+        124,
+        125
+      ],
+      "courseNames": [
+        "데이터 시각화와 대시보드",
+        "통계 분석 기초",
+        "A/B 테스트 실무"
+      ],
+      "coPurchaseCount": 142
+    },
+    {
+      "courseIds": [
+        125,
+        126,
+        127
+      ],
+      "courseNames": [
+        "A/B 테스트 실무",
+        "Tableau 대시보드",
+        "Power BI 데이터 분석"
+      ],
+      "coPurchaseCount": 168
+    },
+    {
+      "courseIds": [
+        127,
+        128,
+        129
+      ],
+      "courseNames": [
+        "Power BI 데이터 분석",
+        "데이터 전처리 실전",
+        "탐색적 데이터 분석"
+      ],
+      "coPurchaseCount": 54
+    },
+    {
+      "courseIds": [
+        129,
+        130,
+        131
+      ],
+      "courseNames": [
+        "탐색적 데이터 분석",
+        "비즈니스 지표 설계",
+        "고객 세그먼트 분석"
+      ],
+      "coPurchaseCount": 80
+    },
+    {
+      "courseIds": [
+        131,
+        132,
+        133
+      ],
+      "courseNames": [
+        "고객 세그먼트 분석",
+        "마케팅 데이터 분석",
+        "제품 분석과 퍼널"
+      ],
+      "coPurchaseCount": 106
+    },
+    {
+      "courseIds": [
+        133,
+        134,
+        135
+      ],
+      "courseNames": [
+        "제품 분석과 퍼널",
+        "시계열 데이터 분석",
+        "공간 데이터 분석"
+      ],
+      "coPurchaseCount": 132
+    },
+    {
+      "courseIds": [
+        135,
+        136,
+        137
+      ],
+      "courseNames": [
+        "공간 데이터 분석",
+        "데이터 품질 관리",
+        "Apache Spark 입문"
+      ],
+      "coPurchaseCount": 158
+    },
+    {
+      "courseIds": [
+        137,
+        138,
+        139
+      ],
+      "courseNames": [
+        "Apache Spark 입문",
+        "PySpark 대용량 분석",
+        "데이터 파이프라인 기초"
+      ],
+      "coPurchaseCount": 44
+    },
+    {
+      "courseIds": [
+        139,
+        140,
+        141
+      ],
+      "courseNames": [
+        "데이터 파이프라인 기초",
+        "Airflow 워크플로",
+        "dbt 분석 엔지니어링"
+      ],
+      "coPurchaseCount": 70
+    },
+    {
+      "courseIds": [
+        141,
+        142,
+        143
+      ],
+      "courseNames": [
+        "dbt 분석 엔지니어링",
+        "데이터 웨어하우스 설계",
+        "BigQuery 데이터 분석"
+      ],
+      "coPurchaseCount": 96
+    },
+    {
+      "courseIds": [
+        143,
+        144,
+        145
+      ],
+      "courseNames": [
+        "BigQuery 데이터 분석",
+        "Snowflake 활용",
+        "실험 설계와 인과 추론"
+      ],
+      "coPurchaseCount": 122
+    },
+    {
+      "courseIds": [
+        145,
+        146,
+        147
+      ],
+      "courseNames": [
+        "실험 설계와 인과 추론",
+        "예측 분석 실무",
+        "텍스트 데이터 분석"
+      ],
+      "coPurchaseCount": 148
+    },
+    {
+      "courseIds": [
+        147,
+        148,
+        149
+      ],
+      "courseNames": [
+        "텍스트 데이터 분석",
+        "로그 데이터 분석",
+        "데이터 스토리텔링"
+      ],
+      "coPurchaseCount": 174
+    },
+    {
+      "courseIds": [
+        151,
+        152,
+        153
+      ],
+      "courseNames": [
+        "MySQL 성능 튜닝",
+        "Redis 캐시 설계",
+        "데이터 모델링 실전"
+      ],
+      "coPurchaseCount": 135
+    },
+    {
+      "courseIds": [
+        153,
+        154,
+        155
+      ],
+      "courseNames": [
+        "데이터 모델링 실전",
+        "SQL 기초",
+        "SQL 고급 쿼리"
+      ],
+      "coPurchaseCount": 161
+    },
+    {
+      "courseIds": [
+        155,
+        156,
+        157
+      ],
+      "courseNames": [
+        "SQL 고급 쿼리",
+        "PostgreSQL 운영",
+        "Oracle 데이터베이스 기초"
+      ],
+      "coPurchaseCount": 47
+    },
+    {
+      "courseIds": [
+        157,
+        158,
+        159
+      ],
+      "courseNames": [
+        "Oracle 데이터베이스 기초",
+        "MongoDB 문서 모델링",
+        "Elasticsearch 검색 설계"
+      ],
+      "coPurchaseCount": 73
+    },
+    {
+      "courseIds": [
+        159,
+        160,
+        161
+      ],
+      "courseNames": [
+        "Elasticsearch 검색 설계",
+        "인덱스 설계 원칙",
+        "실행 계획 분석"
+      ],
+      "coPurchaseCount": 99
+    },
+    {
+      "courseIds": [
+        161,
+        162,
+        163
+      ],
+      "courseNames": [
+        "실행 계획 분석",
+        "데이터베이스 트랜잭션",
+        "동시성과 잠금 관리"
+      ],
+      "coPurchaseCount": 125
+    },
+    {
+      "courseIds": [
+        163,
+        164,
+        165
+      ],
+      "courseNames": [
+        "동시성과 잠금 관리",
+        "DB 장애 복구",
+        "백업과 복원 실전"
+      ],
+      "coPurchaseCount": 151
+    },
+    {
+      "courseIds": [
+        165,
+        166,
+        167
+      ],
+      "courseNames": [
+        "백업과 복원 실전",
+        "데이터베이스 보안",
+        "샤딩과 파티셔닝"
+      ],
+      "coPurchaseCount": 177
+    },
+    {
+      "courseIds": [
+        167,
+        168,
+        169
+      ],
+      "courseNames": [
+        "샤딩과 파티셔닝",
+        "복제와 고가용성",
+        "NoSQL 데이터 설계"
+      ],
+      "coPurchaseCount": 63
+    },
+    {
+      "courseIds": [
+        169,
+        170,
+        171
+      ],
+      "courseNames": [
+        "NoSQL 데이터 설계",
+        "그래프 데이터베이스",
+        "시계열 데이터베이스"
+      ],
+      "coPurchaseCount": 89
+    },
+    {
+      "courseIds": [
+        171,
+        172,
+        173
+      ],
+      "courseNames": [
+        "시계열 데이터베이스",
+        "클라우드 데이터베이스",
+        "RDS 운영 실전"
+      ],
+      "coPurchaseCount": 115
+    },
+    {
+      "courseIds": [
+        173,
+        174,
+        175
+      ],
+      "courseNames": [
+        "RDS 운영 실전",
+        "데이터 마이그레이션",
+        "CDC 데이터 동기화"
+      ],
+      "coPurchaseCount": 141
+    },
+    {
+      "courseIds": [
+        175,
+        176,
+        177
+      ],
+      "courseNames": [
+        "CDC 데이터 동기화",
+        "대용량 배치 쿼리",
+        "ORM과 데이터베이스"
+      ],
+      "coPurchaseCount": 167
+    },
+    {
+      "courseIds": [
+        177,
+        178,
+        179
+      ],
+      "courseNames": [
+        "ORM과 데이터베이스",
+        "쿼리 성능 모니터링",
+        "분산 데이터베이스"
+      ],
+      "coPurchaseCount": 53
+    },
+    {
+      "courseIds": [
+        181,
+        182,
+        183
+      ],
+      "courseNames": [
+        "웹 애플리케이션 보안",
+        "OAuth2와 OpenID Connect",
+        "OWASP Top 10 실전"
+      ],
+      "coPurchaseCount": 154
+    },
+    {
+      "courseIds": [
+        183,
+        184,
+        185
+      ],
+      "courseNames": [
+        "OWASP Top 10 실전",
+        "네트워크 보안 기초",
+        "클라우드 보안 아키텍처"
+      ],
+      "coPurchaseCount": 40
+    },
+    {
+      "courseIds": [
+        185,
+        186,
+        187
+      ],
+      "courseNames": [
+        "클라우드 보안 아키텍처",
+        "API 보안 설계",
+        "JWT 보안 실무"
+      ],
+      "coPurchaseCount": 66
+    },
+    {
+      "courseIds": [
+        187,
+        188,
+        189
+      ],
+      "courseNames": [
+        "JWT 보안 실무",
+        "침투 테스트 입문",
+        "취약점 진단 자동화"
+      ],
+      "coPurchaseCount": 92
+    },
+    {
+      "courseIds": [
+        189,
+        190,
+        191
+      ],
+      "courseNames": [
+        "취약점 진단 자동화",
+        "보안 로그 분석",
+        "SIEM 운영 기초"
+      ],
+      "coPurchaseCount": 118
+    },
+    {
+      "courseIds": [
+        191,
+        192,
+        193
+      ],
+      "courseNames": [
+        "SIEM 운영 기초",
+        "제로 트러스트 아키텍처",
+        "IAM 권한 관리"
+      ],
+      "coPurchaseCount": 144
+    },
+    {
+      "courseIds": [
+        193,
+        194,
+        195
+      ],
+      "courseNames": [
+        "IAM 권한 관리",
+        "Kubernetes 보안 실전",
+        "컨테이너 보안"
+      ],
+      "coPurchaseCount": 170
+    },
+    {
+      "courseIds": [
+        195,
+        196,
+        197
+      ],
+      "courseNames": [
+        "컨테이너 보안",
+        "DevSecOps 구축",
+        "암호학 기초"
+      ],
+      "coPurchaseCount": 56
+    },
+    {
+      "courseIds": [
+        197,
+        198,
+        199
+      ],
+      "courseNames": [
+        "암호학 기초",
+        "개인정보 보호 설계",
+        "시큐어 코딩 Java"
+      ],
+      "coPurchaseCount": 82
+    },
+    {
+      "courseIds": [
+        199,
+        200,
+        201
+      ],
+      "courseNames": [
+        "시큐어 코딩 Java",
+        "시큐어 코딩 JavaScript",
+        "모바일 앱 보안"
+      ],
+      "coPurchaseCount": 108
+    },
+    {
+      "courseIds": [
+        201,
+        202,
+        203
+      ],
+      "courseNames": [
+        "모바일 앱 보안",
+        "데이터베이스 보안",
+        "랜섬웨어 대응"
+      ],
+      "coPurchaseCount": 134
+    },
+    {
+      "courseIds": [
+        203,
+        204,
+        205
+      ],
+      "courseNames": [
+        "랜섬웨어 대응",
+        "인시던트 대응 실무",
+        "디지털 포렌식 입문"
+      ],
+      "coPurchaseCount": 160
+    },
+    {
+      "courseIds": [
+        205,
+        206,
+        207
+      ],
+      "courseNames": [
+        "디지털 포렌식 입문",
+        "소프트웨어 공급망 보안",
+        "SAST와 DAST 활용"
+      ],
+      "coPurchaseCount": 46
+    },
+    {
+      "courseIds": [
+        207,
+        208,
+        209
+      ],
+      "courseNames": [
+        "SAST와 DAST 활용",
+        "보안 위협 모델링",
+        "AI 서비스 보안"
+      ],
+      "coPurchaseCount": 72
+    },
+    {
+      "courseIds": [
+        211,
+        212,
+        213
+      ],
+      "courseNames": [
+        "Flutter 모바일 앱 개발",
+        "Dart 프로그래밍 기초",
+        "Android Kotlin 입문"
+      ],
+      "coPurchaseCount": 173
+    },
+    {
+      "courseIds": [
+        213,
+        214,
+        215
+      ],
+      "courseNames": [
+        "Android Kotlin 입문",
+        "iOS Swift 입문",
+        "React Native 앱 개발"
+      ],
+      "coPurchaseCount": 59
+    },
+    {
+      "courseIds": [
+        215,
+        216,
+        217
+      ],
+      "courseNames": [
+        "React Native 앱 개발",
+        "Flutter 상태 관리",
+        "Android Jetpack Compose"
+      ],
+      "coPurchaseCount": 85
+    },
+    {
+      "courseIds": [
+        217,
+        218,
+        219
+      ],
+      "courseNames": [
+        "Android Jetpack Compose",
+        "SwiftUI 앱 개발",
+        "모바일 UI/UX 구현"
+      ],
+      "coPurchaseCount": 111
+    },
+    {
+      "courseIds": [
+        219,
+        220,
+        221
+      ],
+      "courseNames": [
+        "모바일 UI/UX 구현",
+        "모바일 REST API 연동",
+        "Firebase 앱 백엔드"
+      ],
+      "coPurchaseCount": 137
+    },
+    {
+      "courseIds": [
+        221,
+        222,
+        223
+      ],
+      "courseNames": [
+        "Firebase 앱 백엔드",
+        "모바일 푸시 알림",
+        "앱 결제 시스템"
+      ],
+      "coPurchaseCount": 163
+    },
+    {
+      "courseIds": [
+        223,
+        224,
+        225
+      ],
+      "courseNames": [
+        "앱 결제 시스템",
+        "모바일 인증과 보안",
+        "모바일 데이터 저장"
+      ],
+      "coPurchaseCount": 49
+    },
+    {
+      "courseIds": [
+        225,
+        226,
+        227
+      ],
+      "courseNames": [
+        "모바일 데이터 저장",
+        "오프라인 우선 앱 설계",
+        "모바일 성능 최적화"
+      ],
+      "coPurchaseCount": 75
+    },
+    {
+      "courseIds": [
+        227,
+        228,
+        229
+      ],
+      "courseNames": [
+        "모바일 성능 최적화",
+        "앱 크래시 분석",
+        "Android 테스트 자동화"
+      ],
+      "coPurchaseCount": 101
+    },
+    {
+      "courseIds": [
+        229,
+        230,
+        231
+      ],
+      "courseNames": [
+        "Android 테스트 자동화",
+        "iOS 테스트 자동화",
+        "모바일 CI/CD"
+      ],
+      "coPurchaseCount": 127
+    },
+    {
+      "courseIds": [
+        231,
+        232,
+        233
+      ],
+      "courseNames": [
+        "모바일 CI/CD",
+        "앱스토어 배포 실전",
+        "모바일 접근성"
+      ],
+      "coPurchaseCount": 153
+    },
+    {
+      "courseIds": [
+        233,
+        234,
+        235
+      ],
+      "courseNames": [
+        "모바일 접근성",
+        "위치 기반 서비스",
+        "카메라와 미디어 처리"
+      ],
+      "coPurchaseCount": 179
+    },
+    {
+      "courseIds": [
+        235,
+        236,
+        237
+      ],
+      "courseNames": [
+        "카메라와 미디어 처리",
+        "BLE IoT 앱 개발",
+        "Flutter 애니메이션"
+      ],
+      "coPurchaseCount": 65
+    },
+    {
+      "courseIds": [
+        237,
+        238,
+        239
+      ],
+      "courseNames": [
+        "Flutter 애니메이션",
+        "모바일 아키텍처 패턴",
+        "크로스플랫폼 앱 전략"
+      ],
+      "coPurchaseCount": 91
+    },
+    {
+      "courseIds": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "courseNames": [
+        "Spring Boot 기초",
+        "Spring Boot MSA",
+        "Java 객체지향 실전",
+        "Spring Security와 JWT"
+      ],
+      "coPurchaseCount": 20
+    },
+    {
+      "courseIds": [
+        1,
+        3,
+        6,
+        32
+      ],
+      "courseNames": [
+        "Spring Boot 기초",
+        "Vue.js 기초",
+        "REST API 설계와 테스트",
+        "React 웹 개발 입문"
+      ],
+      "coPurchaseCount": 97
+    },
+    {
+      "courseIds": [
+        3,
+        32,
+        33,
+        34
+      ],
+      "courseNames": [
+        "Vue.js 기초",
+        "React 웹 개발 입문",
+        "HTML과 CSS 실전",
+        "TypeScript 실전"
+      ],
+      "coPurchaseCount": 37
+    },
+    {
+      "courseIds": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "courseNames": [
+        "REST API 설계와 테스트",
+        "JPA와 Hibernate 성능 최적화",
+        "Kotlin 서버 개발",
+        "Spring WebFlux 리액티브 프로그래밍"
+      ],
+      "coPurchaseCount": 64
+    },
+    {
+      "courseIds": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "courseNames": [
+        "클린 아키텍처 실전",
+        "도메인 주도 설계 입문",
+        "백엔드 TDD 실전",
+        "Gradle 빌드 자동화"
+      ],
+      "coPurchaseCount": 108
+    },
+    {
+      "courseIds": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "courseNames": [
+        "Spring과 Redis 활용",
+        "Kafka 이벤트 기반 아키텍처",
+        "gRPC 서비스 개발",
+        "GraphQL API 구축"
+      ],
+      "coPurchaseCount": 62
+    },
+    {
+      "courseIds": [
+        18,
+        19,
+        20,
+        21
+      ],
+      "courseNames": [
+        "Spring Batch 대용량 처리",
+        "Java 동시성 프로그래밍",
+        "JVM 성능 튜닝",
+        "백엔드 로깅과 모니터링"
+      ],
+      "coPurchaseCount": 106
+    },
+    {
+      "courseIds": [
+        22,
+        23,
+        24,
+        25
+      ],
+      "courseNames": [
+        "API Gateway 패턴",
+        "분산 트랜잭션 이해",
+        "Saga 패턴 실전",
+        "CQRS와 이벤트 소싱"
+      ],
+      "coPurchaseCount": 60
+    },
+    {
+      "courseIds": [
+        26,
+        27,
+        28,
+        29
+      ],
+      "courseNames": [
+        "헥사고날 아키텍처",
+        "레거시 시스템 리팩터링",
+        "Spring 통합 테스트",
+        "Spring Cloud 실전"
+      ],
+      "coPurchaseCount": 104
+    },
+    {
+      "courseIds": [
+        35,
+        36,
+        37,
+        38
+      ],
+      "courseNames": [
+        "Next.js 웹 애플리케이션",
+        "프론트엔드 테스트 자동화",
+        "Vue 3 Composition API",
+        "React 상태 관리"
+      ],
+      "coPurchaseCount": 81
+    },
+    {
+      "courseIds": [
+        39,
+        40,
+        41,
+        42
+      ],
+      "courseNames": [
+        "웹 접근성 실무",
+        "반응형 웹 디자인",
+        "JavaScript 핵심 원리",
+        "모던 CSS 레이아웃"
+      ],
+      "coPurchaseCount": 35
+    },
+    {
+      "courseIds": [
+        43,
+        44,
+        45,
+        46
+      ],
+      "courseNames": [
+        "Vite 빌드 최적화",
+        "프론트엔드 성능 개선",
+        "Storybook 디자인 시스템",
+        "React Query 데이터 패칭"
+      ],
+      "coPurchaseCount": 79
+    },
+    {
+      "courseIds": [
+        47,
+        48,
+        49,
+        50
+      ],
+      "courseNames": [
+        "Nuxt 풀스택 프론트엔드",
+        "Svelte 입문",
+        "웹 컴포넌트 설계",
+        "Micro Frontend 아키텍처"
+      ],
+      "coPurchaseCount": 33
+    },
+    {
+      "courseIds": [
+        51,
+        52,
+        53,
+        54
+      ],
+      "courseNames": [
+        "브라우저 렌더링 원리",
+        "프론트엔드 보안 기초",
+        "Playwright E2E 테스트",
+        "프론트엔드 CI/CD"
+      ],
+      "coPurchaseCount": 77
+    },
+    {
+      "courseIds": [
+        55,
+        56,
+        57,
+        58
+      ],
+      "courseNames": [
+        "Canvas 데이터 시각화",
+        "PWA 서비스 개발",
+        "프론트엔드 코드 리뷰",
+        "Redux Toolkit 실전"
+      ],
+      "coPurchaseCount": 31
+    },
+    {
+      "courseIds": [
+        61,
+        62,
+        63,
+        64
+      ],
+      "courseNames": [
+        "머신러닝 입문",
+        "생성형 AI와 프롬프트 엔지니어링",
+        "딥러닝과 PyTorch",
+        "RAG 기반 AI 서비스 구축"
+      ],
+      "coPurchaseCount": 54
+    },
+    {
+      "courseIds": [
+        65,
+        66,
+        67,
+        68
+      ],
+      "courseNames": [
+        "LLM 애플리케이션 평가와 운영",
+        "자연어 처리 기초",
+        "컴퓨터 비전 입문",
+        "Transformer 핵심 원리"
+      ],
+      "coPurchaseCount": 98
+    },
+    {
+      "courseIds": [
+        69,
+        70,
+        71,
+        72
+      ],
+      "courseNames": [
+        "OpenAI API 서비스 개발",
+        "LangChain 애플리케이션",
+        "벡터 데이터베이스 활용",
+        "AI Agent 설계"
+      ],
+      "coPurchaseCount": 52
+    },
+    {
+      "courseIds": [
+        73,
+        74,
+        75,
+        76
+      ],
+      "courseNames": [
+        "멀티모달 AI 서비스",
+        "파인튜닝과 모델 최적화",
+        "추천 시스템 입문",
+        "시계열 예측 모델"
+      ],
+      "coPurchaseCount": 96
+    },
+    {
+      "courseIds": [
+        77,
+        78,
+        79,
+        80
+      ],
+      "courseNames": [
+        "MLOps 파이프라인",
+        "AI 모델 설명 가능성",
+        "Responsible AI 기초",
+        "음성 인식 서비스 개발"
+      ],
+      "coPurchaseCount": 50
+    },
+    {
+      "courseIds": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "courseNames": [
+        "이미지 생성 AI 활용",
+        "문서 분류 자동화",
+        "LLM 프롬프트 평가",
+        "검색 증강 생성 심화"
+      ],
+      "coPurchaseCount": 94
+    },
+    {
+      "courseIds": [
+        85,
+        86,
+        87,
+        88
+      ],
+      "courseNames": [
+        "지식 그래프와 AI",
+        "경량 모델 배포",
+        "AI 서비스 비용 최적화",
+        "Synthetic Data 생성"
+      ],
+      "coPurchaseCount": 48
+    },
+    {
+      "courseIds": [
+        91,
+        92,
+        93,
+        94
+      ],
+      "courseNames": [
+        "Docker 컨테이너 실전",
+        "Kubernetes 운영 기초",
+        "GitHub Actions CI/CD",
+        "AWS 클라우드 아키텍처"
+      ],
+      "coPurchaseCount": 71
+    },
+    {
+      "courseIds": [
+        91,
+        92,
+        94,
+        95
+      ],
+      "courseNames": [
+        "Docker 컨테이너 실전",
+        "Kubernetes 운영 기초",
+        "AWS 클라우드 아키텍처",
+        "Terraform 인프라 자동화"
+      ],
+      "coPurchaseCount": 118
+    },
+    {
+      "courseIds": [
+        95,
+        96,
+        97,
+        98
+      ],
+      "courseNames": [
+        "Terraform 인프라 자동화",
+        "Linux 서버 운영",
+        "Nginx 웹 서버 구성",
+        "Helm 차트 실전"
+      ],
+      "coPurchaseCount": 25
+    },
+    {
+      "courseIds": [
+        99,
+        100,
+        101,
+        102
+      ],
+      "courseNames": [
+        "Argo CD GitOps",
+        "Jenkins 파이프라인",
+        "Prometheus 모니터링",
+        "Grafana 대시보드"
+      ],
+      "coPurchaseCount": 69
+    },
+    {
+      "courseIds": [
+        103,
+        104,
+        105,
+        106
+      ],
+      "courseNames": [
+        "ELK 로그 분석",
+        "OpenTelemetry 분산 추적",
+        "SRE 기초",
+        "클라우드 비용 최적화"
+      ],
+      "coPurchaseCount": 23
+    },
+    {
+      "courseIds": [
+        107,
+        108,
+        109,
+        110
+      ],
+      "courseNames": [
+        "AWS EKS 운영",
+        "Azure DevOps 입문",
+        "GCP 인프라 설계",
+        "Ansible 구성 관리"
+      ],
+      "coPurchaseCount": 67
+    },
+    {
+      "courseIds": [
+        111,
+        112,
+        113,
+        114
+      ],
+      "courseNames": [
+        "네트워크와 DNS 기초",
+        "서비스 메시 Istio",
+        "Kubernetes 보안",
+        "컨테이너 이미지 최적화"
+      ],
+      "coPurchaseCount": 21
+    },
+    {
+      "courseIds": [
+        115,
+        116,
+        117,
+        118
+      ],
+      "courseNames": [
+        "무중단 배포 전략",
+        "재해 복구 설계",
+        "DevSecOps 파이프라인",
+        "플랫폼 엔지니어링"
+      ],
+      "coPurchaseCount": 65
+    },
+    {
+      "courseIds": [
+        121,
+        122,
+        123,
+        124
+      ],
+      "courseNames": [
+        "Python 데이터 분석",
+        "Pandas와 SQL 데이터 처리",
+        "데이터 시각화와 대시보드",
+        "통계 분석 기초"
+      ],
+      "coPurchaseCount": 88
+    },
+    {
+      "courseIds": [
+        125,
+        126,
+        127,
+        128
+      ],
+      "courseNames": [
+        "A/B 테스트 실무",
+        "Tableau 대시보드",
+        "Power BI 데이터 분석",
+        "데이터 전처리 실전"
+      ],
+      "coPurchaseCount": 42
+    },
+    {
+      "courseIds": [
+        129,
+        130,
+        131,
+        132
+      ],
+      "courseNames": [
+        "탐색적 데이터 분석",
+        "비즈니스 지표 설계",
+        "고객 세그먼트 분석",
+        "마케팅 데이터 분석"
+      ],
+      "coPurchaseCount": 86
+    },
+    {
+      "courseIds": [
+        133,
+        134,
+        135,
+        136
+      ],
+      "courseNames": [
+        "제품 분석과 퍼널",
+        "시계열 데이터 분석",
+        "공간 데이터 분석",
+        "데이터 품질 관리"
+      ],
+      "coPurchaseCount": 40
+    },
+    {
+      "courseIds": [
+        137,
+        138,
+        139,
+        140
+      ],
+      "courseNames": [
+        "Apache Spark 입문",
+        "PySpark 대용량 분석",
+        "데이터 파이프라인 기초",
+        "Airflow 워크플로"
+      ],
+      "coPurchaseCount": 84
+    },
+    {
+      "courseIds": [
+        141,
+        142,
+        143,
+        144
+      ],
+      "courseNames": [
+        "dbt 분석 엔지니어링",
+        "데이터 웨어하우스 설계",
+        "BigQuery 데이터 분석",
+        "Snowflake 활용"
+      ],
+      "coPurchaseCount": 38
+    },
+    {
+      "courseIds": [
+        145,
+        146,
+        147,
+        148
+      ],
+      "courseNames": [
+        "실험 설계와 인과 추론",
+        "예측 분석 실무",
+        "텍스트 데이터 분석",
+        "로그 데이터 분석"
+      ],
+      "coPurchaseCount": 82
+    },
+    {
+      "courseIds": [
+        151,
+        152,
+        153,
+        154
+      ],
+      "courseNames": [
+        "MySQL 성능 튜닝",
+        "Redis 캐시 설계",
+        "데이터 모델링 실전",
+        "SQL 기초"
+      ],
+      "coPurchaseCount": 105
+    },
+    {
+      "courseIds": [
+        155,
+        156,
+        157,
+        158
+      ],
+      "courseNames": [
+        "SQL 고급 쿼리",
+        "PostgreSQL 운영",
+        "Oracle 데이터베이스 기초",
+        "MongoDB 문서 모델링"
+      ],
+      "coPurchaseCount": 59
+    },
+    {
+      "courseIds": [
+        159,
+        160,
+        161,
+        162
+      ],
+      "courseNames": [
+        "Elasticsearch 검색 설계",
+        "인덱스 설계 원칙",
+        "실행 계획 분석",
+        "데이터베이스 트랜잭션"
+      ],
+      "coPurchaseCount": 103
+    },
+    {
+      "courseIds": [
+        163,
+        164,
+        165,
+        166
+      ],
+      "courseNames": [
+        "동시성과 잠금 관리",
+        "DB 장애 복구",
+        "백업과 복원 실전",
+        "데이터베이스 보안"
+      ],
+      "coPurchaseCount": 57
+    },
+    {
+      "courseIds": [
+        167,
+        168,
+        169,
+        170
+      ],
+      "courseNames": [
+        "샤딩과 파티셔닝",
+        "복제와 고가용성",
+        "NoSQL 데이터 설계",
+        "그래프 데이터베이스"
+      ],
+      "coPurchaseCount": 101
+    },
+    {
+      "courseIds": [
+        171,
+        172,
+        173,
+        174
+      ],
+      "courseNames": [
+        "시계열 데이터베이스",
+        "클라우드 데이터베이스",
+        "RDS 운영 실전",
+        "데이터 마이그레이션"
+      ],
+      "coPurchaseCount": 55
+    },
+    {
+      "courseIds": [
+        175,
+        176,
+        177,
+        178
+      ],
+      "courseNames": [
+        "CDC 데이터 동기화",
+        "대용량 배치 쿼리",
+        "ORM과 데이터베이스",
+        "쿼리 성능 모니터링"
+      ],
+      "coPurchaseCount": 99
+    },
+    {
+      "courseIds": [
+        181,
+        182,
+        183,
+        184
+      ],
+      "courseNames": [
+        "웹 애플리케이션 보안",
+        "OAuth2와 OpenID Connect",
+        "OWASP Top 10 실전",
+        "네트워크 보안 기초"
+      ],
+      "coPurchaseCount": 32
+    },
+    {
+      "courseIds": [
+        185,
+        186,
+        187,
+        188
+      ],
+      "courseNames": [
+        "클라우드 보안 아키텍처",
+        "API 보안 설계",
+        "JWT 보안 실무",
+        "침투 테스트 입문"
+      ],
+      "coPurchaseCount": 76
+    },
+    {
+      "courseIds": [
+        189,
+        190,
+        191,
+        192
+      ],
+      "courseNames": [
+        "취약점 진단 자동화",
+        "보안 로그 분석",
+        "SIEM 운영 기초",
+        "제로 트러스트 아키텍처"
+      ],
+      "coPurchaseCount": 30
+    },
+    {
+      "courseIds": [
+        193,
+        194,
+        195,
+        196
+      ],
+      "courseNames": [
+        "IAM 권한 관리",
+        "Kubernetes 보안 실전",
+        "컨테이너 보안",
+        "DevSecOps 구축"
+      ],
+      "coPurchaseCount": 74
+    },
+    {
+      "courseIds": [
+        197,
+        198,
+        199,
+        200
+      ],
+      "courseNames": [
+        "암호학 기초",
+        "개인정보 보호 설계",
+        "시큐어 코딩 Java",
+        "시큐어 코딩 JavaScript"
+      ],
+      "coPurchaseCount": 28
+    },
+    {
+      "courseIds": [
+        201,
+        202,
+        203,
+        204
+      ],
+      "courseNames": [
+        "모바일 앱 보안",
+        "데이터베이스 보안",
+        "랜섬웨어 대응",
+        "인시던트 대응 실무"
+      ],
+      "coPurchaseCount": 72
+    },
+    {
+      "courseIds": [
+        205,
+        206,
+        207,
+        208
+      ],
+      "courseNames": [
+        "디지털 포렌식 입문",
+        "소프트웨어 공급망 보안",
+        "SAST와 DAST 활용",
+        "보안 위협 모델링"
+      ],
+      "coPurchaseCount": 26
+    },
+    {
+      "courseIds": [
+        211,
+        212,
+        213,
+        214
+      ],
+      "courseNames": [
+        "Flutter 모바일 앱 개발",
+        "Dart 프로그래밍 기초",
+        "Android Kotlin 입문",
+        "iOS Swift 입문"
+      ],
+      "coPurchaseCount": 49
+    },
+    {
+      "courseIds": [
+        215,
+        216,
+        217,
+        218
+      ],
+      "courseNames": [
+        "React Native 앱 개발",
+        "Flutter 상태 관리",
+        "Android Jetpack Compose",
+        "SwiftUI 앱 개발"
+      ],
+      "coPurchaseCount": 93
+    },
+    {
+      "courseIds": [
+        219,
+        220,
+        221,
+        222
+      ],
+      "courseNames": [
+        "모바일 UI/UX 구현",
+        "모바일 REST API 연동",
+        "Firebase 앱 백엔드",
+        "모바일 푸시 알림"
+      ],
+      "coPurchaseCount": 47
+    },
+    {
+      "courseIds": [
+        223,
+        224,
+        225,
+        226
+      ],
+      "courseNames": [
+        "앱 결제 시스템",
+        "모바일 인증과 보안",
+        "모바일 데이터 저장",
+        "오프라인 우선 앱 설계"
+      ],
+      "coPurchaseCount": 91
+    },
+    {
+      "courseIds": [
+        227,
+        228,
+        229,
+        230
+      ],
+      "courseNames": [
+        "모바일 성능 최적화",
+        "앱 크래시 분석",
+        "Android 테스트 자동화",
+        "iOS 테스트 자동화"
+      ],
+      "coPurchaseCount": 45
+    },
+    {
+      "courseIds": [
+        231,
+        232,
+        233,
+        234
+      ],
+      "courseNames": [
+        "모바일 CI/CD",
+        "앱스토어 배포 실전",
+        "모바일 접근성",
+        "위치 기반 서비스"
+      ],
+      "coPurchaseCount": 89
+    },
+    {
+      "courseIds": [
+        235,
+        236,
+        237,
+        238
+      ],
+      "courseNames": [
+        "카메라와 미디어 처리",
+        "BLE IoT 앱 개발",
+        "Flutter 애니메이션",
+        "모바일 아키텍처 패턴"
+      ],
+      "coPurchaseCount": 43
+    }
+  ]
+}
