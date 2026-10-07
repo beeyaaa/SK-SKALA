@@ -87,6 +87,8 @@
 /0902_Agile 방법론 및 MSA 개발/최종_백엔드_env포함/.env.example
 /portfolio/0902_Agile 방법론 및 MSA 개발/최종_백엔드_env포함/.env.example
 /portfolio/0821_컨테이너 이해 및 애플리케이션 컨테이너화/board/.env.example
+# 기존에 추적 중인 안전한 예시는 유지하고, 새 설정 예시의 자동 추가를 막음
+**/.env.example
 
 # 압축본 내부에 설정 예시가 포함되어 있어 게시 전 별도 검토가 필요한 파일
 /0922-0929 모델 서빙 및 AIOps 구성/실습/day3_실습.zip
